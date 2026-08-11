@@ -94,3 +94,67 @@ h1, h2, h3, .pb-serif {
   padding: 0.9rem 1.1rem;
   margin-bottom: 1rem;
 }
+
+// sidebar + single-viewport analysis layout (wordbank-datapage pattern)
+.viz-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 991px) {
+  .viz-layout { grid-template-columns: 1fr; }
+}
+
+.viz-sidebar {
+  position: sticky;
+  top: 70px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem;
+
+  form, select { max-width: 100%; width: 100%; }
+  label { font-weight: 600; }
+
+  form > div, form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// IRW-style dataset cards
+.pb-dataset-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.7rem;
+  background: #fff;
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #111827;
+  }
+  .pb-ds-meta {
+    color: #4b5563;
+    font-size: 0.9rem;
+    margin: 0.3rem 0 0 0;
+  }
+  .pb-ds-chips { margin-top: 0.45rem; }
+  .pb-chip {
+    display: inline-block;
+    background: #eef2f6;
+    border-radius: 10px;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.8rem;
+    margin-right: 0.35rem;
+    color: #1f2937;
+  }
+  .pb-ds-body {
+    margin-top: 0.55rem;
+    font-size: 0.92rem;
+    color: #374151;
+  }
+}

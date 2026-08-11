@@ -20,6 +20,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 705,
    "kb": 1836
   },
   {
@@ -42,6 +44,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 38,
    "kb": 82
   },
   {
@@ -63,6 +67,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 100,
    "kb": 96
   },
   {
@@ -84,6 +90,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 80,
    "kb": 252
   },
   {
@@ -105,6 +113,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 79,
    "kb": 113
   },
   {
@@ -128,6 +138,8 @@
    "native_languages": [
     "eng, fre"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 47,
    "kb": 89
   },
   {
@@ -156,6 +168,8 @@
     "fre, eng",
     "spa, eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 82
   },
   {
@@ -177,6 +191,8 @@
    "native_languages": [
     "zxx"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 58
   },
   {
@@ -198,6 +214,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 28,
    "kb": 17
   },
   {
@@ -219,6 +237,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 671,
    "kb": 1788
   },
   {
@@ -240,6 +260,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 229,
    "kb": 348
   },
   {
@@ -261,6 +283,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 175,
    "kb": 435
   },
   {
@@ -282,6 +306,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 395
   },
   {
@@ -303,6 +329,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 35,
    "kb": 131
   },
   {
@@ -324,6 +352,8 @@
    "native_languages": [
     "dut"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 60,
    "kb": 218
   },
   {
@@ -345,6 +375,8 @@
    "native_languages": [
     "spa"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 136,
    "kb": 307
   },
   {
@@ -366,6 +398,8 @@
    "native_languages": [
     "nor"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 67,
    "kb": 597
   },
   {
@@ -392,6 +426,8 @@
     "eng, fre",
     "eng, spa"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 105
   },
   {
@@ -413,6 +449,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 75,
    "kb": 82
   },
   {
@@ -434,6 +472,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 29,
    "kb": 92
   },
   {
@@ -455,6 +495,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 87,
    "kb": 267
   },
   {
@@ -476,6 +518,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 4,
    "kb": 144
   },
   {
@@ -497,6 +541,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 26
   },
   {
@@ -518,6 +564,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 91
   },
   {
@@ -539,6 +587,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 43,
    "kb": 145
   },
   {
@@ -560,6 +610,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 293
   },
   {
@@ -581,6 +633,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 101
   },
   {
@@ -602,6 +656,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 86
   },
   {
@@ -623,6 +679,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 154
   },
   {
@@ -645,6 +703,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 144
   },
   {
@@ -666,6 +726,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 60,
    "kb": 170
   },
   {
@@ -689,6 +751,8 @@
    "native_languages": [
     "spa, eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 32,
    "kb": 54
   },
   {
@@ -710,6 +774,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 1268
   },
   {
@@ -731,6 +797,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 658
   },
   {
@@ -752,6 +820,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 40,
    "kb": 41
   },
   {
@@ -775,6 +845,8 @@
    "native_languages": [
     "eng, fre"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 119,
    "kb": 305
   },
   {
@@ -796,6 +868,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 50,
    "kb": 85
   },
   {
@@ -817,6 +891,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 40,
    "kb": 63
   },
   {
@@ -838,6 +914,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 43,
    "kb": 436
   },
   {
@@ -859,6 +937,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 0,
    "kb": 501
   },
   {
@@ -880,6 +960,8 @@
    "native_languages": [
     "spa"
    ],
+   "longitudinal": true,
+   "n_subjects_with_cdi": 0,
    "kb": 151
   },
   {
@@ -901,6 +983,8 @@
    "native_languages": [
     "spa"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 68
   },
   {
@@ -922,6 +1006,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 623
   },
   {
@@ -943,6 +1029,8 @@
    "native_languages": [
     "eng"
    ],
+   "longitudinal": false,
+   "n_subjects_with_cdi": 0,
    "kb": 603
   }
  ]

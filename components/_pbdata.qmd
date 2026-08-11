@@ -1,0 +1,75 @@
+```{ojs pbdata-manifest}
+//| output: false
+manifest = d3.json("slices/manifest.json")
+datasetNames = manifest.datasets.map((d) => d.name)
+
+sliceCache = new Map()
+
+async function loadSlice(name) {
+  if (!sliceCache.has(name)) {
+    sliceCache.set(name, await d3.json(`slices/datasets/${name}.json`));
+  }
+  return sliceCache.get(name);
+}
+
+// flatten selected slices into one row per trial administration:
+// {dataset, aid, tid, t0, runs, age, subject, word, distractor, vanilla,
+//  excluded, trial_order}
+function buildRows(slices, opts = {}) {
+  const {
+    ageLo = 0, ageHi = 999, words = null, includeExcluded = true,
+    collapseWords = false,
+  } = opts;
+  const wordSet = words ? new Set(words) : null;
+  const rows = [];
+  for (const s of slices) {
+    const adminById = new Map(s.admins.map((a) => [a[0], a]));
+    const ttById = new Map(s.trial_types.map((t) => [t[0], t]));
+    const trialById = new Map(s.trials.map((t) => [t[0], t]));
+    for (const [aid, tid, t0, runs] of s.runs) {
+      const admin = adminById.get(aid);
+      if (!admin || admin[1] == null || admin[1] < ageLo || admin[1] > ageHi) continue;
+      const trial = trialById.get(tid);
+      if (!trial) continue;
+      if (!includeExcluded && trial[3] === 1) continue;
+      const tt = ttById.get(trial[2]);
+      if (!tt) continue;
+      if (wordSet && !wordSet.has(tt[1])) continue;
+      rows.push({
+        dataset: s.dataset.name, aid, tid, t0, runs,
+        age: admin[1], subject: admin[2],
+        word: collapseWords ? "All" : tt[1], distractor: tt[2],
+        vanilla: tt[4] === 1, excluded: trial[3] === 1,
+        trial_order: trial[1],
+      });
+    }
+  }
+  return rows;
+}
+
+// mean accuracy within [wLo, wHi] for one trial's runs (or null if no
+// target/distractor samples in the window)
+function windowAccuracy(t0, runs, wLo, wHi) {
+  let t = t0, n = 0, p = 0;
+  for (const [aoi, len] of runs) {
+    for (let k = 0; k < len; k++, t += STEP_MS) {
+      if (t < wLo || t > wHi || aoi > 1) continue;
+      n += 1;
+      if (aoi === 0) p += 1;
+    }
+  }
+  return n > 0 ? p / n : null;
+}
+
+wordsOf = (slices) => {
+  const w = new Set();
+  for (const s of slices) for (const tt of s.trial_types) {
+    if (tt[1] != null) w.add(tt[1]);
+  }
+  return Array.from(w).sort();
+}
+```
+
+```{=html}
+<div class="pb-spinner"><div class="ring"></div>Loading data…</div>
+```

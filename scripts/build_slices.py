@@ -67,7 +67,8 @@ def main():
                   ["administration_id", "age", "dataset_id", "subject_id",
                    "coding_method"]).to_pylist()
     subjects = {s["subject_id"]: s for s in read(
-        v, "subjects", ["subject_id", "native_language"]).to_pylist()}
+        v, "subjects", ["subject_id", "native_language",
+                        "subject_aux_data"]).to_pylist()}
     stimuli = {s["stimulus_id"]: s for s in read(
         v, "stimuli", ["stimulus_id", "english_stimulus_label",
                        "stimulus_novelty", "dataset_id"]).to_pylist()}
@@ -142,6 +143,15 @@ def main():
         out_path = out_root / "datasets" / f"{name}.json"
         out_path.write_text(json.dumps(slice_obj, separators=(",", ":")))
 
+        admins_per_subject = defaultdict(int)
+        for a in da:
+            admins_per_subject[a["subject_id"]] += 1
+        n_cdi = sum(
+            1 for a in da
+            if a["subject_id"] in subjects and
+            (subjects[a["subject_id"]].get("subject_aux_data") or "")
+            .find("cdi_responses") >= 0)
+
         manifest["datasets"].append({
             "name": name, "shortcite": ds["shortcite"], "cite": ds["cite"],
             "n_subjects": len({a["subject_id"] for a in da}),
@@ -153,6 +163,8 @@ def main():
             "native_languages": sorted({
                 subjects[a["subject_id"]]["native_language"] or ""
                 for a in da if a["subject_id"] in subjects} - {""}),
+            "longitudinal": max(admins_per_subject.values(), default=1) > 1,
+            "n_subjects_with_cdi": n_cdi,
             "kb": out_path.stat().st_size // 1024,
         })
         print(f"{name}: {len(da)} admins, {len(dt)} trials, "
@@ -160,6 +172,37 @@ def main():
               f"{out_path.stat().st_size / 1e6:.2f} MB")
 
     (out_root / "manifest.json").write_text(json.dumps(manifest, indent=1))
+
+    # global CDI slice: one row per (subject, cdi response), joined to the
+    # subject's administrations at build time in the page (by closest age)
+    id_to_name = {d["dataset_id"]: d["dataset_name"] for d in datasets}
+    cdi_rows = []
+    subj_dataset = {}
+    for a in admins:
+        subj_dataset.setdefault(a["subject_id"], a["dataset_id"])
+    for sid, s in subjects.items():
+        aux = s.get("subject_aux_data")
+        if not aux or "cdi_responses" not in aux:
+            continue
+        try:
+            responses = json.loads(aux).get("cdi_responses") or []
+        except json.JSONDecodeError:
+            continue
+        ds_name = id_to_name.get(subj_dataset.get(sid))
+        for r in responses:
+            cdi_rows.append([
+                ds_name, sid, r.get("age"), r.get("measure"),
+                r.get("instrument_type"), r.get("rawscore"),
+                r.get("percentile"), r.get("language"),
+            ])
+    (out_root / "cdi.json").write_text(json.dumps({
+        "columns": ["dataset", "subject_id", "age", "measure",
+                    "instrument_type", "rawscore", "percentile", "language"],
+        "rows": cdi_rows,
+    }, separators=(",", ":")))
+    print(f"cdi.json: {len(cdi_rows)} CDI responses "
+          f"({(out_root / 'cdi.json').stat().st_size / 1e6:.2f} MB)")
+
     total = sum(d["kb"] for d in manifest["datasets"]) / 1024
     print(f"\n{len(manifest['datasets'])} datasets, {total:.1f} MB total slices")
 

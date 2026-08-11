@@ -5,6 +5,8 @@ project:
   type: website
   render:
     - "*.qmd"
+    - "!repos/"
+    - "!migration/"
   resources:
     - "slices/**"
 
@@ -15,8 +17,18 @@ website:
     logo-alt: "Peekbank raccoon logo"
     title: Peekbank
     left:
-      - href: viz.qmd
-        text: Visualizations
+      - text: Analyses
+        menu:
+          - href: accuracy.qmd
+            text: Accuracy Explorer
+          - href: rt.qmd
+            text: Reaction Time Explorer
+          - href: longitudinal.qmd
+            text: Longitudinal Explorer
+          - href: cdi.qmd
+            text: CDI Relationships
+          - href: reliability.qmd
+            text: Reliability Explorer
       - href: datasets.qmd
         text: Datasets
       - href: about.qmd

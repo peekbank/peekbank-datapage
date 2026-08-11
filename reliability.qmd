@@ -1,0 +1,248 @@
+---
+title: "Reliability Explorer"
+---
+
+How reliable is windowed accuracy as an individual-difference measure — and
+how does that depend on the analysis window? This explorer computes
+split-half reliability (children's trial sets split randomly in half,
+half-means correlated across children, Spearman-Brown corrected) for a grid
+of analysis windows, in your browser.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs rel-inputs}
+viewof sel_datasets = Inputs.select(datasetNames, {
+  label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+})
+viewof age_range = interval([0, 84], {
+  step: 1, value: [0, 84], label: "Ages (months)",
+})
+viewof my_window = interval([-1000, 4000], {
+  step: 25, value: [300, 1800], label: "Your window (msec)",
+})
+viewof n_splits = Inputs.range([5, 50], {
+  step: 5, value: 20, label: "Random splits",
+})
+viewof min_trials = Inputs.range([4, 20], {
+  step: 1, value: 6, label: "Min trials per child",
+})
+viewof include_excluded = Inputs.toggle({
+  label: "Lab-excluded trials", value: true,
+})
+```
+
+The heatmap sweeps window **start** (−500 to 1500 ms) and **end** (1000 to
+4000 ms); your window is marked ×.
+
+:::
+
+::: {.viz-main}
+
+```{ojs rel-lib}
+//| output: false
+// deterministic RNG so results are stable across reactive updates
+function mulberry32(seed) {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// per-trial prefix sums so any window's accuracy is O(1):
+// samples run t0, t0+25, ...; cumTD[i]/cumT[i] = counts among samples < i
+function trialPrefix(t0, runs) {
+  let total = 0;
+  for (const [, len] of runs) total += len;
+  const cumTD = new Float64Array(total + 1);
+  const cumT = new Float64Array(total + 1);
+  let i = 0;
+  for (const [aoi, len] of runs) {
+    for (let k = 0; k < len; k++, i++) {
+      cumTD[i + 1] = cumTD[i] + (aoi <= 1 ? 1 : 0);
+      cumT[i + 1] = cumT[i] + (aoi === 0 ? 1 : 0);
+    }
+  }
+  return { t0, total, cumTD, cumT };
+}
+
+function prefixAccuracy(p, wLo, wHi) {
+  let lo = Math.ceil((wLo - p.t0) / STEP_MS);
+  let hi = Math.floor((wHi - p.t0) / STEP_MS) + 1;
+  lo = Math.max(0, lo);
+  hi = Math.min(p.total, hi);
+  if (hi <= lo) return null;
+  const n = p.cumTD[hi] - p.cumTD[lo];
+  if (n === 0) return null;
+  return (p.cumT[hi] - p.cumT[lo]) / n;
+}
+
+function pearson(xs, ys) {
+  const n = xs.length;
+  const mx = d3.mean(xs);
+  const my = d3.mean(ys);
+  let sxy = 0;
+  let sxx = 0;
+  let syy = 0;
+  for (let i = 0; i < n; i++) {
+    sxy += (xs[i] - mx) * (ys[i] - my);
+    sxx += (xs[i] - mx) ** 2;
+    syy += (ys[i] - my) ** 2;
+  }
+  return sxx > 0 && syy > 0 ? sxy / Math.sqrt(sxx * syy) : NaN;
+}
+
+// split-half (Spearman-Brown corrected), averaged over deterministic splits
+function splitHalf(children, wLo, wHi, splits) {
+  const usable = [];
+  for (const trials of children) {
+    const accs = [];
+    for (const p of trials) {
+      const a = prefixAccuracy(p, wLo, wHi);
+      if (a != null) accs.push(a);
+    }
+    if (accs.length >= 2) usable.push(accs);
+  }
+  if (usable.length < 8) return { r: NaN, n: usable.length };
+  const rs = [];
+  for (let s = 0; s < splits; s++) {
+    const rng = mulberry32(1234 + s);
+    const h1 = [];
+    const h2 = [];
+    for (const accs of usable) {
+      const idx = d3.shuffler(rng)(d3.range(accs.length));
+      const half = Math.floor(accs.length / 2);
+      h1.push(d3.mean(idx.slice(0, half), (i) => accs[i]));
+      h2.push(d3.mean(idx.slice(half), (i) => accs[i]));
+    }
+    const r = pearson(h1, h2);
+    if (!isNaN(r)) rs.push((2 * r) / (1 + r));
+  }
+  return { r: d3.mean(rs), n: usable.length };
+}
+```
+
+```{ojs rel-data}
+//| output: false
+slices = Promise.all(sel_datasets.map(loadSlice))
+
+childTrials = {
+  const rows = buildRows(slices, {
+    ageLo: age_range[0], ageHi: age_range[1],
+    includeExcluded: include_excluded, collapseWords: true,
+  });
+  const bySubj = d3.group(rows, (r) => `${r.dataset}|${r.aid}`);
+  const out = [];
+  for (const [, g] of bySubj) {
+    if (g.length < min_trials) continue;
+    out.push(g.map((r) => trialPrefix(r.t0, r.runs)));
+  }
+  return out;
+}
+
+windowGrid = {
+  const starts = d3.range(-500, 1501, 250);
+  const ends = d3.range(1000, 4001, 500);
+  const cells = [];
+  for (const s of starts) {
+    for (const e of ends) {
+      if (e - s < 500) continue;
+      const { r, n } = splitHalf(childTrials, s, e, n_splits);
+      cells.push({ start: s, end: e, r, n });
+    }
+  }
+  return cells;
+}
+
+myR = splitHalf(childTrials, my_window[0], my_window[1], n_splits)
+```
+
+```{ojs rel-readout}
+html`<p style="color:#374151; margin:0 0 0.5rem 0">
+<b>Your window [${my_window[0]}, ${my_window[1]}] ms:</b>
+split-half r = ${isNaN(myR.r) ? "— (too few children)" : myR.r.toFixed(2)}
+across ${myR.n} children ·
+best grid cell: ${(() => {
+  const best = windowGrid.filter((d) => !isNaN(d.r))
+    .sort((a, b) => b.r - a.r)[0];
+  return best ? `[${best.start}, ${best.end}] ms (r = ${best.r.toFixed(2)})` : "—";
+})()}</p>`
+```
+
+::: {.panel-tabset}
+
+### Window heatmap
+
+```{ojs rel-heatmap}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  return Plot.plot({
+    width, height: 480,
+    x: { label: "Window start (msec)", tickFormat: (d) => d },
+    y: { label: "Window end (msec)", tickFormat: (d) => d },
+    color: {
+      legend: true, label: "Split-half r (corrected)", scheme: "viridis",
+      domain: [Math.max(0, d3.min(windowGrid, (d) => d.r) ?? 0),
+               d3.max(windowGrid, (d) => d.r) ?? 1],
+    },
+    marks: [
+      Plot.cell(windowGrid.filter((d) => !isNaN(d.r)), {
+        x: "start", y: "end", fill: "r",
+        tip: true, title: (d) => `[${d.start}, ${d.end}] ms\nr = ${d.r.toFixed(2)}`,
+      }),
+      Plot.text([{ start: 250 * Math.round(my_window[0] / 250),
+                   end: 500 * Math.round(my_window[1] / 500) }],
+        { x: "start", y: "end", text: () => "×", fontSize: 22, fill: "#dc2626" }),
+    ],
+  });
+}
+```
+
+Cells with too few children (< 8 usable) are blank. The × marks the grid
+cell nearest your window.
+
+### Reliability vs. window end
+
+```{ojs rel-curve}
+{
+  const byStart = d3.group(windowGrid.filter((d) => !isNaN(d.r)), (d) => d.start);
+  const data = Array.from(byStart, ([start, g]) => g.map((d) => ({ ...d }))).flat();
+  return Plot.plot({
+    width, height: 420, grid: true,
+    x: { label: "Window end (msec)" },
+    y: { label: "Split-half r (corrected)" },
+    color: { legend: true, label: "Window start (msec)", scheme: "plasma" },
+    marks: [
+      Plot.lineY(data, { x: "end", y: "r", stroke: "start" }),
+      Plot.dot(data, { x: "end", y: "r", fill: "start", r: 2.5 }),
+    ],
+  });
+}
+```
+
+### Data
+
+```{ojs rel-table}
+Inputs.table(windowGrid, {
+  format: { r: (d) => (isNaN(d) ? "—" : d.toFixed(3)) },
+})
+```
+
+```{ojs rel-download}
+download_csv(windowGrid, "peekbank_reliability_grid.csv")
+```
+
+:::
+
+:::
+
+::::

@@ -31,7 +31,7 @@ ${totals.trials.toLocaleString()} experimental trials.</div>`
 ```
 
 <div style="text-align:center; margin: 1.2rem 0 2rem 0;">
-<a class="pb-cta" href="viz.html">Explore the data →</a>&nbsp;&nbsp;
+<a class="pb-cta" href="accuracy.html">Explore the data →</a>&nbsp;&nbsp;
 <a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="https://peekbank.github.io/peekbank-website/">Documentation ↗</a>
 </div>
 

@@ -1,0 +1,185 @@
+---
+title: "Longitudinal Explorer"
+---
+
+Several Peekbank datasets tested the same children repeatedly. Each point is
+one test session (administration); thin lines connect sessions from the same
+child, showing individual developmental trajectories in recognition accuracy
+and speed.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs long-inputs}
+longitudinalNames = manifest.datasets.filter((d) => d.longitudinal).map((d) => d.name)
+
+viewof sel_datasets = Inputs.select(longitudinalNames, {
+  label: "Datasets (longitudinal)", multiple: 8,
+  value: ["adams_marchman_2018", "fernald_marchman_2012", "fernald_totlot", "fmw_2013"],
+})
+viewof measure = Inputs.select(["Accuracy", "Reaction time"], {
+  label: "Measure", value: "Accuracy",
+})
+viewof analysis_window = interval([-1000, 4000], {
+  step: 25, value: [250, 2250], label: "Accuracy window (msec)",
+})
+viewof log_age = Inputs.toggle({ label: "Log age axis", value: false })
+viewof min_sessions = Inputs.range([1, 4], {
+  step: 1, value: 2, label: "Min sessions per child",
+})
+viewof min_trials = Inputs.range([1, 10], {
+  step: 1, value: 4, label: "Min trials per session",
+})
+viewof include_excluded = Inputs.toggle({
+  label: "Lab-excluded trials", value: true,
+})
+```
+
+:::
+
+::: {.viz-main}
+
+```{ojs long-data}
+//| output: false
+slices = Promise.all(sel_datasets.map(loadSlice))
+
+adminMeasures = {
+  const rows = buildRows(slices, { includeExcluded: include_excluded, collapseWords: true });
+  const byAdmin = d3.group(rows, (r) => `${r.dataset}|${r.aid}`);
+  const out = [];
+  for (const [, g] of byAdmin) {
+    const { dataset, aid, subject, age } = g[0];
+    const accs = [];
+    const rts = [];
+    for (const r of g) {
+      const a = windowAccuracy(r.t0, r.runs, analysis_window[0], analysis_window[1]);
+      if (a != null) accs.push(a);
+      const res = trialRT(r.t0, r.runs);
+      if (res && res.rt != null && res.shift_type === "D-T") rts.push(res.rt);
+    }
+    out.push({
+      dataset, aid, subject: `${dataset}|${subject}`, age,
+      accuracy: accs.length >= min_trials ? d3.mean(accs) : null,
+      n_acc_trials: accs.length,
+      rt: rts.length >= Math.max(1, Math.floor(min_trials / 2)) ? d3.mean(rts) : null,
+      n_rt_trials: rts.length,
+    });
+  }
+  return out;
+}
+
+longData = {
+  const field = measure === "Accuracy" ? "accuracy" : "rt";
+  const pts = adminMeasures.filter((d) => d[field] != null && d.age != null);
+  const bySubj = d3.group(pts, (d) => d.subject);
+  const keep = new Set();
+  for (const [s, g] of bySubj) if (g.length >= min_sessions) keep.add(s);
+  return pts.filter((d) => keep.has(d.subject))
+    .map((d) => ({ ...d, value: d[field] }))
+    .sort((a, b) => a.age - b.age);
+}
+
+nChildren = new Set(longData.map((d) => d.subject)).size
+```
+
+```{ojs long-count}
+html`<p style="color:#6b7280; margin:0 0 0.5rem 0">${nChildren.toLocaleString()}
+children, ${longData.length.toLocaleString()} sessions
+(≥${min_sessions} sessions each).</p>`
+```
+
+::: {.panel-tabset}
+
+### Trajectories
+
+```{ojs long-plot}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  const isAcc = measure === "Accuracy";
+  return Plot.plot({
+    width, height: 520, grid: true,
+    x: { label: "Age (months)", type: log_age ? "log" : "linear" },
+    y: isAcc
+      ? { label: "Proportion target looking", domain: [0, 1] }
+      : { label: "Reaction time (msec)", type: log_age ? "log" : "linear" },
+    color: { legend: true, label: "Dataset" },
+    marks: [
+      Plot.line(longData, {
+        x: "age", y: "value", z: "subject", stroke: "dataset",
+        strokeOpacity: 0.25, strokeWidth: 0.8,
+      }),
+      Plot.dot(longData, {
+        x: "age", y: "value", fill: "dataset", r: 2, fillOpacity: 0.6,
+        tip: true, title: (d) =>
+          `${d.dataset}\nage ${d.age} mo\n${measure}: ${
+            isAcc ? d.value.toFixed(3) : Math.round(d.value) + " ms"}`,
+      }),
+      Plot.linearRegressionY(longData, {
+        x: (d) => (log_age ? Math.log(d.age) : d.age), y: "value",
+        stroke: "#111827", strokeWidth: 2.5,
+      }),
+      ...(isAcc ? [Plot.ruleY([0.5], { strokeDasharray: "4 4" })] : []),
+    ],
+  });
+}
+```
+
+The black line is a pooled linear fit (in log age when the log axis is on);
+per-child lines are the raw trajectories.
+
+### Change per child
+
+```{ojs long-delta}
+{
+  const bySubj = d3.group(longData, (d) => d.subject);
+  const deltas = [];
+  for (const [s, g] of bySubj) {
+    if (g.length < 2) continue;
+    const first = g[0], last = g[g.length - 1];
+    if (last.age === first.age) continue;
+    deltas.push({
+      subject: s, dataset: first.dataset,
+      age_first: first.age, age_last: last.age,
+      slope: (last.value - first.value) / (last.age - first.age),
+    });
+  }
+  return Plot.plot({
+    width, height: 420,
+    x: { label: measure === "Accuracy"
+      ? "Change in accuracy per month" : "Change in RT per month (msec)" },
+    y: { label: "Children" },
+    color: { legend: true, label: "Dataset" },
+    marks: [
+      Plot.rectY(deltas, Plot.binX({ y: "count" },
+        { x: "slope", fill: "dataset", opacity: 0.7 })),
+      Plot.ruleX([0], { strokeDasharray: "4 4" }),
+      Plot.ruleX([d3.median(deltas, (d) => d.slope)], { stroke: "#111827" }),
+    ],
+  });
+}
+```
+
+First-to-last-session change per child; the solid line marks the median.
+
+### Data
+
+```{ojs long-table}
+Inputs.table(longData.map(({ runs, ...d }) => d), { maxHeight: 500 })
+```
+
+```{ojs long-download}
+download_csv(longData.map(({ runs, ...d }) => d), "peekbank_longitudinal.csv")
+```
+
+:::
+
+:::
+
+::::

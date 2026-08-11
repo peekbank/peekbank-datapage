@@ -1,39 +1,64 @@
 ---
-pagetitle: "Peekbank | Datasets"
 title: "Datasets"
 ---
 
-All datasets in the current Peekbank release. Each dataset was contributed by
-the original research team and imported into the common Peekbank format; see
-the [How to Cite](https://peekbank.github.io/peekbank-website/misc/howtocite/)
-page for citation policy — when you use a dataset, cite its original
-publication (shown here) as well as the database.
+Every dataset in the current Peekbank release. Search by name, citation,
+language, or method; expand a dataset for its full citation and details.
+When you use a dataset, cite its original publication as well as the
+database (see [how to cite](https://peekbank.github.io/peekbank-website/misc/howtocite/)).
 
-```{ojs manifest-data}
+```{ojs ds-manifest}
 //| output: false
 manifest = d3.json("slices/manifest.json")
 ```
 
-```{ojs datasets-table}
-Inputs.table(
-  manifest.datasets.map((d) => ({
-    dataset: d.name,
-    citation: d.cite || d.shortcite,
-    children: d.n_subjects,
-    sessions: d.n_admins,
-    trials: d.n_trials,
-    "age range (mo)": `${d.age_min}–${d.age_max}`,
-    method: d.methods.join(", "),
-    languages: d.languages.join(", "),
-    words: d.n_words,
-  })),
-  { maxHeight: 700, layout: "auto" }
-)
+```{ojs ds-search}
+viewof ds_query = Inputs.search(manifest.datasets, {
+  placeholder: "Search datasets…",
+  columns: ["name", "shortcite", "cite", "languages", "methods",
+            "native_languages"],
+})
 ```
 
-```{ojs release-note}
-html`<p style="color:#6b7280">Release ${manifest.version} ·
-${manifest.datasets.length} datasets · generated from the
-<a href="https://redivis.com/datapages/datasets/peekbank">peekbank dataset on
-Redivis</a>.</p>`
+```{ojs ds-summary}
+html`<p style="color:#6b7280">${ds_query.length} of
+${manifest.datasets.length} datasets · release ${manifest.version} ·
+${d3.sum(ds_query, (d) => d.n_subjects).toLocaleString()} children ·
+${d3.sum(ds_query, (d) => d.n_admins).toLocaleString()} sessions ·
+${d3.sum(ds_query, (d) => d.n_trials).toLocaleString()} trials</p>`
+```
+
+```{ojs ds-cards}
+html`<div>${ds_query.map((d) => html`
+<details class="pb-dataset-item">
+  <summary>${d.name}
+    <span style="font-weight:400; color:#6b7280"> — ${d.shortcite ?? ""}</span>
+  </summary>
+  <div class="pb-ds-body">
+    <p>${d.cite ?? d.shortcite ?? "No citation recorded."}</p>
+    <p class="pb-ds-meta">
+      Explore this dataset in the
+      <a href="accuracy.html">Accuracy</a> ·
+      <a href="rt.html">Reaction Time</a>${d.longitudinal
+        ? html` · <a href="longitudinal.html">Longitudinal</a>` : ""}${
+        d.n_subjects_with_cdi > 0
+        ? html` · <a href="cdi.html">CDI</a>` : ""} explorers,
+      or in the
+      <a href="https://redivis.com/datapages/datasets/peekbank">peekbank
+      dataset on Redivis</a>.
+    </p>
+  </div>
+  <div class="pb-ds-chips">
+    <span class="pb-chip">${d.n_subjects.toLocaleString()} children</span>
+    <span class="pb-chip">${d.n_admins.toLocaleString()} sessions</span>
+    <span class="pb-chip">${d.n_trials.toLocaleString()} trials</span>
+    <span class="pb-chip">${d.age_min}–${d.age_max} mo</span>
+    <span class="pb-chip">${d.n_words} words</span>
+    ${(d.methods ?? []).map((m) => html`<span class="pb-chip">${m.replace("_", " ")}</span>`)}
+    ${(d.languages ?? []).map((l) => html`<span class="pb-chip">${l}</span>`)}
+    ${d.longitudinal ? html`<span class="pb-chip" style="background:#dbeafe">longitudinal</span>` : ""}
+    ${d.n_subjects_with_cdi > 0
+      ? html`<span class="pb-chip" style="background:#dcfce7">CDI: ${d.n_subjects_with_cdi}</span>` : ""}
+  </div>
+</details>`)}</div>`
 ```

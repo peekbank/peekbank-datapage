@@ -1,0 +1,189 @@
+---
+title: "Accuracy Explorer"
+---
+
+Proportion of looks to the target image (among target + distractor looks),
+over time and within an analysis window. Chance is 0.5; time is centered on
+target-word onset.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs acc-inputs}
+viewof sel_datasets = Inputs.select(datasetNames, {
+  label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+})
+viewof age_range = interval([0, 84], {
+  step: 1, value: [0, 84], label: "Ages (months)",
+})
+viewof age_nbins = Inputs.range([1, 6], {
+  step: 1, value: 2, label: "Age groups",
+})
+viewof sel_words = Inputs.select(["All"].concat(allWords), {
+  label: "Words", multiple: 5, value: ["All"],
+})
+viewof analysis_window = interval([-1000, 4000], {
+  step: 25, value: [250, 2250], label: "Analysis window (msec)",
+})
+viewof plot_window = interval([-1000, 4000], {
+  step: 25, value: [-500, 4000], label: "Profile window (msec)",
+})
+viewof age_as_color = Inputs.toggle({ label: "Age as color", value: true })
+viewof include_excluded = Inputs.toggle({
+  label: "Lab-excluded trials", value: true,
+})
+```
+
+:::
+
+::: {.viz-main}
+
+```{ojs acc-data}
+//| output: false
+slices = Promise.all(sel_datasets.map(loadSlice))
+allWords = wordsOf(slices)
+
+rows = {
+  const useAll = sel_words.includes("All");
+  return buildRows(slices, {
+    ageLo: age_range[0], ageHi: age_range[1],
+    words: useAll ? null : sel_words,
+    includeExcluded: include_excluded,
+    collapseWords: useAll,
+  });
+}
+
+binner = makeAgeBinner(Array.from(new Set(rows.map((r) => r.age))), age_nbins)
+groupedRows = rows.map((r) => ({ ...r, age_bin: binner.labels[binner.bin(r.age)] }))
+
+profileData = {
+  const [tLo, tHi] = plot_window;
+  const acc = new Map();
+  for (const r of groupedRows) {
+    let t = r.t0;
+    for (const [aoi, len] of r.runs) {
+      for (let k = 0; k < len; k++, t += STEP_MS) {
+        if (t <= tLo || t >= tHi || aoi > 1) continue;
+        const key = `${t}|${r.age_bin}|${r.word}`;
+        let e = acc.get(key);
+        if (!e) acc.set(key, e = { t, age_bin: r.age_bin, word: r.word, n: 0, p: 0 });
+        e.n += 1;
+        if (aoi === 0) e.p += 1;
+      }
+    }
+  }
+  const out = [];
+  for (const e of acc.values()) {
+    const [lo, hi] = bayesCI(e.p, e.n);
+    out.push({ t: e.t, age_bin: e.age_bin, word: e.word, n: e.n,
+               prop_looking: e.p / e.n, ci_lower: lo, ci_upper: hi });
+  }
+  return out.sort((a, b) => a.t - b.t);
+}
+
+accuracyData = {
+  const perTrial = [];
+  for (const r of groupedRows) {
+    const acc = windowAccuracy(r.t0, r.runs, analysis_window[0], analysis_window[1]);
+    if (acc != null) perTrial.push({ age_bin: r.age_bin, word: r.word, prop: acc });
+  }
+  const out = [];
+  for (const [bin, byWord] of d3.group(perTrial, (d) => d.age_bin, (d) => d.word)) {
+    for (const [word, g] of byWord) {
+      const mean = d3.mean(g, (d) => d.prop);
+      const sem = (d3.deviation(g, (d) => d.prop) || 0) / Math.sqrt(g.length);
+      out.push({ age_bin: bin, word, n_trials: g.length, mean,
+                 ci_lower: mean - 1.96 * sem, ci_upper: mean + 1.96 * sem });
+    }
+  }
+  return out.sort((a, b) => d3.ascending(a.age_bin, b.age_bin));
+}
+```
+
+::: {.panel-tabset}
+
+### Profile
+
+```{ojs acc-profile-plot}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  const colorField = age_as_color ? "age_bin" : "word";
+  const facetField = age_as_color ? "word" : "age_bin";
+  const facets = new Set(profileData.map((d) => d[facetField]));
+  return Plot.plot({
+    width, height: Math.max(420, 230 * Math.ceil(facets.size / 2)),
+    grid: true, marginRight: 40,
+    x: { label: "Time (msec)" },
+    y: { label: "Proportion target looking", domain: [0, 1] },
+    color: { legend: true, label: colorField === "age_bin" ? "Age group" : "Word" },
+    fy: facets.size > 1 ? { label: null } : undefined,
+    marks: [
+      Plot.rectY([{ x1: analysis_window[0], x2: analysis_window[1] }],
+        { x1: "x1", x2: "x2", y1: 0, y2: 1, fill: "#e5e7eb", opacity: 0.5 }),
+      Plot.areaY(profileData, {
+        x: "t", y1: "ci_lower", y2: "ci_upper", fill: colorField,
+        opacity: 0.3, ...(facets.size > 1 ? { fy: facetField } : {}),
+      }),
+      Plot.lineY(profileData, {
+        x: "t", y: "prop_looking", stroke: colorField,
+        ...(facets.size > 1 ? { fy: facetField } : {}),
+      }),
+      Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
+      Plot.ruleX([0], { strokeDasharray: "4 4" }),
+    ],
+  });
+}
+```
+
+### Window accuracy
+
+```{ojs acc-window-plot}
+{
+  const xField = age_as_color ? "age_bin" : "word";
+  const facetField = age_as_color ? "word" : "age_bin";
+  const facets = new Set(accuracyData.map((d) => d[facetField]));
+  return Plot.plot({
+    width, height: Math.max(380, 220 * Math.ceil(facets.size / 3)),
+    x: { label: xField === "age_bin" ? "Age (binned)" : "Word" },
+    y: { label: "Proportion target looking", domain: [0, 1] },
+    fx: facets.size > 1 ? { label: null } : undefined,
+    marks: [
+      Plot.barY(accuracyData, {
+        x: xField, y: "mean", fill: xField,
+        ...(facets.size > 1 ? { fx: facetField } : {}),
+      }),
+      Plot.ruleX(accuracyData, {
+        x: xField, y1: "ci_lower", y2: "ci_upper",
+        ...(facets.size > 1 ? { fx: facetField } : {}),
+      }),
+      Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
+    ],
+  });
+}
+```
+
+### Data
+
+```{ojs acc-table}
+Inputs.table(accuracyData, {
+  format: { mean: (d) => d.toFixed(3), ci_lower: (d) => d.toFixed(3),
+            ci_upper: (d) => d.toFixed(3) },
+})
+```
+
+```{ojs acc-download}
+download_csv(accuracyData, "peekbank_accuracy.csv")
+```
+
+:::
+
+:::
+
+::::

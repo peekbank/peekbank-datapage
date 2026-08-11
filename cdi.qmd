@@ -1,0 +1,188 @@
+---
+title: "CDI Relationships"
+---
+
+Many Peekbank datasets include parent-reported vocabulary from the
+MacArthur-Bates Communicative Development Inventories (CDI). This explorer
+relates in-lab word recognition (accuracy or reaction time) to CDI scores,
+pairing each test session with the child's closest-in-age CDI administration.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs cdi-inputs}
+cdiNames = manifest.datasets.filter((d) => d.n_subjects_with_cdi > 0).map((d) => d.name)
+
+viewof sel_datasets = Inputs.select(cdiNames, {
+  label: "Datasets (with CDI)", multiple: 6,
+  value: ["adams_marchman_2018", "fernald_marchman_2012", "fmw_2013"],
+})
+viewof cdi_measure = Inputs.select(
+  new Map([["Production", "prod"], ["Comprehension", "comp"]]),
+  { label: "CDI measure", value: "prod" })
+viewof cdi_scale = Inputs.select(
+  new Map([["Raw score", "rawscore"], ["Percentile", "percentile"]]),
+  { label: "CDI scale", value: "rawscore" })
+viewof lwl_measure = Inputs.select(["Accuracy", "Reaction time"], {
+  label: "Recognition measure", value: "Accuracy",
+})
+viewof analysis_window = interval([-1000, 4000], {
+  step: 25, value: [250, 2250], label: "Accuracy window (msec)",
+})
+viewof age_tol = Inputs.range([0.5, 6], {
+  step: 0.5, value: 2, label: "Max age gap (months)",
+})
+viewof min_trials = Inputs.range([1, 10], {
+  step: 1, value: 4, label: "Min trials per session",
+})
+```
+
+:::
+
+::: {.viz-main}
+
+```{ojs cdi-data}
+//| output: false
+cdiRaw = d3.json("slices/cdi.json")
+
+cdiRows = cdiRaw.rows.map((r) =>
+  Object.fromEntries(cdiRaw.columns.map((c, i) => [c, r[i]])))
+
+slices = Promise.all(sel_datasets.map(loadSlice))
+
+pairedData = {
+  const rows = buildRows(slices, { includeExcluded: true, collapseWords: true });
+  const byAdmin = d3.group(rows, (r) => `${r.dataset}|${r.aid}`);
+  const cdiBySubj = d3.group(
+    cdiRows.filter((c) => c.measure === cdi_measure &&
+      sel_datasets.includes(c.dataset) && c[cdi_scale] != null),
+    (c) => `${c.dataset}|${c.subject_id}`);
+  const out = [];
+  for (const [, g] of byAdmin) {
+    const { dataset, aid, subject, age } = g[0];
+    const cdis = cdiBySubj.get(`${dataset}|${subject}`);
+    if (!cdis || age == null) continue;
+    let best = null;
+    for (const c of cdis) {
+      if (c.age == null) continue;
+      const gap = Math.abs(c.age - age);
+      if (gap <= age_tol && (!best || gap < best.gap)) best = { ...c, gap };
+    }
+    if (!best) continue;
+    const accs = [];
+    const rts = [];
+    for (const r of g) {
+      const a = windowAccuracy(r.t0, r.runs, analysis_window[0], analysis_window[1]);
+      if (a != null) accs.push(a);
+      const res = trialRT(r.t0, r.runs);
+      if (res && res.rt != null && res.shift_type === "D-T") rts.push(res.rt);
+    }
+    const lwl = lwl_measure === "Accuracy"
+      ? (accs.length >= min_trials ? d3.mean(accs) : null)
+      : (rts.length >= Math.max(1, Math.floor(min_trials / 2)) ? d3.mean(rts) : null);
+    if (lwl == null) continue;
+    out.push({
+      dataset, aid, subject, age, lwl, cdi: best[cdi_scale],
+      cdi_age: best.age, age_gap: best.gap, instrument: best.instrument_type,
+      n_trials: lwl_measure === "Accuracy" ? accs.length : rts.length,
+    });
+  }
+  return out;
+}
+
+pearsonR = {
+  const xs = pairedData.map((d) => d.lwl);
+  const ys = pairedData.map((d) => d.cdi);
+  const mx = d3.mean(xs);
+  const my = d3.mean(ys);
+  let sxy = 0;
+  let sxx = 0;
+  let syy = 0;
+  for (let i = 0; i < xs.length; i++) {
+    sxy += (xs[i] - mx) * (ys[i] - my);
+    sxx += (xs[i] - mx) ** 2;
+    syy += (ys[i] - my) ** 2;
+  }
+  return sxx > 0 && syy > 0 ? sxy / Math.sqrt(sxx * syy) : NaN;
+}
+```
+
+```{ojs cdi-count}
+html`<p style="color:#6b7280; margin:0 0 0.5rem 0">
+${pairedData.length.toLocaleString()} paired sessions ·
+r = ${isNaN(pearsonR) ? "—" : pearsonR.toFixed(2)}
+(${lwl_measure.toLowerCase()} × CDI ${cdi_measure === "prod" ? "production" : "comprehension"})</p>`
+```
+
+::: {.panel-tabset}
+
+### Relationship
+
+```{ojs cdi-scatter}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  const isAcc = lwl_measure === "Accuracy";
+  return Plot.plot({
+    width, height: 520, grid: true,
+    x: isAcc
+      ? { label: "Proportion target looking", domain: [0, 1] }
+      : { label: "Reaction time (msec)" },
+    y: { label: cdi_scale === "rawscore" ? "CDI raw score" : "CDI percentile" },
+    color: { legend: true, label: "Age (months)", scheme: "viridis" },
+    marks: [
+      Plot.dot(pairedData, {
+        x: "lwl", y: "cdi", fill: "age", r: 3, fillOpacity: 0.7, tip: true,
+        title: (d) => `${d.dataset}\nage ${d.age} mo (CDI at ${d.cdi_age})\n` +
+          `${isAcc ? "acc " + d.lwl.toFixed(2) : "RT " + Math.round(d.lwl) + " ms"}` +
+          ` · CDI ${d.cdi}`,
+      }),
+      Plot.linearRegressionY(pairedData, {
+        x: "lwl", y: "cdi", stroke: "#111827", strokeWidth: 2.5,
+      }),
+    ],
+  });
+}
+```
+
+### By age
+
+```{ojs cdi-by-age}
+Plot.plot({
+  width, height: 480, grid: true,
+  x: { label: "Age at CDI (months)" },
+  y: { label: cdi_scale === "rawscore" ? "CDI raw score" : "CDI percentile" },
+  color: { legend: true, label: "Dataset" },
+  marks: [
+    Plot.dot(
+      cdiRows.filter((c) => c.measure === cdi_measure &&
+        sel_datasets.includes(c.dataset) && c[cdi_scale] != null && c.age != null),
+      { x: "age", y: cdi_scale, fill: "dataset", r: 2.5, fillOpacity: 0.6 }),
+  ],
+})
+```
+
+All CDI administrations of the selected measure in the selected datasets
+(not only those paired with a recognition session).
+
+### Data
+
+```{ojs cdi-table}
+Inputs.table(pairedData, { maxHeight: 500 })
+```
+
+```{ojs cdi-download}
+download_csv(pairedData, "peekbank_cdi_pairs.csv")
+```
+
+:::
+
+:::
+
+::::

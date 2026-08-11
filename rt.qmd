@@ -1,0 +1,214 @@
+---
+title: "Reaction Time Explorer"
+---
+
+Latency of gaze shifts after target-word onset. Reaction time is the
+landing time of the first shift from the distractor to the target
+(distractor-initial trials); onset-contingent curves show shifting away
+from the initially fixated image for both trial types.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs rt-inputs}
+viewof sel_datasets = Inputs.select(datasetNames, {
+  label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+})
+viewof age_range = interval([0, 84], {
+  step: 1, value: [0, 84], label: "Ages (months)",
+})
+viewof age_nbins = Inputs.range([1, 6], {
+  step: 1, value: 2, label: "Age groups",
+})
+viewof sel_words = Inputs.select(["All"].concat(allWords), {
+  label: "Words", multiple: 5, value: ["All"],
+})
+viewof rt_range = interval([0, 4000], {
+  step: 25, value: [0, 4000], label: "RT range (msec)",
+})
+viewof onset_window = interval([0, 4000], {
+  step: 25, value: [0, 4000], label: "Onset plot window (msec)",
+})
+viewof include_excluded = Inputs.toggle({
+  label: "Lab-excluded trials", value: true,
+})
+```
+
+:::
+
+::: {.viz-main}
+
+```{ojs rt-data}
+//| output: false
+slices = Promise.all(sel_datasets.map(loadSlice))
+allWords = wordsOf(slices)
+
+rows = {
+  const useAll = sel_words.includes("All");
+  return buildRows(slices, {
+    ageLo: age_range[0], ageHi: age_range[1],
+    words: useAll ? null : sel_words,
+    includeExcluded: include_excluded,
+    collapseWords: useAll,
+  });
+}
+
+binner = makeAgeBinner(Array.from(new Set(rows.map((r) => r.age))), age_nbins)
+groupedRows = rows.map((r) => ({ ...r, age_bin: binner.labels[binner.bin(r.age)] }))
+
+rtTrials = {
+  const out = [];
+  for (const r of groupedRows) {
+    const res = trialRT(r.t0, r.runs);
+    if (res && res.rt != null && res.rt >= rt_range[0] && res.rt <= rt_range[1]) {
+      out.push({ ...res, age_bin: r.age_bin, word: r.word, age: r.age,
+                 dataset: r.dataset, aid: r.aid, tid: r.tid });
+    }
+  }
+  return out;
+}
+
+rtMeans = {
+  const dt = rtTrials.filter((d) => d.shift_type === "D-T");
+  const out = [];
+  for (const [bin, byWord] of d3.group(dt, (d) => d.age_bin, (d) => d.word)) {
+    for (const [word, g] of byWord) {
+      const mean = d3.mean(g, (d) => d.rt);
+      const sem = (d3.deviation(g, (d) => d.rt) || 0) / Math.sqrt(g.length);
+      out.push({ age_bin: bin, word, n_trials: g.length, mean_rt: mean,
+                 ci_lower: mean - 1.96 * sem, ci_upper: mean + 1.96 * sem });
+    }
+  }
+  return out.sort((a, b) => d3.ascending(a.age_bin, b.age_bin));
+}
+
+onsetData = {
+  const [tLo, tHi] = onset_window;
+  const shiftByTrial = new Map();
+  for (const r of groupedRows) {
+    const res = trialRT(r.t0, r.runs);
+    if (res && (res.shift_type === "D-T" || res.shift_type === "T-D")) {
+      shiftByTrial.set(`${r.aid}|${r.tid}`, res.shift_type);
+    }
+  }
+  const acc = new Map();
+  for (const r of groupedRows) {
+    const st = shiftByTrial.get(`${r.aid}|${r.tid}`);
+    if (!st) continue;
+    let t = r.t0;
+    for (const [aoi, len] of r.runs) {
+      for (let k = 0; k < len; k++, t += STEP_MS) {
+        if (t < tLo || t >= tHi) continue;
+        const key = `${t}|${st}|${r.age_bin}`;
+        let e = acc.get(key);
+        if (!e) acc.set(key, e = { t, shift_type: st, age_bin: r.age_bin, n: 0, s: 0 });
+        e.n += 1;
+        if (st === "T-D" ? aoi === 1 : aoi === 0) e.s += 1;
+      }
+    }
+  }
+  return Array.from(acc.values(), (e) => ({
+    t: e.t, shift_type: e.shift_type, age_bin: e.age_bin, n: e.n,
+    prop_shifted: e.s / e.n,
+  })).sort((a, b) => a.t - b.t);
+}
+```
+
+::: {.panel-tabset}
+
+### RT by age
+
+```{ojs rt-means-plot}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  const facets = new Set(rtMeans.map((d) => d.word));
+  return Plot.plot({
+    width, height: Math.max(380, 220 * Math.ceil(facets.size / 3)),
+    x: { label: "Age (binned)" },
+    y: { label: "Reaction time (msec)" },
+    fx: facets.size > 1 ? { label: null } : undefined,
+    marks: [
+      Plot.barY(rtMeans, {
+        x: "age_bin", y: "mean_rt", fill: "age_bin",
+        ...(facets.size > 1 ? { fx: "word" } : {}),
+      }),
+      Plot.ruleX(rtMeans, {
+        x: "age_bin", y1: "ci_lower", y2: "ci_upper",
+        ...(facets.size > 1 ? { fx: "word" } : {}),
+      }),
+    ],
+  });
+}
+```
+
+### Distribution
+
+```{ojs rt-hist-plot}
+Plot.plot({
+  width, height: 400,
+  x: { label: "RT (msec)" },
+  y: { label: "Trials" },
+  color: { legend: true, label: "Age group" },
+  marks: [
+    Plot.rectY(rtTrials.filter((d) => d.shift_type === "D-T"),
+      Plot.binX({ y: "count" }, {
+        x: "rt", fill: "age_bin", opacity: 0.6, interval: 100,
+        mixBlendMode: "multiply",
+      })),
+  ],
+})
+```
+
+### Onset-contingent
+
+```{ojs rt-onset-plot}
+{
+  const facets = new Set(onsetData.map((d) => d.age_bin));
+  return Plot.plot({
+    width, height: Math.max(400, 220 * Math.ceil(facets.size / 2)),
+    grid: true,
+    x: { label: "Time (msec)" },
+    y: { label: "Prop. shifted from onset image", domain: [0, 1] },
+    fy: facets.size > 1 ? { label: null } : undefined,
+    marks: [
+      Plot.lineY(onsetData.filter((d) => d.shift_type === "D-T"), {
+        x: "t", y: "prop_shifted", stroke: "#2563eb",
+        ...(facets.size > 1 ? { fy: "age_bin" } : {}),
+      }),
+      Plot.lineY(onsetData.filter((d) => d.shift_type === "T-D"), {
+        x: "t", y: "prop_shifted", stroke: "#2563eb", strokeDasharray: "5 4",
+        ...(facets.size > 1 ? { fy: "age_bin" } : {}),
+      }),
+      Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
+    ],
+  });
+}
+```
+
+Solid: distractor-initial (D-T). Dashed: target-initial (T-D).
+
+### Data
+
+```{ojs rt-table}
+Inputs.table(rtMeans, {
+  format: { mean_rt: (d) => d.toFixed(0), ci_lower: (d) => d.toFixed(0),
+            ci_upper: (d) => d.toFixed(0) },
+})
+```
+
+```{ojs rt-download}
+download_csv(rtMeans, "peekbank_rt.csv")
+```
+
+:::
+
+:::
+
+::::
