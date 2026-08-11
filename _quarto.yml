@@ -9,6 +9,7 @@ project:
     - "!migration/"
   resources:
     - "slices/**"
+    - "images/**"
 
 website:
   favicon: images/favicon-32x32.png

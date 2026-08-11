@@ -2,9 +2,10 @@
 pagetitle: "Peekbank"
 ---
 
+{{< include components/_hero.qmd >}}
+
 ```{=html}
-<div class="pb-hero">
-  <img class="raccoon" src="images/raccoon.png" alt="Peekbank raccoon">
+<div class="pb-hero" style="justify-content: center; text-align: center;">
   <div>
     <div class="pb-title" role="heading" aria-level="1">Peekbank</div>
     <p>An open database of infant looking-while-listening data</p>
