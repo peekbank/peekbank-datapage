@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Peekbank",
     "section": "",
-    "text": "Peekbank\n    An open database of infant looking-while-listening data\nmanifest = d3.json(\"slices/manifest.json\")\ntotals = ({\n  datasets: manifest.datasets.length,\n  admins: d3.sum(manifest.datasets, (d) =&gt; d.n_admins),\n  subjects: d3.sum(manifest.datasets, (d) =&gt; d.n_subjects),\n  trials: d3.sum(manifest.datasets, (d) =&gt; d.n_trials),\n})\nhtml`&lt;div class=\"pb-stats\"&gt;Peekbank release ${manifest.version} contains\n${totals.datasets} datasets: ${totals.subjects.toLocaleString()} children,\n${totals.admins.toLocaleString()} test sessions, and\n${totals.trials.toLocaleString()} experimental trials.&lt;/div&gt;`"
+    "text": "manifest = d3.json(\"slices/manifest.json\")\ntotals = ({\n  datasets: manifest.datasets.length,\n  admins: d3.sum(manifest.datasets, (d) =&gt; d.n_admins),\n  subjects: d3.sum(manifest.datasets, (d) =&gt; d.n_subjects),\n  trials: d3.sum(manifest.datasets, (d) =&gt; d.n_trials),\n})\nhtml`&lt;div class=\"pb-stats\"&gt;Peekbank release ${manifest.version} contains\n${totals.datasets} datasets: ${totals.subjects.toLocaleString()} children,\n${totals.admins.toLocaleString()} test sessions, and\n${totals.trials.toLocaleString()} experimental trials.&lt;/div&gt;`"
   },
   {
     "objectID": "index.html#what-is-peekbank",
