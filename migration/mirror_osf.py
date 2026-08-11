@@ -27,6 +27,13 @@ MIRROR = ROOT / "osf_mirror"
 API_ROOT = "https://api.osf.io/v2/nodes/pr6wu/files/osfstorage/"
 UA = {"User-Agent": "peekbank-migration/1.0 (peekbank-dev@lists.stanford.edu)"}
 
+# files that are corrupted ON OSF's side (download endpoint returns a
+# persistent 4xx even in a browser); documented in TEAM_REPORT.md
+KNOWN_BAD = {
+    # HTTP 400 from https://osf.io/download/q8x4k/ (reported to the team)
+    "pomper_saffran_2016/raw_data/README.md",
+}
+
 
 def backoff_seconds(e, attempt):
     """Long, Retry-After-aware backoff for OSF throttling (HTTP 429)."""
@@ -84,6 +91,8 @@ def walk_files(url):
 
 def download(item, tries=8):
     rel = item["path"].lstrip("/")
+    if rel in KNOWN_BAD:
+        return ("skip", rel, 0)
     dest = MIRROR / rel
     size = item["size"] or 0
     if dest.exists() and dest.stat().st_size == size:

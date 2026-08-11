@@ -56,6 +56,15 @@ recommended to FIX in the next release with release-notes callouts:
 
 ## OSF ≠ release state
 
+- **One file is corrupted on OSF itself**:
+  `pomper_saffran_2016/raw_data/README.md` (3,306 bytes per OSF metadata)
+  returns a persistent HTTP 400 from OSF's own download endpoint
+  (https://osf.io/download/q8x4k/), including in a browser. Its content
+  could not be mirrored and appears unrecoverable without OSF support; an
+  older (2020, 437-byte) local variant exists in the team's archives but is
+  not the same file. The dataset's top-level README is intact. Consider
+  reporting to support@osf.io or re-authoring the raw-data README.
+
 - **8 datasets have no processed_data on OSF at all** (bergelson_swingley,
   ferguson_eyetrackingr, fmw_2013, nih_babytoolbox_2025 (raw data is in a
   private repo; OSF holds a 0-byte pointer), ronfard_2021,
