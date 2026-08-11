@@ -88,6 +88,14 @@ recommended to FIX in the next release with release-notes callouts:
   discrepancies remain: the next release will absorb all of this
   intentionally.
 
+- **Aux JSON ages lose precision on re-import under current defaults**: the
+  pipeline currently serializes CDI ages in `*_aux_data` at 4 significant
+  digits (jsonlite default; e.g. 15.377 where the released data has
+  15.3770491803279). Verified in the end-to-end rerun of
+  swingley_aslin_2002, where this was the ONLY difference from the released
+  2026.1. Recommend `digits = NA` in the peekds writer before the next
+  release.
+
 ## Deliberate behavior changes in the new stack
 
 - peekbankr 0.4 returns local tibbles in all cases (previously lazy remote
@@ -115,5 +123,14 @@ recommended to FIX in the next release with release-notes callouts:
 - The new release builder verified engine-exact per dataset against
   released 2026.1 wherever OSF processed_data still matches the release
   (including the 8.1M-row fernald_marchman_2012).
+
+## End-to-end verification of the new release path
+
+The full Django-free pipeline was exercised on swingley_aslin_2002:
+raw data downloaded from the released `peekbank_files` dataset → the
+unmodified `import.R` → all peekds validators pass → processed CSVs
+byte-identical to the OSF-era copies (except the aux-digits wrinkle above)
+→ staged into the files draft (same-named files replace idempotently) →
+release tables built and matching the released 2026.1 (same wrinkle only).
 
 *(Living document — updated as the migration proceeds.)*

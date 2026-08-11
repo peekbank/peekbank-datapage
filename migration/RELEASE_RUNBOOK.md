@@ -53,6 +53,10 @@ MySQL schemas used to play: org members can see it, the public cannot.
 .venv/bin/python migration/upload_redivis.py --version <release> --release
 ```
 
+Note: `add_files()` on the files table REPLACES same-named files in the
+draft (verified), so re-staging a dataset's processed_data is idempotent —
+no delete step needed.
+
 (Point it at the rebuild output by placing it under
 `migration/staging/<release>/<table>/part-*.parquet`, or adapt the
 `table_files` glob. Every version gets the synthetic one-row
