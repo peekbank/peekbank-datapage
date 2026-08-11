@@ -423,8 +423,8 @@ Inputs.table(rtMeans, {
 ## Onset-contingent looking
 
 Proportion of trials on which children have shifted away from the image they
-were fixating at word onset, split by whether they started on the target
-(T-D) or the distractor (D-T).
+were fixating at word onset, split by whether they started on the distractor
+(D-T, solid lines) or on the target (T-D, dashed lines).
 
 ::: {.panel-tabset}
 
@@ -478,9 +478,12 @@ onsetData = {
     color: { legend: true, label: "Word" },
     fy: facets.size > 1 ? { label: null } : undefined,
     marks: [
-      Plot.lineY(onsetData, {
-        x: "t", y: "prop_shifted", stroke: "word", strokeDasharray:
-          (d) => (d.shift_type === "T-D" ? "4 3" : null),
+      Plot.lineY(onsetData.filter((d) => d.shift_type === "D-T"), {
+        x: "t", y: "prop_shifted", stroke: "word",
+        ...(facets.size > 1 ? { fy: "age_bin" } : {}),
+      }),
+      Plot.lineY(onsetData.filter((d) => d.shift_type === "T-D"), {
+        x: "t", y: "prop_shifted", stroke: "word", strokeDasharray: "5 4",
         ...(facets.size > 1 ? { fy: "age_bin" } : {}),
       }),
       Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
