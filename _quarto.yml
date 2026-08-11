@@ -28,6 +28,8 @@ website:
             text: Longitudinal Explorer
           - href: cdi.qmd
             text: CDI Relationships
+          - href: items.qmd
+            text: Items Explorer
           - href: reliability.qmd
             text: Reliability Explorer
       - href: datasets.qmd

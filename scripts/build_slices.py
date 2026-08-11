@@ -173,6 +173,19 @@ def main():
 
     (out_root / "manifest.json").write_text(json.dumps(manifest, indent=1))
 
+    # word -> datasets index (for the cross-dataset item explorer)
+    word_index = defaultdict(list)
+    for ds in sorted(datasets, key=lambda d: d["dataset_name"]):
+        dtt = tt_by_ds[ds["dataset_id"]]
+        ws = {stimuli[tt["target_id"]]["english_stimulus_label"]
+              for tt in dtt if tt["target_id"] in stimuli}
+        for w in ws:
+            if w:
+                word_index[w].append(ds["dataset_name"])
+    (out_root / "words.json").write_text(json.dumps(
+        dict(sorted(word_index.items())), separators=(",", ":")))
+    print(f"words.json: {len(word_index)} words")
+
     # global CDI slice: one row per (subject, cdi response), joined to the
     # subject's administrations at build time in the page (by closest age)
     id_to_name = {d["dataset_id"]: d["dataset_name"] for d in datasets}

@@ -1,0 +1,223 @@
+---
+title: "Items Explorer"
+---
+
+Word recognition varies enormously across items. Each thin line is one
+target word's looking curve; the dark line is a weighted smooth across
+items. Switch tabs to follow a single word across every dataset that
+tested it.
+
+{{< include components/_interval.qmd >}}
+{{< include components/_vizlib.qmd >}}
+{{< include components/_pbdata.qmd >}}
+{{< include components/_style.qmd >}}
+{{< include components/_download.qmd >}}
+{{< include components/_loess.qmd >}}
+
+:::: {.viz-layout}
+
+::: {.viz-sidebar}
+
+```{ojs items-inputs}
+viewof sel_datasets = Inputs.select(datasetNames, {
+  label: "Datasets", multiple: 5, value: ["pomper_saffran_2016"],
+})
+viewof age_range = interval([0, 84], {
+  step: 1, value: [0, 84], label: "Ages (months)",
+})
+viewof highlight_words = Inputs.select(allWords, {
+  label: "Highlight words", multiple: 5, value: [],
+})
+viewof plot_window = interval([-1000, 4000], {
+  step: 25, value: [-500, 3000], label: "Time window (msec)",
+})
+viewof min_n = Inputs.range([1, 50], {
+  step: 1, value: 10, label: "Min looks per point",
+})
+viewof include_excluded = Inputs.toggle({
+  label: "Lab-excluded trials", value: true,
+})
+```
+
+For the cross-dataset view:
+
+```{ojs items-word-input}
+wordIndex = d3.json("slices/words.json")
+
+viewof focus_word = Inputs.select(
+  Object.keys(wordIndex).sort((a, b) =>
+    wordIndex[b].length - wordIndex[a].length || a.localeCompare(b)),
+  { label: "Word (across datasets)", value: "dog",
+    format: (w) => `${w} (${wordIndex[w].length})` })
+```
+
+:::
+
+::: {.viz-main}
+
+```{ojs items-data}
+//| output: false
+slices = Promise.all(sel_datasets.map(loadSlice))
+allWords = wordsOf(slices)
+
+wordCurves = {
+  const [tLo, tHi] = plot_window;
+  const rows = buildRows(slices, {
+    ageLo: age_range[0], ageHi: age_range[1],
+    includeExcluded: include_excluded,
+  });
+  const acc = new Map();
+  for (const r of rows) {
+    let t = r.t0;
+    for (const [aoi, len] of r.runs) {
+      for (let k = 0; k < len; k++, t += STEP_MS) {
+        if (t <= tLo || t >= tHi || aoi > 1) continue;
+        const key = `${r.dataset}|${r.word}|${t}`;
+        let e = acc.get(key);
+        if (!e) acc.set(key, e = { dataset: r.dataset, word: r.word, t, n: 0, p: 0 });
+        e.n += 1;
+        if (aoi === 0) e.p += 1;
+      }
+    }
+  }
+  return Array.from(acc.values(), (e) => ({
+    dataset: e.dataset, word: e.word, t: e.t, n: e.n, prop: e.p / e.n,
+  })).filter((d) => d.n >= min_n).sort((a, b) => a.t - b.t);
+}
+
+datasetSmooths = {
+  const out = [];
+  for (const [dataset, g] of d3.group(wordCurves, (d) => d.dataset)) {
+    const sm = loess_points(g, { x: "t", y: "prop", w: "n", span: 0.3, grid: 80 });
+    for (const p of sm) out.push({ dataset, t: p.t, prop: p.prop });
+  }
+  return out;
+}
+
+nItems = d3.group(wordCurves, (d) => d.dataset, (d) => d.word)
+```
+
+::: {.panel-tabset}
+
+### Item variability
+
+```{ojs items-count}
+html`<p style="color:#6b7280; margin:0 0 0.5rem 0">${
+  Array.from(nItems, ([ds, words]) => `${ds}: ${words.size} items`).join(" · ")
+}</p>`
+```
+
+```{ojs items-plot}
+{
+  document.querySelectorAll(".pb-spinner").forEach((el) => el.remove());
+  const highlighted = new Set(highlight_words);
+  const facets = new Set(wordCurves.map((d) => d.dataset));
+  const base = wordCurves.filter((d) => !highlighted.has(d.word));
+  const hi = wordCurves.filter((d) => highlighted.has(d.word));
+  return Plot.plot({
+    width, height: Math.max(420, 300 * Math.ceil(facets.size / 2)),
+    grid: true,
+    x: { label: "Time (msec)" },
+    y: { label: "Proportion target looking", domain: [0, 1] },
+    color: { legend: highlighted.size > 0, label: "Word" },
+    fy: facets.size > 1 ? { label: null } : undefined,
+    marks: [
+      Plot.lineY(base, {
+        x: "t", y: "prop", z: "word", stroke: "#9ca3af",
+        strokeOpacity: 0.45, strokeWidth: 0.8,
+        ...(facets.size > 1 ? { fy: "dataset" } : {}),
+      }),
+      Plot.lineY(hi, {
+        x: "t", y: "prop", z: "word", stroke: "word", strokeWidth: 2,
+        ...(facets.size > 1 ? { fy: "dataset" } : {}),
+      }),
+      Plot.lineY(datasetSmooths, {
+        x: "t", y: "prop", stroke: "#111827", strokeWidth: 2.5,
+        ...(facets.size > 1 ? { fy: "dataset" } : {}),
+      }),
+      Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
+      Plot.ruleX([0], { strokeDasharray: "4 4" }),
+      Plot.tip(wordCurves, Plot.pointer({
+        x: "t", y: "prop",
+        title: (d) => `${d.word}\n${d.prop.toFixed(2)} at ${d.t} ms (n=${d.n})`,
+        ...(facets.size > 1 ? { fy: "dataset" } : {}),
+      })),
+    ],
+  });
+}
+```
+
+Hover to identify items; pick words in the sidebar to highlight them.
+
+### Word across datasets
+
+```{ojs word-across}
+focusCurves = {
+  const [tLo, tHi] = plot_window;
+  const dss = wordIndex[focus_word] ?? [];
+  const loaded = await Promise.all(dss.map(loadSlice));
+  const rows = buildRows(loaded, {
+    ageLo: age_range[0], ageHi: age_range[1],
+    words: [focus_word], includeExcluded: include_excluded,
+  });
+  const acc = new Map();
+  for (const r of rows) {
+    let t = r.t0;
+    for (const [aoi, len] of r.runs) {
+      for (let k = 0; k < len; k++, t += STEP_MS) {
+        if (t <= tLo || t >= tHi || aoi > 1) continue;
+        const key = `${r.dataset}|${t}`;
+        let e = acc.get(key);
+        if (!e) acc.set(key, e = { dataset: r.dataset, t, n: 0, p: 0 });
+        e.n += 1;
+        if (aoi === 0) e.p += 1;
+      }
+    }
+  }
+  return Array.from(acc.values(), (e) => ({
+    dataset: e.dataset, t: e.t, n: e.n, prop: e.p / e.n,
+  })).filter((d) => d.n >= min_n).sort((a, b) => a.t - b.t);
+}
+```
+
+```{ojs word-across-plot}
+{
+  const nDs = new Set(focusCurves.map((d) => d.dataset)).size;
+  return Plot.plot({
+    width, height: 500, grid: true,
+    x: { label: "Time (msec)" },
+    y: { label: `Proportion target looking: "${focus_word}"`, domain: [0, 1] },
+    color: { legend: true, label: "Dataset" },
+    marks: [
+      Plot.lineY(focusCurves, {
+        x: "t", y: "prop", stroke: "dataset", strokeWidth: 1.5,
+        tip: true, title: (d) => `${d.dataset}\n${d.prop.toFixed(2)} (n=${d.n})`,
+      }),
+      Plot.ruleY([0.5], { strokeDasharray: "4 4" }),
+      Plot.ruleX([0], { strokeDasharray: "4 4" }),
+    ],
+  });
+}
+```
+
+Every dataset in the current release that tested this word, filtered by the
+sidebar's age range. Curves use each dataset's own design (carrier phrases,
+distractors, timing), so differences reflect both development and design.
+
+### Data
+
+```{ojs items-table}
+Inputs.table(wordCurves, {
+  format: { prop: (d) => d.toFixed(3) }, maxHeight: 500,
+})
+```
+
+```{ojs items-download}
+download_csv(wordCurves, "peekbank_item_curves.csv")
+```
+
+:::
+
+:::
+
+::::
