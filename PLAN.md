@@ -1,6 +1,6 @@
 # Peekbank → Redivis datapage migration plan
 
-*Drafted 2026-08-11, for review. Follows the wordbank / childes-db playbook
+*Drafted 2026-08-11; updated end of day 1 (stages 1, 2, 4 complete; 3, 5, 6 near-complete). Follows the wordbank / childes-db playbook
 (`~/Projects/shiny-to-observable-advice.md`).*
 
 ## Current architecture (as surveyed)
