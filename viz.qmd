@@ -5,9 +5,10 @@ title: "Interactive visualizations"
 
 Explore the time course of children's word recognition across the datasets in
 [Peekbank](https://peekbank.github.io/peekbank-website/). Pick datasets, an
-age range, and words; the plots update as you go. These are the same analyses
-as the classic Peekbank Shiny app (following Fernald et al., 2008), computed
-in your browser from the current database release.
+age range, and words; the plots update as you go. Analyses follow standard
+conventions for looking-while-listening data (e.g., Fernald, Zangl, Portillo,
+& Marchman, 2008) and are computed in your browser from the current database
+release.
 
 {{< include components/_interval.qmd >}}
 {{< include components/_vizlib.qmd >}}

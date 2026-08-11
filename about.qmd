@@ -32,13 +32,13 @@ publications for each dataset you use (listed on the
 
 ## The analyses
 
-The visualizations follow the analysis conventions of the original Peekbank
-Shiny app (Fernald et al., 2008): proportion target looking among
-target-and-distractor looks; landing-time reaction times on
-distractor-initial trials; onset-contingent looking curves. Trials excluded
-by the contributing labs are included by default (Peekbank archives all
-contributed data), and can be filtered with the "Include lab-excluded
-trials" toggle.
+The visualizations follow standard analysis conventions for
+looking-while-listening data (Fernald, Zangl, Portillo, & Marchman, 2008):
+proportion target looking among target-and-distractor looks; landing-time
+reaction times on distractor-initial trials; onset-contingent looking
+curves. Trials excluded by the contributing labs are included by default
+(Peekbank archives all contributed data), and can be filtered with the
+"Include lab-excluded trials" toggle.
 
 Built with [Quarto](https://quarto.org) and
 [Observable](https://observablehq.com/plot/); source at
