@@ -6,6 +6,6 @@
 /.quarto/
 __pycache__/
 _site/
-migration/fixtures/
+migration/fixtures/**/*.rds
 migration/staging/
 repos/

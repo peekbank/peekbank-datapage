@@ -213,6 +213,16 @@
    contributors table (20 datasets, dated 1/9/2024, vs 44 in 2026.1), fix
    the 3306/3307 port inconsistency — natural to fold into Stage 2.
 
+## Related follow-ups (not blocking this migration)
+
+- **Release childesr (redivis backend) to CRAN** — the childes-db migration's
+  companion package (langcog/childesr branch `redivis`) still needs a CRAN
+  submission plan: merge the branch, run the `cran-safe-release` checklist
+  (graceful network failure, NOT_CRAN gating, \dontrun examples, redivis in
+  Suggests + Additional_repositories via r-universe, CRAN-simulation CI job),
+  bump version + NEWS, submit. peekbankr will follow the same path at
+  cutover (Stage 7), so doing childesr first is a dry run.
+
 ## Auth / secrets needed
 
 - **Redivis**: org-scoped API token for `datapages` with data-edit +

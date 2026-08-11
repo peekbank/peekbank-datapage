@@ -1,0 +1,524 @@
+{
+  "2021.1/datasets": {
+    "name": "datasets",
+    "version": "2021.1",
+    "nrow": 20,
+    "ncol": 5,
+    "cols": "cite,dataset_id,dataset_name,lab_dataset_id,shortcite",
+    "hash": "47880784a4a1df21d1106fc67afd58e1",
+    "secs": 0.9
+  },
+  "2021.1/subjects": {
+    "name": "subjects",
+    "version": "2021.1",
+    "nrow": 1594,
+    "ncol": 4,
+    "cols": "lab_subject_id,native_language,sex,subject_id",
+    "hash": "126e956352cdd14a2f679b7d187a09c6",
+    "secs": 0.9
+  },
+  "2021.1/administrations": {
+    "name": "administrations",
+    "version": "2021.1",
+    "nrow": 1984,
+    "ncol": 12,
+    "cols": "administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "7d5ac357dc87418561294f79ef9cff76",
+    "secs": 1.2
+  },
+  "2021.1/administrations_age": {
+    "name": "administrations_age",
+    "version": "2021.1",
+    "nrow": 837,
+    "ncol": 12,
+    "cols": "administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "15ec7242dad485fa2a229aec4aa7c854",
+    "secs": 1.1
+  },
+  "2021.1/administrations_ds": {
+    "name": "administrations_ds",
+    "version": "2021.1",
+    "nrow": 60,
+    "ncol": 12,
+    "cols": "administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "e15d43e02382abf3258968d5474e5cdf",
+    "secs": 1.1
+  },
+  "2021.1/trials": {
+    "name": "trials",
+    "version": "2021.1",
+    "nrow": 3836,
+    "ncol": 5,
+    "cols": "dataset_id,dataset_name,trial_id,trial_order,trial_type_id",
+    "hash": "f5648e7b1c71bfe7c378c2ee5cebf87a",
+    "secs": 1.4
+  },
+  "2021.1/trials_ds": {
+    "name": "trials_ds",
+    "version": "2021.1",
+    "nrow": 256,
+    "ncol": 5,
+    "cols": "dataset_id,dataset_name,trial_id,trial_order,trial_type_id",
+    "hash": "debeca1a5c665f1f256b639f6f7d82c3",
+    "secs": 1.2
+  },
+  "2021.1/trial_types": {
+    "name": "trial_types",
+    "version": "2021.1",
+    "nrow": 3017,
+    "ncol": 12,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_id",
+    "hash": "d09d169d70771dd26e094a09de4388c9",
+    "secs": 1.2
+  },
+  "2021.1/trial_types_ds": {
+    "name": "trial_types_ds",
+    "version": "2021.1",
+    "nrow": 101,
+    "ncol": 12,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_id",
+    "hash": "02656c5774155195f56051a81045c430",
+    "secs": 1.1
+  },
+  "2021.1/stimuli": {
+    "name": "stimuli",
+    "version": "2021.1",
+    "nrow": 815,
+    "ncol": 10,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "dbf6bf55d7a4c003c0c4f5fcd12d8c9e",
+    "secs": 1.2
+  },
+  "2021.1/stimuli_ds": {
+    "name": "stimuli_ds",
+    "version": "2021.1",
+    "nrow": 64,
+    "ncol": 10,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "9b530025b2086c82fb73f79fe8e2e0bd",
+    "secs": 1.1
+  },
+  "2021.1/aoi_region_sets": {
+    "name": "aoi_region_sets",
+    "version": "2021.1",
+    "nrow": 29,
+    "ncol": 9,
+    "cols": "aoi_region_set_id,l_x_max,l_x_min,l_y_max,l_y_min,r_x_max,r_x_min,r_y_max,r_y_min",
+    "hash": "2e0557ad40583946d0b0c3f94a463074",
+    "secs": 0.8
+  },
+  "2021.1/aoi_timepoints_ps_rle": {
+    "name": "aoi_timepoints_ps_rle",
+    "version": "2021.1",
+    "nrow": 301455,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "fc7bfacd05af5713d821e6d47e6c8dc7",
+    "secs": 2.2
+  },
+  "2021.1/aoi_timepoints_ps_norle": {
+    "name": "aoi_timepoints_ps_norle",
+    "version": "2021.1",
+    "nrow": 301455,
+    "ncol": 5,
+    "cols": "administration_id,aoi,aoi_timepoint_id,t_norm,trial_id",
+    "hash": "6491bbb2a5cad17e1c4e09b2aee8f48c",
+    "secs": 3.6
+  },
+  "2021.1/aoi_timepoints_ps_age": {
+    "name": "aoi_timepoints_ps_age",
+    "version": "2021.1",
+    "nrow": 155925,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "299638350dac6a834de65058765582d3",
+    "secs": 1.7
+  },
+  "2021.1/aoi_timepoints_sa": {
+    "name": "aoi_timepoints_sa",
+    "version": "2021.1",
+    "nrow": 179032,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "a72cc2d04c4c628bd6cdfd0631be78ad",
+    "secs": 1.9
+  },
+  "2021.1/xy_timepoints_rv4": {
+    "name": "xy_timepoints_rv4",
+    "version": "2021.1",
+    "nrow": 167661,
+    "ncol": 6,
+    "cols": "administration_id,t_norm,trial_id,x,xy_timepoint_id,y",
+    "hash": "14e38d4704c3209a2b0ab9912e83691f",
+    "secs": 2.8
+  },
+  "2021.1/sql_query": {
+    "name": "sql_query",
+    "version": "2021.1",
+    "nrow": 20,
+    "ncol": 2,
+    "cols": "dataset_id,dataset_name",
+    "hash": "bb4a82e179057927e61ad537115125c6",
+    "secs": 1.8
+  },
+  "2021.1/list_tables": {
+    "name": "list_tables",
+    "version": "2021.1",
+    "nrow": 13,
+    "ncol": 1,
+    "cols": "table",
+    "hash": "4eae14a2c13545ba63b67ba7296ebd72",
+    "secs": 0.7
+  },
+  "2025.1/datasets": {
+    "name": "datasets",
+    "version": "2025.1",
+    "nrow": 39,
+    "ncol": 6,
+    "cols": "cite,dataset_aux_data,dataset_id,dataset_name,lab_dataset_id,shortcite",
+    "hash": "c0fb27b7773ef162226390a3dce71a64",
+    "secs": 0.8
+  },
+  "2025.1/subjects": {
+    "name": "subjects",
+    "version": "2025.1",
+    "nrow": 3537,
+    "ncol": 5,
+    "cols": "lab_subject_id,native_language,sex,subject_aux_data,subject_id",
+    "hash": "4aa88f0848c803be14f7440935394822",
+    "secs": 0.9
+  },
+  "2025.1/administrations": {
+    "name": "administrations",
+    "version": "2025.1",
+    "nrow": 5218,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "ec58b6016f9ea88ba42ba095b5624664",
+    "secs": 1.2
+  },
+  "2025.1/administrations_age": {
+    "name": "administrations_age",
+    "version": "2025.1",
+    "nrow": 1937,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "b16802cf19ba9ed31412f38fc6916d9d",
+    "secs": 1.1
+  },
+  "2025.1/administrations_ds": {
+    "name": "administrations_ds",
+    "version": "2025.1",
+    "nrow": 60,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "852bdba2ae097de2ea78be894a5471aa",
+    "secs": 1.2
+  },
+  "2025.1/trials": {
+    "name": "trials",
+    "version": "2025.1",
+    "nrow": 125430,
+    "ncol": 8,
+    "cols": "dataset_id,dataset_name,excluded,exclusion_reason,trial_aux_data,trial_id,trial_order,trial_type_id",
+    "hash": "8be69141b45b0969e6a67d08d50c40d7",
+    "secs": 2.5
+  },
+  "2025.1/trials_ds": {
+    "name": "trials_ds",
+    "version": "2025.1",
+    "nrow": 957,
+    "ncol": 8,
+    "cols": "dataset_id,dataset_name,excluded,exclusion_reason,trial_aux_data,trial_id,trial_order,trial_type_id",
+    "hash": "23fbc714de0434546800b0afea9b280c",
+    "secs": 1.2
+  },
+  "2025.1/trial_types": {
+    "name": "trial_types",
+    "version": "2025.1",
+    "nrow": 5463,
+    "ncol": 14,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_aux_data,trial_type_id,vanilla_trial",
+    "hash": "a06387394dbadf77da870937916b99f2",
+    "secs": 1.3
+  },
+  "2025.1/trial_types_ds": {
+    "name": "trial_types_ds",
+    "version": "2025.1",
+    "nrow": 101,
+    "ncol": 14,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_aux_data,trial_type_id,vanilla_trial",
+    "hash": "3ebeb3c0d977b3b35715702d614a4c19",
+    "secs": 1.1
+  },
+  "2025.1/stimuli": {
+    "name": "stimuli",
+    "version": "2025.1",
+    "nrow": 1582,
+    "ncol": 11,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_aux_data,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "0346e2b4b30e37325a41eb57179210c5",
+    "secs": 1.2
+  },
+  "2025.1/stimuli_ds": {
+    "name": "stimuli_ds",
+    "version": "2025.1",
+    "nrow": 64,
+    "ncol": 11,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_aux_data,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "0ff928702fc61bf20f2d23e9bf89e3b6",
+    "secs": 1.1
+  },
+  "2025.1/aoi_region_sets": {
+    "name": "aoi_region_sets",
+    "version": "2025.1",
+    "nrow": 45,
+    "ncol": 9,
+    "cols": "aoi_region_set_id,l_x_max,l_x_min,l_y_max,l_y_min,r_x_max,r_x_min,r_y_max,r_y_min",
+    "hash": "2ac6d9bc81413b719a3a1be451b743ad",
+    "secs": 0.8
+  },
+  "2025.1/aoi_timepoints_ps_rle": {
+    "name": "aoi_timepoints_ps_rle",
+    "version": "2025.1",
+    "nrow": 301455,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "dfc58dd3bbb81dee270f7d658eb43ee4",
+    "secs": 2.7
+  },
+  "2025.1/aoi_timepoints_ps_norle": {
+    "name": "aoi_timepoints_ps_norle",
+    "version": "2025.1",
+    "nrow": 301455,
+    "ncol": 5,
+    "cols": "administration_id,aoi,aoi_timepoint_id,t_norm,trial_id",
+    "hash": "d40fdfafd2b2a6d742dfb679e472ebc8",
+    "secs": 3.7
+  },
+  "2025.1/aoi_timepoints_ps_age": {
+    "name": "aoi_timepoints_ps_age",
+    "version": "2025.1",
+    "nrow": 155925,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "ca28e681eab9870303899383a2de718a",
+    "secs": 3.4
+  },
+  "2025.1/aoi_timepoints_sa": {
+    "name": "aoi_timepoints_sa",
+    "version": "2025.1",
+    "nrow": 178871,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "285ed8683cff920219dc942e31f6ff0d",
+    "secs": 2.1
+  },
+  "2025.1/xy_timepoints_rv4": {
+    "name": "xy_timepoints_rv4",
+    "version": "2025.1",
+    "nrow": 1310321,
+    "ncol": 6,
+    "cols": "administration_id,t_norm,trial_id,x,xy_timepoint_id,y",
+    "hash": "f30193aec9685771319d7354fedef04f",
+    "secs": 13.1
+  },
+  "2025.1/sql_query": {
+    "name": "sql_query",
+    "version": "2025.1",
+    "nrow": 39,
+    "ncol": 2,
+    "cols": "dataset_id,dataset_name",
+    "hash": "65ee36d83fd59d6de753288ef6f79816",
+    "secs": 0.8
+  },
+  "2025.1/list_tables": {
+    "name": "list_tables",
+    "version": "2025.1",
+    "nrow": 13,
+    "ncol": 1,
+    "cols": "table",
+    "hash": "4eae14a2c13545ba63b67ba7296ebd72",
+    "secs": 0.7
+  },
+  "2026.1/datasets": {
+    "name": "datasets",
+    "version": "2026.1",
+    "nrow": 44,
+    "ncol": 6,
+    "cols": "cite,dataset_aux_data,dataset_id,dataset_name,lab_dataset_id,shortcite",
+    "hash": "bd867a2afc6f494d3e01eb923214ebe0",
+    "secs": 0.8
+  },
+  "2026.1/subjects": {
+    "name": "subjects",
+    "version": "2026.1",
+    "nrow": 3915,
+    "ncol": 5,
+    "cols": "lab_subject_id,native_language,sex,subject_aux_data,subject_id",
+    "hash": "9ddb56da930ebcb1e755d9f381aee74c",
+    "secs": 0.9
+  },
+  "2026.1/administrations": {
+    "name": "administrations",
+    "version": "2026.1",
+    "nrow": 5596,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "509795fc2cce59ccc7aa9bb0a40cf588",
+    "secs": 1.2
+  },
+  "2026.1/administrations_age": {
+    "name": "administrations_age",
+    "version": "2026.1",
+    "nrow": 2046,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "4203eb19b667ac8acd3ae8d9d65445b9",
+    "secs": 1.2
+  },
+  "2026.1/administrations_ds": {
+    "name": "administrations_ds",
+    "version": "2026.1",
+    "nrow": 60,
+    "ncol": 13,
+    "cols": "administration_aux_data,administration_id,age,coding_method,dataset_id,dataset_name,lab_age,lab_age_units,monitor_size_x,monitor_size_y,sample_rate,subject_id,tracker",
+    "hash": "5eb846a93bfffe0a95db51f7639bfe3a",
+    "secs": 1.1
+  },
+  "2026.1/trials": {
+    "name": "trials",
+    "version": "2026.1",
+    "nrow": 134929,
+    "ncol": 8,
+    "cols": "dataset_id,dataset_name,excluded,exclusion_reason,trial_aux_data,trial_id,trial_order,trial_type_id",
+    "hash": "f5db9f45f98819dc615e0b1f3253a1b2",
+    "secs": 2.8
+  },
+  "2026.1/trials_ds": {
+    "name": "trials_ds",
+    "version": "2026.1",
+    "nrow": 957,
+    "ncol": 8,
+    "cols": "dataset_id,dataset_name,excluded,exclusion_reason,trial_aux_data,trial_id,trial_order,trial_type_id",
+    "hash": "2e93b9f26756340fa2371b0c1fbff32f",
+    "secs": 1.2
+  },
+  "2026.1/trial_types": {
+    "name": "trial_types",
+    "version": "2026.1",
+    "nrow": 6918,
+    "ncol": 14,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_aux_data,trial_type_id,vanilla_trial",
+    "hash": "3fed83254e8f739c612031d18d1f8ed0",
+    "secs": 1.3
+  },
+  "2026.1/trial_types_ds": {
+    "name": "trial_types_ds",
+    "version": "2026.1",
+    "nrow": 101,
+    "ncol": 14,
+    "cols": "aoi_region_set_id,condition,dataset_id,dataset_name,distractor_id,full_phrase,full_phrase_language,lab_trial_id,point_of_disambiguation,target_id,target_side,trial_type_aux_data,trial_type_id,vanilla_trial",
+    "hash": "d003042cf955bac02826ce061f9331e2",
+    "secs": 1.1
+  },
+  "2026.1/stimuli": {
+    "name": "stimuli",
+    "version": "2026.1",
+    "nrow": 1834,
+    "ncol": 11,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_aux_data,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "f149cd0b7f95e8879fa3dcbe824000dd",
+    "secs": 1.2
+  },
+  "2026.1/stimuli_ds": {
+    "name": "stimuli_ds",
+    "version": "2026.1",
+    "nrow": 64,
+    "ncol": 11,
+    "cols": "dataset_id,dataset_name,english_stimulus_label,image_description,image_description_source,lab_stimulus_id,original_stimulus_label,stimulus_aux_data,stimulus_id,stimulus_image_path,stimulus_novelty",
+    "hash": "1dc4cf7766913b0e77d5c24395e5f44d",
+    "secs": 1.3
+  },
+  "2026.1/aoi_region_sets": {
+    "name": "aoi_region_sets",
+    "version": "2026.1",
+    "nrow": 44,
+    "ncol": 9,
+    "cols": "aoi_region_set_id,l_x_max,l_x_min,l_y_max,l_y_min,r_x_max,r_x_min,r_y_max,r_y_min",
+    "hash": "ca5e59e1571c189d2fa22a6657234e6f",
+    "secs": 0.8
+  },
+  "2026.1/aoi_timepoints_ps_rle": {
+    "name": "aoi_timepoints_ps_rle",
+    "version": "2026.1",
+    "nrow": 301455,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "dcf4778696ee380dcc220b4a03192fae",
+    "secs": 2.7
+  },
+  "2026.1/aoi_timepoints_ps_norle": {
+    "name": "aoi_timepoints_ps_norle",
+    "version": "2026.1",
+    "nrow": 301455,
+    "ncol": 5,
+    "cols": "administration_id,aoi,aoi_timepoint_id,t_norm,trial_id",
+    "hash": "c1dd3721aa436622d55642cd20f9ad07",
+    "secs": 3.5
+  },
+  "2026.1/aoi_timepoints_ps_age": {
+    "name": "aoi_timepoints_ps_age",
+    "version": "2026.1",
+    "nrow": 155925,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "40a942f150aadb087b4334dc515a3d8e",
+    "secs": 3.7
+  },
+  "2026.1/aoi_timepoints_sa": {
+    "name": "aoi_timepoints_sa",
+    "version": "2026.1",
+    "nrow": 178871,
+    "ncol": 4,
+    "cols": "administration_id,aoi,t_norm,trial_id",
+    "hash": "00e599610fda5c13c899c65266c23aa3",
+    "secs": 2.1
+  },
+  "2026.1/xy_timepoints_rv4": {
+    "name": "xy_timepoints_rv4",
+    "version": "2026.1",
+    "nrow": 1310043,
+    "ncol": 6,
+    "cols": "administration_id,t_norm,trial_id,x,xy_timepoint_id,y",
+    "hash": "541c14d7cbdb6c32c9018b808bb87160",
+    "secs": 13.1
+  },
+  "2026.1/sql_query": {
+    "name": "sql_query",
+    "version": "2026.1",
+    "nrow": 44,
+    "ncol": 2,
+    "cols": "dataset_id,dataset_name",
+    "hash": "e1bf98d66bc8b94d4a4c3c38e7ba7215",
+    "secs": 0.8
+  },
+  "2026.1/list_tables": {
+    "name": "list_tables",
+    "version": "2026.1",
+    "nrow": 13,
+    "ncol": 1,
+    "cols": "table",
+    "hash": "4eae14a2c13545ba63b67ba7296ebd72",
+    "secs": 0.7
+  },
+  "2026.1/subjects_aux_unpacked": {
+    "name": "subjects_aux_unpacked",
+    "version": "2026.1",
+    "nrow": 3915,
+    "ncol": 5,
+    "cols": "lab_subject_id,native_language,sex,subject_aux_data,subject_id",
+    "hash": "060aef919034e44e54aac6ef12f53695",
+    "secs": 1.6
+  }
+}
