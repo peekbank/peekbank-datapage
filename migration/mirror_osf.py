@@ -18,6 +18,7 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
 
@@ -27,7 +28,16 @@ API_ROOT = "https://api.osf.io/v2/nodes/pr6wu/files/osfstorage/"
 UA = {"User-Agent": "peekbank-migration/1.0 (peekbank-dev@lists.stanford.edu)"}
 
 
-def get_json(url, tries=5):
+def backoff_seconds(e, attempt):
+    """Long, Retry-After-aware backoff for OSF throttling (HTTP 429)."""
+    if isinstance(e, HTTPError) and e.code == 429:
+        retry_after = e.headers.get("Retry-After")
+        base = int(retry_after) if retry_after and retry_after.isdigit() else 30
+        return min(600, max(base, 30) * (attempt + 1))
+    return 2 ** (attempt + 1)
+
+
+def get_json(url, tries=8):
     for i in range(tries):
         try:
             with urlopen(Request(url, headers=UA), timeout=60) as r:
@@ -35,7 +45,7 @@ def get_json(url, tries=5):
         except Exception as e:
             if i == tries - 1:
                 raise
-            time.sleep(2 ** (i + 1))
+            time.sleep(backoff_seconds(e, i))
 
 
 def list_children(url):
@@ -72,7 +82,7 @@ def walk_files(url):
     return files
 
 
-def download(item, tries=4):
+def download(item, tries=8):
     rel = item["path"].lstrip("/")
     dest = MIRROR / rel
     size = item["size"] or 0
@@ -97,20 +107,20 @@ def download(item, tries=4):
         except Exception as e:
             if i == tries - 1:
                 return ("fail", rel, str(e))
-            time.sleep(2 ** (i + 1))
+            time.sleep(backoff_seconds(e, i))
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--datasets", nargs="*", default=None)
-    ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--workers", type=int, default=3)
     args = ap.parse_args()
 
     MIRROR.mkdir(exist_ok=True)
     top = [i for i in list_children(API_ROOT) if i["kind"] == "folder"]
     if args.datasets:
-        keep = set(args.datasets)
-        top = [i for i in top if i["path"].strip("/") in keep]
+        by_name = {i["path"].strip("/"): i for i in top}
+        top = [by_name[d] for d in args.datasets if d in by_name]
     print(f"{len(top)} top-level dataset folders", flush=True)
 
     grand_ok = grand_fail = grand_bytes = 0
