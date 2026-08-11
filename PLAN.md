@@ -163,6 +163,28 @@
 - Later experiment (not blocking): Redivis workflow that reruns the full
   import for a release in-cloud.
 
+**Stage 5 findings (2026-08-11):**
+- `build_release.py` verified engine-exact against released 2026.1 on every
+  dataset whose OSF processed_data still matches the release (incl. the
+  8.1M-row fernald_marchman_2012); remaining per-dataset diffs are
+  **upstream drift** — OSF processed_data moved past the release: CDI
+  dedup (adams_marchman), unified AOI computation (borovsky,
+  byers-heinlein_2017; peekbankr 2026-08-05), t_norm resampling fix
+  (nordmeyer; peekbankr 2026-06-03), aoi_region_sets added post-release
+  (byers-heinlein_2017, casillas_tseltal).
+- **Legacy pipeline mangles now baked into released data** (replicated for
+  parity, candidates to FIX in the next release, with release-notes
+  callouts): (a) pandas type inference in populate.py strips leading zeros
+  from string ids (lab_subject_id "01" → "1"); (b) fractional eye-tracker
+  gaze coordinates are silently int()-truncated (xy xsd/y declared
+  IntegerField).
+- **8 datasets have no processed_data on OSF at all** (bergelson_swingley,
+  ferguson_eyetrackingr, fmw_2013, nih_babytoolbox_2025, ronfard_2021,
+  sander-montant_2022, xsectional_2007, yoon_simpimp_2015) — the 2026.1
+  release was built from a local pipeline run, so OSF was never the
+  complete intermediate store. Regenerate via the pipeline to complete
+  peekbank_files processed coverage.
+
 ### Stage 6 — Paper-based visualizations (after infra)
 - eLife: age-binned recognition curves (Fig 1), accuracy/RT ~ log-age with
   per-dataset fits and longitudinal spaghetti (Figs 2–3), item trajectories.

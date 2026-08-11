@@ -111,9 +111,15 @@ def read_table(folder, table, spec, aux_validate):
         if table in OPTIONAL_TABLES:
             return None
         raise ValueError(f"{path} is missing")
-    df = pd.read_csv(path, dtype=str, keep_default_na=True,
-                     na_values=[""], low_memory=False)
-    df = df.where(pd.notna(df), None)
+    # read with pandas type inference, exactly like populate.py: this
+    # deliberately REPLICATES the legacy pipeline's string mangling (e.g.
+    # lab_subject_id "01" -> int 1 -> stored "1"), which is baked into the
+    # released databases. Faithful-string reading is a candidate behavior
+    # change for future releases -- decide explicitly, don't drift.
+    df = pd.read_csv(path, low_memory=False)
+    # NOTE: .where(cond, None) does NOT insert None (None = default NaN);
+    # replace() is what populate.py itself uses
+    df = df.replace({np.nan: None})
 
     have, need = set(df.columns), {f["name"] for f in spec["fields"]}
     if need - have:
@@ -125,7 +131,17 @@ def read_table(folder, table, spec, aux_validate):
     for f in spec["fields"]:
         col = df[f["name"]]
         if f["cls"] in ("IntegerField", "ForeignKey"):
-            out[f["name"]] = pd.to_numeric(col, errors="raise").astype("Int64")
+            num = pd.to_numeric(col, errors="raise")
+            try:
+                out[f["name"]] = num.astype("Int64")
+            except TypeError:
+                # fractional values in an integer column: Django's
+                # IntegerField applies int() (truncation toward zero) --
+                # e.g. gaze x/y coordinates in some eye-tracker datasets
+                out[f["name"]] = pd.array(
+                    [None if v is None or
+                     (isinstance(v, float) and np.isnan(v)) else int(v)
+                     for v in num], dtype="Int64")
         elif f["cls"] == "FloatField":
             out[f["name"]] = pd.to_numeric(col, errors="raise").astype(float)
         elif f["cls"] == "BooleanField":
@@ -142,8 +158,10 @@ def read_table(folder, table, spec, aux_validate):
                         validate_aux(obj, f"{path}:{f['name']}")
                     vals.append(json.dumps(obj))
             out[f["name"]] = pd.array(vals, dtype="string")
-        else:  # CharField, TextField, DateField (none dated in these tables)
-            out[f["name"]] = col.astype("string")
+        else:  # CharField, TextField: Django stringifies whatever pandas
+            # inferred (int 1 -> "1", float 1.0 -> "1.0", bool -> "True")
+            out[f["name"]] = pd.array(
+                [None if v is None else str(v) for v in col], dtype="string")
     return pd.DataFrame(out)
 
 
@@ -164,11 +182,12 @@ def build_rle(aoi_df):
     """Derive aoi_timepoints_rle exactly like rle_custom_migration.py."""
     df = aoi_df.sort_values(
         ["administration_id", "trial_id", "t_norm"], kind="mergesort")
-    key_change = (
-        (df["administration_id"] != df["administration_id"].shift()) |
-        (df["trial_id"] != df["trial_id"].shift()) |
-        (df["aoi"] != df["aoi"].shift())
-    )
+    def changed(s):
+        return s.ne(s.shift()).fillna(True).to_numpy(dtype=bool)
+
+    key_change = pd.Series(
+        changed(df["administration_id"]) | changed(df["trial_id"]) |
+        changed(df["aoi"]), index=df.index)
     grp = key_change.cumsum()
     runs = df.groupby(grp, sort=False).agg(
         administration_id=("administration_id", "first"),
@@ -182,15 +201,197 @@ def build_rle(aoi_df):
                             kind="mergesort").reset_index(drop=True)
 
 
+def ref_slice(ref_dir, table, columns=None, filt=None):
+    ds = pads.dataset(sorted((Path(ref_dir) / table).glob("part-*.parquet")))
+    t = ds.to_table(columns=columns, filter=filt)
+    return t.to_pandas()
+
+
+def compare_frames(name, built, ref, float_cols):
+    """Compare two frames (same columns) after sorting; return list of diffs."""
+    problems = []
+    if len(built) != len(ref):
+        return [f"{name}: rows {len(built)} built vs {len(ref)} reference"]
+    a = built.reset_index(drop=True)
+    b = ref[built.columns].reset_index(drop=True)
+    for col in built.columns:
+        av = a[col]
+        bv = b[col]
+        if col in float_cols:
+            neq = ~np.isclose(pd.to_numeric(av, errors="coerce"),
+                              pd.to_numeric(bv, errors="coerce"),
+                              rtol=0, atol=1e-9, equal_nan=True)
+        else:
+            ao = av.astype(object).where(pd.notna(av), None)
+            bo = bv.astype(object).where(pd.notna(bv), None)
+            neq = ~(ao.eq(bo) | (ao.isna() & bo.isna()))
+        n = int(pd.Series(neq).sum())
+        if n:
+            i = int(pd.Series(neq).idxmax())
+            problems.append(
+                f"{name}.{col}: {n} mismatches; first at row {i}: "
+                f"built={a[col].iloc[i]!r} ref={b[col].iloc[i]!r}")
+    return problems
+
+
+def per_dataset_diff(source, ref_dir, tables, class_to_table, only=None):
+    """Validate the build engine dataset-by-dataset: build each dataset
+    standalone (zero offsets) and compare against the reference release's
+    rows for that dataset with the reference's own id offsets subtracted.
+    Immune to gaps in local processed_data coverage and to dataset order."""
+    import pyarrow.compute as pc
+
+    ref_datasets = ref_slice(ref_dir, "datasets")
+    name_to_id = dict(zip(ref_datasets.dataset_name, ref_datasets.dataset_id))
+    float_cols_by_table = {
+        t: {f["name"] for f in spec["fields"] if f["cls"] == "FloatField"}
+        for t, spec in tables.items()}
+
+    candidates = []
+    for name in sorted(name_to_id):
+        src_name = name if name != "newman_sinewave_2015" else "newman_sinewave"
+        folder = source / src_name / "processed_data"
+        if folder.is_dir() and (source / src_name / ".mirror_done").exists():
+            if only is None or name in only:
+                candidates.append((name, folder))
+    print(f"per-dataset diff: {len(candidates)} datasets with local "
+          f"processed_data: {[c[0] for c in candidates]}")
+
+    overall_ok = True
+    for name, folder in candidates:
+        ds_id = name_to_id[name]
+        # build standalone (offsets all zero)
+        local = {}
+        try:
+            for table in TABLE_ORDER:
+                local[table] = read_table(folder, table, tables[table],
+                                          aux_validate=False)
+        except Exception as e:
+            print(f"  {name}: BUILD ERROR {e}")
+            overall_ok = False
+            continue
+
+        # reference rows for this dataset
+        ref = {}
+        ref["datasets"] = ref_slice(ref_dir, "datasets",
+                                    filt=pc.field("dataset_id") == ds_id)
+        ref["administrations"] = ref_slice(
+            ref_dir, "administrations", filt=pc.field("dataset_id") == ds_id)
+        admin_ids = ref["administrations"].administration_id.to_numpy()
+        subj_ids = np.unique(ref["administrations"].subject_id.to_numpy())
+        ref["subjects"] = ref_slice(
+            ref_dir, "subjects", filt=pc.field("subject_id").isin(subj_ids))
+        ref["stimuli"] = ref_slice(ref_dir, "stimuli",
+                                   filt=pc.field("dataset_id") == ds_id)
+        ref["trial_types"] = ref_slice(
+            ref_dir, "trial_types", filt=pc.field("dataset_id") == ds_id)
+        tt_ids = ref["trial_types"].trial_type_id.to_numpy()
+        ref["trials"] = ref_slice(
+            ref_dir, "trials", filt=pc.field("trial_type_id").isin(tt_ids))
+        ars_ids = ref["trial_types"].aoi_region_set_id.dropna().unique()
+        ref["aoi_region_sets"] = ref_slice(
+            ref_dir, "aoi_region_sets",
+            filt=pc.field("aoi_region_set_id").isin(ars_ids)) \
+            if len(ars_ids) else None
+        ref["aoi_timepoints"] = ref_slice(
+            ref_dir, "aoi_timepoints",
+            filt=pc.field("administration_id").isin(admin_ids))
+        ref["xy_timepoints"] = ref_slice(
+            ref_dir, "xy_timepoints",
+            filt=pc.field("administration_id").isin(admin_ids))
+        if len(ref["xy_timepoints"]) == 0:
+            ref["xy_timepoints"] = None
+
+        # per-table id bases from the reference (contiguity checked)
+        bases = {}
+        problems = []
+        for table in TABLE_ORDER:
+            r = ref.get(table)
+            if r is None or len(r) == 0:
+                bases[table] = None
+                continue
+            pk = tables[table]["pk"]
+            ids = np.sort(r[pk].to_numpy())
+            if not np.array_equal(ids, np.arange(ids[0], ids[0] + len(ids))):
+                problems.append(f"{table}: reference ids not contiguous")
+            bases[table] = int(ids[0])
+        if problems:
+            print(f"  {name}: {problems}")
+            overall_ok = False
+            continue
+
+        # rebase reference ids to zero and compare
+        for table in TABLE_ORDER:
+            built, r = local.get(table), ref.get(table)
+            if built is None and (r is None or len(r) == 0):
+                continue
+            if built is None or r is None:
+                print(f"  {name}/{table}: presence mismatch "
+                      f"(built={built is not None}, ref={r is not None})")
+                overall_ok = False
+                continue
+            r = r.copy()
+            spec = tables[table]
+            r[spec["pk"]] -= bases[table]
+            for f in spec["fields"]:
+                if f["cls"] != "ForeignKey":
+                    continue
+                fk_table = class_to_table[f["to"]]
+                if bases.get(fk_table) is not None:
+                    r[f["name"]] -= bases[fk_table]
+            sort_cols = [spec["pk"]]
+            built_s = built.sort_values(sort_cols).reset_index(drop=True)
+            r_s = r.sort_values(sort_cols).reset_index(drop=True)
+            problems.extend(compare_frames(
+                f"{table}", built_s, r_s, float_cols_by_table[table]))
+
+        # RLE: derive from built aoi and compare to rebased reference rle
+        rle_built = build_rle(local["aoi_timepoints"])
+        rle_ref = ref_slice(
+            ref_dir, "aoi_timepoints_rle",
+            filt=pc.field("administration_id").isin(admin_ids)).copy()
+        rle_ref["administration_id"] -= bases["administrations"]
+        rle_ref["trial_id"] -= bases["trials"]
+        key = ["administration_id", "trial_id", "t_norm"]
+        problems.extend(compare_frames(
+            "aoi_timepoints_rle",
+            rle_built.sort_values(key).reset_index(drop=True),
+            rle_ref.sort_values(key).reset_index(drop=True),
+            set()))
+
+        if problems:
+            overall_ok = False
+            print(f"  {name}: FAIL")
+            for p in problems[:6]:
+                print(f"    {p}")
+        else:
+            n = sum(len(v) for v in local.values() if v is not None)
+            print(f"  {name}: OK ({n:,} rows across tables)")
+
+    print("PER-DATASET DIFF:", "PASS" if overall_ok else "FAIL")
+    return overall_ok
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
     ap.add_argument("--order-from", required=True,
                     help="staged export dir whose datasets table defines order")
     ap.add_argument("--diff-against", default=None)
+    ap.add_argument("--per-dataset-diff", action="store_true",
+                    help="validate engine per dataset against --diff-against "
+                         "(order/gap independent); skips the full build")
+    ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--source", default=str(MIRROR))
     args = ap.parse_args()
+
+    if args.per_dataset_diff:
+        tables_, class_to_table_ = load_schema()
+        ok = per_dataset_diff(Path(args.source), args.diff_against or
+                              args.order_from, tables_, class_to_table_,
+                              only=set(args.only) if args.only else None)
+        sys.exit(0 if ok else 1)
 
     source = Path(args.source)
     out = Path(args.out)
