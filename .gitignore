@@ -7,5 +7,6 @@
 __pycache__/
 _site/
 migration/fixtures/**/*.rds
+migration/osf_mirror/
 migration/staging/
 repos/
