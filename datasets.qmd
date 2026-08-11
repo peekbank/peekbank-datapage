@@ -1,0 +1,39 @@
+---
+pagetitle: "Peekbank | Datasets"
+title: "Datasets"
+---
+
+All datasets in the current Peekbank release. Each dataset was contributed by
+the original research team and imported into the common Peekbank format; see
+the [How to Cite](https://peekbank.github.io/peekbank-website/misc/howtocite/)
+page for citation policy — when you use a dataset, cite its original
+publication (shown here) as well as the database.
+
+```{ojs manifest-data}
+//| output: false
+manifest = d3.json("slices/manifest.json")
+```
+
+```{ojs datasets-table}
+Inputs.table(
+  manifest.datasets.map((d) => ({
+    dataset: d.name,
+    citation: d.cite || d.shortcite,
+    children: d.n_subjects,
+    sessions: d.n_admins,
+    trials: d.n_trials,
+    "age range (mo)": `${d.age_min}–${d.age_max}`,
+    method: d.methods.join(", "),
+    languages: d.languages.join(", "),
+    words: d.n_words,
+  })),
+  { maxHeight: 700, layout: "auto" }
+)
+```
+
+```{ojs release-note}
+html`<p style="color:#6b7280">Release ${manifest.version} ·
+${manifest.datasets.length} datasets · generated from the
+<a href="https://redivis.com/datapages/datasets/peekbank">peekbank dataset on
+Redivis</a>.</p>`
+```

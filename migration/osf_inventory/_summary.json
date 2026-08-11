@@ -1,0 +1,1186 @@
+{
+ "total_bytes": 15357716988,
+ "total_files": 7103,
+ "datasets": [
+  {
+   "name": "weaver_zettersten_2024",
+   "files": 88,
+   "folders": 6,
+   "bytes": 2893769665,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2447
+    ],
+    "processed_data": [
+     7,
+     41882621
+    ],
+    "raw_data": [
+     80,
+     2851884597
+    ]
+   }
+  },
+  {
+   "name": "reflook_v4",
+   "files": 833,
+   "folders": 8,
+   "bytes": 2060434380,
+   "immediate": [
+    "README.md",
+    "full_dataset/",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3385
+    ],
+    "full_dataset": [
+     397,
+     984265666
+    ],
+    "processed_data": [
+     9,
+     82563574
+    ],
+    "raw_data": [
+     426,
+     993601755
+    ]
+   }
+  },
+  {
+   "name": "gazetriggered_2020",
+   "files": 16,
+   "folders": 2,
+   "bytes": 1780758423,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     653
+    ],
+    "processed_data": [
+     9,
+     17778540
+    ],
+    "raw_data": [
+     6,
+     1762979230
+    ]
+   }
+  },
+  {
+   "name": "yoon_simpimp_2015",
+   "files": 371,
+   "folders": 5,
+   "bytes": 1594755027,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     371,
+     1594755027
+    ]
+   }
+  },
+  {
+   "name": "reflook_socword",
+   "files": 449,
+   "folders": 4,
+   "bytes": 963712869,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     4604
+    ],
+    "processed_data": [
+     9,
+     163919834
+    ],
+    "raw_data": [
+     439,
+     799788431
+    ]
+   }
+  },
+  {
+   "name": "nordmeyer_negtracker_2014",
+   "files": 355,
+   "folders": 4,
+   "bytes": 821727604,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3509
+    ],
+    "processed_data": [
+     9,
+     12927682
+    ],
+    "raw_data": [
+     345,
+     808796413
+    ]
+   }
+  },
+  {
+   "name": "pomper_dimy",
+   "files": 168,
+   "folders": 7,
+   "bytes": 537709911,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     4367
+    ],
+    "processed_data": [
+     9,
+     33237104
+    ],
+    "raw_data": [
+     158,
+     504468440
+    ]
+   }
+  },
+  {
+   "name": "yurovsky_2017",
+   "files": 282,
+   "folders": 10,
+   "bytes": 476348756,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3084
+    ],
+    "processed_data": [
+     7,
+     34614815
+    ],
+    "raw_data": [
+     274,
+     441730857
+    ]
+   }
+  },
+  {
+   "name": "kartushina_2019",
+   "files": 109,
+   "folders": 7,
+   "bytes": 407853618,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     5193
+    ],
+    "processed_data": [
+     7,
+     13606311
+    ],
+    "raw_data": [
+     101,
+     394242114
+    ]
+   }
+  },
+  {
+   "name": "bergelson_swingley_2012",
+   "files": 1,
+   "folders": 1,
+   "bytes": 361178151,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     1,
+     361178151
+    ]
+   }
+  },
+  {
+   "name": "fernald_marchman_2012",
+   "files": 339,
+   "folders": 4,
+   "bytes": 284536351,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     7284
+    ],
+    "processed_data": [
+     7,
+     247863547
+    ],
+    "raw_data": [
+     331,
+     36665520
+    ]
+   }
+  },
+  {
+   "name": "weaver_saffran_2026",
+   "files": 193,
+   "folders": 6,
+   "bytes": 261562822,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     4616
+    ],
+    "processed_data": [
+     9,
+     38042533
+    ],
+    "raw_data": [
+     183,
+     223515673
+    ]
+   }
+  },
+  {
+   "name": "sander-montant_2022",
+   "files": 22,
+   "folders": 4,
+   "bytes": 229989791,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     22,
+     229989791
+    ]
+   }
+  },
+  {
+   "name": "pomper_prime",
+   "files": 219,
+   "folders": 7,
+   "bytes": 221212781,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2222
+    ],
+    "processed_data": [
+     7,
+     7551802
+    ],
+    "raw_data": [
+     211,
+     213658757
+    ]
+   }
+  },
+  {
+   "name": "adams_marchman_2018",
+   "files": 198,
+   "folders": 12,
+   "bytes": 204651327,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3296
+    ],
+    "processed_data": [
+     7,
+     158348780
+    ],
+    "raw_data": [
+     190,
+     46299251
+    ]
+   }
+  },
+  {
+   "name": "moore_bergelson_2022_verb",
+   "files": 45,
+   "folders": 8,
+   "bytes": 204064322,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     4890
+    ],
+    "processed_data": [
+     9,
+     41519416
+    ],
+    "raw_data": [
+     35,
+     162540016
+    ]
+   }
+  },
+  {
+   "name": "pomper_saffran_2016",
+   "files": 354,
+   "folders": 6,
+   "bytes": 195354445,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2101
+    ],
+    "processed_data": [
+     7,
+     7967458
+    ],
+    "raw_data": [
+     346,
+     187384886
+    ]
+   }
+  },
+  {
+   "name": "frank_tablet_2016",
+   "files": 172,
+   "folders": 5,
+   "bytes": 194470189,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2820
+    ],
+    "processed_data": [
+     9,
+     46431306
+    ],
+    "raw_data": [
+     162,
+     148036063
+    ]
+   }
+  },
+  {
+   "name": "byers-heinlein_2017",
+   "files": 22,
+   "folders": 3,
+   "bytes": 166369406,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2731
+    ],
+    "processed_data": [
+     9,
+     10429065
+    ],
+    "raw_data": [
+     12,
+     155937610
+    ]
+   }
+  },
+  {
+   "name": "casillas_tseltal_2015",
+   "files": 357,
+   "folders": 9,
+   "bytes": 145439438,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     6422
+    ],
+    "processed_data": [
+     8,
+     4798347
+    ],
+    "raw_data": [
+     348,
+     140634669
+    ]
+   }
+  },
+  {
+   "name": "garrison_bergelson_2020",
+   "files": 439,
+   "folders": 5,
+   "bytes": 141629021,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2420
+    ],
+    "processed_data": [
+     9,
+     18728245
+    ],
+    "raw_data": [
+     429,
+     122898356
+    ]
+   }
+  },
+  {
+   "name": "pomper_yumme",
+   "files": 296,
+   "folders": 12,
+   "bytes": 131511973,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     5403
+    ],
+    "processed_data": [
+     7,
+     8346784
+    ],
+    "raw_data": [
+     288,
+     123159786
+    ]
+   }
+  },
+  {
+   "name": "steil_schild_2021",
+   "files": 19,
+   "folders": 4,
+   "bytes": 105162002,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3858
+    ],
+    "processed_data": [
+     9,
+     22118123
+    ],
+    "raw_data": [
+     9,
+     83040021
+    ]
+   }
+  },
+  {
+   "name": "pomper_salientme",
+   "files": 289,
+   "folders": 6,
+   "bytes": 104772534,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     4794
+    ],
+    "processed_data": [
+     7,
+     10973680
+    ],
+    "raw_data": [
+     281,
+     93794060
+    ]
+   }
+  },
+  {
+   "name": "perry_cowpig",
+   "files": 143,
+   "folders": 7,
+   "bytes": 100817666,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3816
+    ],
+    "processed_data": [
+     7,
+     8957221
+    ],
+    "raw_data": [
+     135,
+     91856629
+    ]
+   }
+  },
+  {
+   "name": "steil_friedrich_2025",
+   "files": 12,
+   "folders": 2,
+   "bytes": 85177713,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     7983
+    ],
+    "processed_data": [
+     7,
+     8822668
+    ],
+    "raw_data": [
+     4,
+     76347062
+    ]
+   }
+  },
+  {
+   "name": "luchkina_waxman_2024",
+   "files": 46,
+   "folders": 6,
+   "bytes": 66446758,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2980
+    ],
+    "processed_data": [
+     7,
+     9679909
+    ],
+    "raw_data": [
+     38,
+     56763869
+    ]
+   }
+  },
+  {
+   "name": "byers-heinlein_2022",
+   "files": 13,
+   "folders": 3,
+   "bytes": 65643882,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     5640
+    ],
+    "processed_data": [
+     7,
+     5238516
+    ],
+    "raw_data": [
+     5,
+     60399726
+    ]
+   }
+  },
+  {
+   "name": "valleau_2018",
+   "files": 11,
+   "folders": 2,
+   "bytes": 57179873,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2912
+    ],
+    "processed_data": [
+     7,
+     4654101
+    ],
+    "raw_data": [
+     3,
+     52522860
+    ]
+   }
+  },
+  {
+   "name": "ofallon_storybook_2020",
+   "files": 33,
+   "folders": 3,
+   "bytes": 49975146,
+   "immediate": [
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     33,
+     49975146
+    ]
+   }
+  },
+  {
+   "name": "kremin_2021",
+   "files": 63,
+   "folders": 5,
+   "bytes": 47324527,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3333
+    ],
+    "processed_data": [
+     9,
+     9057583
+    ],
+    "raw_data": [
+     53,
+     38263611
+    ]
+   }
+  },
+  {
+   "name": "mahr_coartic",
+   "files": 135,
+   "folders": 5,
+   "bytes": 38974163,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2531
+    ],
+    "processed_data": [
+     9,
+     7731820
+    ],
+    "raw_data": [
+     125,
+     31239812
+    ]
+   }
+  },
+  {
+   "name": "dombroski_backgroundnoise_2014",
+   "files": 87,
+   "folders": 5,
+   "bytes": 36957579,
+   "immediate": [
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     87,
+     36957579
+    ]
+   }
+  },
+  {
+   "name": "newman_genderdistractor",
+   "files": 117,
+   "folders": 8,
+   "bytes": 33354675,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3861
+    ],
+    "processed_data": [
+     7,
+     12206319
+    ],
+    "raw_data": [
+     109,
+     21144495
+    ]
+   }
+  },
+  {
+   "name": "potter_canine",
+   "files": 148,
+   "folders": 11,
+   "bytes": 32285483,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3816
+    ],
+    "processed_data": [
+     7,
+     13541440
+    ],
+    "raw_data": [
+     140,
+     18740227
+    ]
+   }
+  },
+  {
+   "name": "bacon_gendercues",
+   "files": 19,
+   "folders": 3,
+   "bytes": 29474290,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2654
+    ],
+    "processed_data": [
+     7,
+     7077435
+    ],
+    "raw_data": [
+     11,
+     22394201
+    ]
+   }
+  },
+  {
+   "name": "baumgartner_2014",
+   "files": 200,
+   "folders": 6,
+   "bytes": 28592465,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3941
+    ],
+    "processed_data": [
+     7,
+     6856346
+    ],
+    "raw_data": [
+     192,
+     21732178
+    ]
+   }
+  },
+  {
+   "name": "potter_remix",
+   "files": 68,
+   "folders": 10,
+   "bytes": 27774553,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     5279
+    ],
+    "processed_data": [
+     7,
+     4759840
+    ],
+    "raw_data": [
+     60,
+     23009434
+    ]
+   }
+  },
+  {
+   "name": "hurtado_2008",
+   "files": 11,
+   "folders": 2,
+   "bytes": 27307536,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2992
+    ],
+    "processed_data": [
+     7,
+     22387296
+    ],
+    "raw_data": [
+     3,
+     4917248
+    ]
+   }
+  },
+  {
+   "name": "fernald_totlot",
+   "files": 13,
+   "folders": 2,
+   "bytes": 25743874,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3508
+    ],
+    "processed_data": [
+     7,
+     23309266
+    ],
+    "raw_data": [
+     5,
+     2431100
+    ]
+   }
+  },
+  {
+   "name": "newman_vocoded_2012",
+   "files": 79,
+   "folders": 6,
+   "bytes": 23245114,
+   "immediate": [
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     79,
+     23245114
+    ]
+   }
+  },
+  {
+   "name": "ferguson_eyetrackingr",
+   "files": 3,
+   "folders": 1,
+   "bytes": 18066025,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     3,
+     18066025
+    ]
+   }
+  },
+  {
+   "name": "borovsky_2019",
+   "files": 9,
+   "folders": 2,
+   "bytes": 17921351,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     3182
+    ],
+    "processed_data": [
+     7,
+     2925736
+    ],
+    "raw_data": [
+     1,
+     14992433
+    ]
+   }
+  },
+  {
+   "name": "newman_vocoded_2020",
+   "files": 70,
+   "folders": 4,
+   "bytes": 15964195,
+   "immediate": [
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     70,
+     15964195
+    ]
+   }
+  },
+  {
+   "name": "fmw_2013",
+   "files": 7,
+   "folders": 1,
+   "bytes": 12614771,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     7,
+     12614771
+    ]
+   }
+  },
+  {
+   "name": "weisleder_stl",
+   "files": 11,
+   "folders": 2,
+   "bytes": 12086529,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     5192
+    ],
+    "processed_data": [
+     7,
+     11263657
+    ],
+    "raw_data": [
+     3,
+     817680
+    ]
+   }
+  },
+  {
+   "name": "newman_sinewave",
+   "files": 37,
+   "folders": 3,
+   "bytes": 5563191,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2225
+    ],
+    "processed_data": [
+     7,
+     1638692
+    ],
+    "raw_data": [
+     29,
+     3922274
+    ]
+   }
+  },
+  {
+   "name": "swingley_aslin_2002",
+   "files": 11,
+   "folders": 2,
+   "bytes": 5186142,
+   "immediate": [
+    "README.md",
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     2401
+    ],
+    "processed_data": [
+     7,
+     4813260
+    ],
+    "raw_data": [
+     3,
+     370481
+    ]
+   }
+  },
+  {
+   "name": "newman_multitalker_2011",
+   "files": 116,
+   "folders": 6,
+   "bytes": 2153046,
+   "immediate": [
+    "processed_data/",
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     116,
+     2153046
+    ]
+   }
+  },
+  {
+   "name": "ronfard_2021",
+   "files": 3,
+   "folders": 1,
+   "bytes": 1803943,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     3,
+     1803943
+    ]
+   }
+  },
+  {
+   "name": "xsectional_2007",
+   "files": 1,
+   "folders": 1,
+   "bytes": 1107692,
+   "immediate": [
+    "raw_data/"
+   ],
+   "sub": {
+    "raw_data": [
+     1,
+     1107692
+    ]
+   }
+  },
+  {
+   "name": "nih_babytoolbox_2025",
+   "files": 1,
+   "folders": 0,
+   "bytes": 0,
+   "immediate": [
+    "raw_data_in_private_repo.txt"
+   ],
+   "sub": {
+    "(root files)": [
+     1,
+     0
+    ]
+   }
+  }
+ ]
+}

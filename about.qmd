@@ -1,0 +1,45 @@
+---
+pagetitle: "Peekbank | About"
+title: "About this site"
+---
+
+This site provides interactive visualizations of the
+[Peekbank](https://peekbank.github.io/peekbank-website/) database, an open
+repository of developmental eye-tracking data from looking-while-listening
+studies of children's word recognition.
+
+All plots are computed in your browser from compact per-dataset extracts of
+the current database release, which is versioned and hosted on
+[Redivis](https://redivis.com/datapages/datasets/peekbank). For full data
+access use the [peekbankr](https://github.com/peekbank/peekbankr) R package,
+query the dataset directly on Redivis, or see the
+[data access documentation](https://peekbank.github.io/peekbank-website/start/dataaccess/).
+
+## Citation
+
+If you use Peekbank data, please cite the database paper and the original
+publications for each dataset you use (listed on the
+[Datasets](datasets.html) page):
+
+> Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M.,
+> Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A.,
+> Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G.,
+> Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V.,
+> Bhatt, N. S., Bergey, C. A., & Frank, M. C. (2023). Peekbank: An open,
+> large-scale repository for developmental eye-tracking data of children's
+> word recognition. *Behavior Research Methods*, 55(5), 2485–2500.
+> [doi:10.3758/s13428-022-01906-4](https://doi.org/10.3758/s13428-022-01906-4)
+
+## The analyses
+
+The visualizations follow the analysis conventions of the original Peekbank
+Shiny app (Fernald et al., 2008): proportion target looking among
+target-and-distractor looks; landing-time reaction times on
+distractor-initial trials; onset-contingent looking curves. Trials excluded
+by the contributing labs are included by default (Peekbank archives all
+contributed data), and can be filtered with the "Include lab-excluded
+trials" toggle.
+
+Built with [Quarto](https://quarto.org) and
+[Observable](https://observablehq.com/plot/); source at
+[peekbank/peekbank-datapage](https://github.com/peekbank/peekbank-datapage).

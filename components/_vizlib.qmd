@@ -1,0 +1,133 @@
+```{ojs vizlib-stats}
+//| output: false
+// Lanczos log-gamma, regularized incomplete beta, and beta quantile —
+// used for Jeffreys-style binomial CIs matching the shiny app's
+// binom::binom.confint(method = "bayes") (posterior Beta(x+.5, n-x+.5)).
+function lgamma(z) {
+  const g = [676.5203681218851, -1259.1392167224028, 771.32342877765313,
+             -176.61502916214059, 12.507343278686905, -0.13857109526572012,
+             9.9843695780195716e-6, 1.5056327351493116e-7];
+  if (z < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * z)) - lgamma(1 - z);
+  z -= 1;
+  let x = 0.99999999999980993;
+  for (let i = 0; i < g.length; i++) x += g[i] / (z + i + 1);
+  const t = z + g.length - 0.5;
+  return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
+}
+
+function betacf(x, a, b) {
+  const MAXIT = 200, EPS = 3e-12, FPMIN = 1e-300;
+  const qab = a + b, qap = a + 1, qam = a - 1;
+  let c = 1, d = 1 - qab * x / qap;
+  if (Math.abs(d) < FPMIN) d = FPMIN;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= MAXIT; m++) {
+    const m2 = 2 * m;
+    let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+    d = 1 + aa * d; if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c; if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d; h *= d * c;
+    aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+    d = 1 + aa * d; if (Math.abs(d) < FPMIN) d = FPMIN;
+    c = 1 + aa / c; if (Math.abs(c) < FPMIN) c = FPMIN;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < EPS) break;
+  }
+  return h;
+}
+
+function incBeta(x, a, b) {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(lgamma(a + b) - lgamma(a) - lgamma(b) +
+                      a * Math.log(x) + b * Math.log(1 - x));
+  return x < (a + 1) / (a + b + 2)
+    ? bt * betacf(x, a, b) / a
+    : 1 - bt * betacf(1 - x, b, a) / b;
+}
+
+function betaQuantile(p, a, b) {
+  let lo = 0, hi = 1;
+  for (let i = 0; i < 80; i++) {
+    const mid = (lo + hi) / 2;
+    if (incBeta(mid, a, b) < p) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+// 95% credible interval for x successes of n (Jeffreys prior), as in the app
+function bayesCI(x, n) {
+  if (n === 0) return [NaN, NaN];
+  return [betaQuantile(0.025, x + 0.5, n - x + 0.5),
+          betaQuantile(0.975, x + 0.5, n - x + 0.5)];
+}
+```
+
+```{ojs vizlib-rt}
+//| output: false
+// Fernald-style RT from RLE runs, a faithful port of
+// peekbank-shiny/helpers/rt_helper.R (landing-time RT).
+// runs: [[aoiCode, length], ...] contiguous 25 ms samples starting at t0 ms.
+// aoi codes: 0 = target, 1 = distractor, 2 = other, 3 = missing.
+STEP_MS = 25
+
+function trialRT(t0, runs) {
+  // keep only samples at t >= 0, requiring a sample at exactly t = 0
+  if (t0 > 0) return null; // no data at 0
+  let skip = (0 - t0) / STEP_MS; // samples to drop before t = 0
+  const post = [];
+  for (const [aoi, len] of runs) {
+    if (skip >= len) { skip -= len; continue; }
+    post.push([aoi, len - skip]);
+    skip = 0;
+  }
+  if (post.length === 0) return null; // no data at 0
+  const onset = post[0][0];
+  if (onset !== 0 && onset !== 1) return ({ rt: null, shift_type: "other" });
+  let landingIdx = -1;
+  for (let i = 1; i < post.length; i++) {
+    const v = post[i][0];
+    if (v !== onset && (v === 0 || v === 1)) { landingIdx = i; break; }
+  }
+  if (landingIdx === -1) return ({ rt: null, shift_type: "no shift" });
+  const landing = post[landingIdx][0];
+  const shift_type =
+    onset === 1 && landing === 0 ? "D-T" :
+    onset === 0 && landing === 1 ? "T-D" : "other";
+  let before = 0;
+  for (let i = 0; i < landingIdx; i++) before += post[i][1];
+  return ({
+    rt: (before + 1) * STEP_MS,           // landing-time RT
+    shift_start_rt: (post[0][1] + 1) * STEP_MS,
+    shift_type,
+  });
+}
+```
+
+```{ojs vizlib-misc}
+//| output: false
+// equal-width age bins like R's cut(age, n); returns {index, label} helpers
+function makeAgeBinner(ages, nbins) {
+  if (nbins <= 1 || ages.length === 0) {
+    return ({ bin: () => 0, labels: ["all ages"] });
+  }
+  const lo = Math.min(...ages), hi = Math.max(...ages);
+  // R's cut() widens the range by 0.1% to include the endpoints
+  const pad = (hi - lo || 1) * 0.001;
+  const start = lo - pad, end = hi + pad;
+  const w = (end - start) / nbins;
+  const fmt = (x) => +x.toFixed(1);
+  const labels = Array.from({ length: nbins }, (_, i) =>
+    `(${fmt(start + i * w)},${fmt(start + (i + 1) * w)}]`);
+  return ({
+    // right-closed (lo, hi] intervals, matching R's cut()
+    bin: (a) => Math.min(nbins - 1, Math.max(0, Math.ceil((a - start) / w) - 1)),
+    labels,
+  });
+}
+
+aoiNames = ["target", "distractor", "other", "missing"]
+```

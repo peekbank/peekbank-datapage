@@ -1,0 +1,45 @@
+lang: en
+
+project:
+  title: "Peekbank"
+  type: website
+  render:
+    - "*.qmd"
+  resources:
+    - "slices/**"
+
+website:
+  favicon: images/favicon-32x32.png
+  navbar:
+    logo: images/raccoon.png
+    logo-alt: "Peekbank raccoon logo"
+    title: Peekbank
+    left:
+      - href: viz.qmd
+        text: Visualizations
+      - href: datasets.qmd
+        text: Datasets
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://github.com/peekbank
+        aria-label: GitHub
+  page-footer:
+    center: |
+      Peekbank is an open database of developmental eye-tracking data.
+      [Documentation](https://peekbank.github.io/peekbank-website/) ·
+      [GitHub](https://github.com/peekbank) ·
+      [How to cite](https://peekbank.github.io/peekbank-website/misc/howtocite/)
+
+format:
+  datapage-html:
+    theme: theme.scss
+    mainfont: "ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif"
+    fontsize: 15px
+
+execute:
+  echo: false
+  message: false
+  warning: false
+  error: false

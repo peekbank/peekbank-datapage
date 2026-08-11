@@ -1,0 +1,11 @@
+
+**/*.quarto_ipynb
+.DS_Store
+.secrets
+.venv/
+/.quarto/
+__pycache__/
+_site/
+migration/fixtures/
+migration/staging/
+repos/

@@ -1,0 +1,1 @@
+{"dataset": "bergelson_swingley_2012", "file_count": 1, "total_bytes": 361178151, "entries": [{"kind": "folder", "name": "raw_data", "path": "/bergelson_swingley_2012/raw_data/", "size": null}, {"kind": "file", "name": "flickr1_119_june2011.txt", "path": "/bergelson_swingley_2012/raw_data/flickr1_119_june2011.txt", "size": 361178151}]}
