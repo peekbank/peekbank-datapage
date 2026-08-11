@@ -72,14 +72,21 @@ recommended to FIX in the next release with release-notes callouts:
   built from local pipeline runs; OSF was never the complete intermediate
   store. These need one pipeline run to backfill into the Redivis files
   dataset.
-- **OSF processed_data has drifted past the 2026.1 release** for ~5
-  datasets, consistent with post-release pipeline fixes: CDI response
-  de-duplication (adams_marchman_2018 aux data in 2026.1 contains each CDI
-  response twice), the unified AOI computation (borovsky_2019,
-  byers-heinlein_2017; peekbankr 2026-08-05), the t_norm resampling drift
-  fix (nordmeyer_negtracker_2014; peekbankr 2026-06-03), and
-  aoi_region_sets added after the release (byers-heinlein_2017,
-  casillas_tseltal_2015). These changes will land in the next release.
+- **OSF processed_data has drifted past the 2026.1 release for 20 of the
+  36 datasets with processed_data on OSF** (full rebuild-vs-release sweep;
+  the other 16 rebuild byte-exactly). Every difference classifies as
+  post-release pipeline evolution, in five signatures: (1) recomputed AOI
+  time courses and added/changed aoi_region_sets across the eye-tracking
+  datasets (the 2026-08 unified AOI computation + the 2026-06 t_norm
+  resampling fix; 16 datasets); (2) aux-data CDI corrections
+  (adams_marchman_2018 — where 2026.1 contains each CDI response twice —
+  baumgartner_2014, newman_sinewave_2015); (3) trial-type re-annotation
+  (adams_marchman_2018: condition, target/distractor assignment,
+  vanilla_trial flags); (4) stimulus re-annotation (garrison_bergelson_2020:
+  labels, image descriptions, paths); (5) added data
+  (reflook_socword: +2 subjects, +40 trials). No rebuild-engine
+  discrepancies remain: the next release will absorb all of this
+  intentionally.
 
 ## Deliberate behavior changes in the new stack
 
