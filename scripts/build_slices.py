@@ -21,6 +21,7 @@ Usage: python3 scripts/build_slices.py [--version 2026.1]
 
 import argparse
 import json
+import os
 from collections import defaultdict
 from pathlib import Path
 
@@ -28,18 +29,35 @@ import pyarrow.dataset as pads
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AOI_CODE = {"target": 0, "distractor": 1, "other": 2, "missing": 3}
+REDIVIS_TAG = None  # set from --from-redivis
 
 
 def read(version, table, columns=None):
+    if REDIVIS_TAG:
+        for line in open(REPO_ROOT / ".secrets"):
+            if "=" in line:
+                k, v = line.strip().split("=", 1)
+                os.environ.setdefault(k, v)
+        import redivis
+        tb = redivis.organization("datapages").dataset(
+            "peekbank:a3v0", version=REDIVIS_TAG).table(table)
+        t = tb.to_arrow_table()
+        return t.select(columns) if columns else t
     d = REPO_ROOT / "migration" / "staging" / version / table
     return pads.dataset(sorted(d.glob("part-*.parquet"))).to_table(columns=columns)
 
 
 def main():
+    global REDIVIS_TAG
     ap = argparse.ArgumentParser()
     ap.add_argument("--version", default="2026.1")
+    ap.add_argument("--from-redivis", default=None, metavar="TAG",
+                    help="read tables from datapages.peekbank at this "
+                         "Redivis version tag (e.g. v1.4) instead of "
+                         "migration/staging/<version>")
     args = ap.parse_args()
     v = args.version
+    REDIVIS_TAG = args.from_redivis
 
     out_root = REPO_ROOT / "slices"
     (out_root / "datasets").mkdir(parents=True, exist_ok=True)
