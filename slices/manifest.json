@@ -1,0 +1,949 @@
+{
+ "version": "2026.1",
+ "datasets": [
+  {
+   "name": "adams_marchman_2018",
+   "shortcite": "Adams et al. (2018)",
+   "cite": "Adams, K. A., Marchman, V. A., Loi, E. C., Ashland, M. D., Fernald, A., & Feldman, H. M. (2018). Caregiver talk and medical risk as predictors of language outcomes in full term and preterm toddlers. Child Development, 89(5), 1674-1690. https://doi.org/10.1111/cdev.12818",
+   "n_subjects": 69,
+   "n_admins": 711,
+   "n_trials": 25016,
+   "age_min": 13.0,
+   "age_max": 38.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 32,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 1836
+  },
+  {
+   "name": "bacon_gendercues",
+   "shortcite": "Bacon & Saffran (2022)",
+   "cite": "Bacon, D, & Saffran, J. (2022). Role of speaker gender in toddler lexical processing. Infancy, 27, 291-300. https://doi.org/10.1111/infa.12455",
+   "n_subjects": 38,
+   "n_admins": 38,
+   "n_trials": 760,
+   "age_min": 22.0,
+   "age_max": 24.0,
+   "methods": [
+    "manual gaze coding",
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 10,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 82
+  },
+  {
+   "name": "baumgartner_2014",
+   "shortcite": "Baumgartner (2014)",
+   "cite": "Baumgartner, H. A. (2014). Understanding the Role of Non-Contrastive Variability in Word Learning and Visual Attention in Infancy (UMI 3685177). [Doctoral dissertation, University of California, Davis]. ProQuest Dissertations Publishing.",
+   "n_subjects": 100,
+   "n_admins": 100,
+   "n_trials": 797,
+   "age_min": 12.0,
+   "age_max": 13.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 96
+  },
+  {
+   "name": "bergelson_swingley_2012",
+   "shortcite": "Bergelson & Swingley, 2012",
+   "cite": "Bergelson, E., & Swingley, D. (2012). At 6\u20139 months, human infants know the meanings of many common nouns. PNAS, 109(9), 3253-3258.",
+   "n_subjects": 84,
+   "n_admins": 84,
+   "n_trials": 2081,
+   "age_min": 6.0,
+   "age_max": 20.8,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 16,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 252
+  },
+  {
+   "name": "borovsky_2019",
+   "shortcite": "Borovsky et al_2019",
+   "cite": "Borovsky, A., & Peters, R. E. (2019). Vocabulary size and structure affects real-time lexical recognition in 18-month-olds. PloS one, 14(7), e0219290.",
+   "n_subjects": 79,
+   "n_admins": 79,
+   "n_trials": 1709,
+   "age_min": 17.0,
+   "age_max": 20.0,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 113
+  },
+  {
+   "name": "byers-heinlein_2017",
+   "shortcite": "Byers-Heinlein et al. 2017",
+   "cite": "Byers-Heinlein, K., Morin-Lessard, E., & Lew-Williams, C. (2017). Bilingual infants control their languages as they listen. Proceedings of the National Academy of Sciences, 114(34), 9032-9037.",
+   "n_subjects": 48,
+   "n_admins": 48,
+   "n_trials": 564,
+   "age_min": 19.0,
+   "age_max": 21.0,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng",
+    "fre",
+    "multiple"
+   ],
+   "n_words": 6,
+   "native_languages": [
+    "eng, fre"
+   ],
+   "kb": 89
+  },
+  {
+   "name": "byers-heinlein_2022",
+   "shortcite": "Byers-Heinlein et al. (2022)",
+   "cite": "Byers-Heinlein, K., Jardak, A., Fourakis, E., & Lew-Williams, C. (2022). Effects of language mixing on bilingual children's word learning. Bilingualism, 25(1): 55-69.",
+   "n_subjects": 38,
+   "n_admins": 38,
+   "n_trials": 574,
+   "age_min": 37.1,
+   "age_max": 48.9,
+   "methods": [
+    "manual gaze coding",
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng",
+    "fre",
+    "multiple",
+    "spa"
+   ],
+   "n_words": 5,
+   "native_languages": [
+    "eng, fre",
+    "eng, spa",
+    "fre, eng",
+    "spa, eng"
+   ],
+   "kb": 82
+  },
+  {
+   "name": "casillas_tseltal_2015",
+   "shortcite": "Casillas et al. (2017)",
+   "cite": "Casillas, M., Brown, P., & Levinson, S. C. (2017). Casillas HomeBank Corpus. https://homebank.talkbank.org/",
+   "n_subjects": 23,
+   "n_admins": 23,
+   "n_trials": 651,
+   "age_min": 9.0,
+   "age_max": 48.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "zxx"
+   ],
+   "n_words": 30,
+   "native_languages": [
+    "zxx"
+   ],
+   "kb": 58
+  },
+  {
+   "name": "ferguson_eyetrackingr",
+   "shortcite": "Ferguson, Graf, & Waxman (2014)",
+   "cite": "Ferguson, B., Graf, E., & Waxman, S. R. (2014). Infants use known verbs to learn novel nouns: Evidence from 15- and 19-month-olds. Cognition, 131(1), 139-146.",
+   "n_subjects": 28,
+   "n_admins": 28,
+   "n_trials": 155,
+   "age_min": 18.0,
+   "age_max": 21.9,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 6,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 17
+  },
+  {
+   "name": "fernald_marchman_2012",
+   "shortcite": "Fernald & Marchman (2012)",
+   "cite": "Fernald, A., & Marchman, V. A. (2012). Individual differences in lexical processing at 18 months predict vocabulary growth in typically developing and late\u2010talking toddlers. Child development, 83(1), 203-222.  https://doi.org/10.1111/j.1467-8624.2011.01692.x",
+   "n_subjects": 122,
+   "n_admins": 679,
+   "n_trials": 21542,
+   "age_min": 17.0,
+   "age_max": 32.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 17,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 1788
+  },
+  {
+   "name": "fernald_totlot",
+   "shortcite": "Fernald et al. (2006)",
+   "cite": "Fernald, A., Perfors, A., & Marchman, V. A. (2006). Picking up speed in understanding: Speech processing efficiency and vocabulary growth across the 2nd year.Developmental Psychology, 42(1), 98\u2013116.",
+   "n_subjects": 63,
+   "n_admins": 229,
+   "n_trials": 6085,
+   "age_min": 15.0,
+   "age_max": 25.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 18,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 348
+  },
+  {
+   "name": "fmw_2013",
+   "shortcite": "Fernald et al. (2013)",
+   "cite": "Fernald, A., Marchman, V. A., & Weisleder, A. (2013). SES differences in language processing skill and vocabulary are evident at 18 months. Developmental Science, 16(2), 234-248",
+   "n_subjects": 80,
+   "n_admins": 179,
+   "n_trials": 5724,
+   "age_min": 17.0,
+   "age_max": 26.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 435
+  },
+  {
+   "name": "frank_tablet_2016",
+   "shortcite": "Frank et al. (2016)",
+   "cite": "Frank, M. C., Sugarman, E., Horowitz, A. C., Lewis, M. L., & Yurovsky, D. (2016). Using tablets to collect data from young children. Journal of Cognition and Development, 17(1), 1-17.",
+   "n_subjects": 108,
+   "n_admins": 108,
+   "n_trials": 2592,
+   "age_min": 12.1,
+   "age_max": 59.8,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 24,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 395
+  },
+  {
+   "name": "garrison_bergelson_2020",
+   "shortcite": "Garrison et al. (2020)",
+   "cite": "Garrison, H., Baudet, G., Breitfeld, E., Aberman, A., & Bergelson, E. (2020). Familiarity plays a small role in noun comprehension at 12-18 months. Infancy, 25, 458-477.",
+   "n_subjects": 35,
+   "n_admins": 35,
+   "n_trials": 1087,
+   "age_min": 12.0,
+   "age_max": 18.0,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 95,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 131
+  },
+  {
+   "name": "gazetriggered_2020",
+   "shortcite": "Egger et al. (2020)",
+   "cite": "Egger, J., Rowland, C. F., & Bergmann, C. (2020). Improving the robustness of infant lexical processing speed measures. Behavior research methods, 52, 2188\u20132201. https://doi.org/10.3758/s13428-020-01385-5",
+   "n_subjects": 60,
+   "n_admins": 60,
+   "n_trials": 1400,
+   "age_min": 18.0,
+   "age_max": 18.8,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "dut"
+   ],
+   "n_words": 16,
+   "native_languages": [
+    "dut"
+   ],
+   "kb": 218
+  },
+  {
+   "name": "hurtado_2008",
+   "shortcite": "Hurtado, Marchman, & Fernald (2008)",
+   "cite": "Hurtado, N., Marchman, V. A., & Fernald, A. (2008). Does input influence uptake? Links between maternal talk, processing speed and vocabulary size in Spanish\u2010learning children. Developmental Science, 11(6), F31-F39. https://doi.org/10.1111/j.1467-7687.2008.00768.x",
+   "n_subjects": 76,
+   "n_admins": 136,
+   "n_trials": 4035,
+   "age_min": 17.0,
+   "age_max": 27.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "spa"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "spa"
+   ],
+   "kb": 307
+  },
+  {
+   "name": "kartushina_2019",
+   "shortcite": "Kartushina & Mayor (2019)",
+   "cite": "Kartushina, N., & Mayor, J. (2019). Word knowledge in six-to nine-month-old Norwegian infants? Not without additional frequency cues. Royal Society open science, 6(9), 180711.",
+   "n_subjects": 69,
+   "n_admins": 69,
+   "n_trials": 2169,
+   "age_min": 6.0,
+   "age_max": 9.0,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "nor"
+   ],
+   "n_words": 32,
+   "native_languages": [
+    "nor"
+   ],
+   "kb": 597
+  },
+  {
+   "name": "kremin_2021",
+   "shortcite": "Kremin et al. 2023",
+   "cite": "Kremin, L. V., Jardak, A., Lew-Williams, C., & Byers-Heinlein, K. (2023). Bilingual children\u2019s comprehension of code-switching at an uninformative adjective. Language Development Research 3(1), 249\u2013276.",
+   "n_subjects": 60,
+   "n_admins": 60,
+   "n_trials": 834,
+   "age_min": 36.6,
+   "age_max": 49.0,
+   "methods": [
+    "eyetracking",
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng",
+    "fre",
+    "multiple",
+    "spa"
+   ],
+   "n_words": 10,
+   "native_languages": [
+    "eng, fre",
+    "eng, spa"
+   ],
+   "kb": 105
+  },
+  {
+   "name": "luchkina_waxman_2024",
+   "shortcite": "Luchkina, E., & Waxman, S. (2024)",
+   "cite": "Luchkina, E., & Waxman, S. R. (2021). Semantic priming supports infants\u2019 ability to learn names of unseen objects. PloS one, 16(1), e0244968.",
+   "n_subjects": 76,
+   "n_admins": 76,
+   "n_trials": 902,
+   "age_min": 11.2,
+   "age_max": 14.9,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 82
+  },
+  {
+   "name": "mahr_coartic",
+   "shortcite": "Mahr et al. (2015)",
+   "cite": "Mahr, T., McMillan, B. T. M., Saffran, J. R., Ellis Weismer, S., & Edwards, J. (2015). Anticipatory coarticulation facilitates word recognition in toddlers. Cognition, 142, 345-350.",
+   "n_subjects": 29,
+   "n_admins": 29,
+   "n_trials": 1302,
+   "age_min": 18.1,
+   "age_max": 23.8,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 10,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 92
+  },
+  {
+   "name": "moore_bergelson_2022_verb",
+   "shortcite": "Moore & Bergelson (2022)",
+   "cite": "Moore, C., & Bergelson, E. (2022). Examining the roles of regularity and lexical class in 18\u201326-month-olds\u2019 representations of how words sound. Journal of Memory and Language, 126, 104337.",
+   "n_subjects": 98,
+   "n_admins": 98,
+   "n_trials": 2783,
+   "age_min": 15.5,
+   "age_max": 28.5,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 32,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 267
+  },
+  {
+   "name": "newman_genderdistractor",
+   "shortcite": "Newman et al. (2017)",
+   "cite": "Newman, R., &  Morini, G. (2017). Effect of the relationship between target and masker sex on infants' recognition of speech. The Journal of the Acoustical Society of America 141, EL164 (2017); doi: 10.1121/1.4976498",
+   "n_subjects": 95,
+   "n_admins": 95,
+   "n_trials": 1512,
+   "age_min": 16.0,
+   "age_max": 31.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 144
+  },
+  {
+   "name": "newman_sinewave_2015",
+   "shortcite": "Newman et al. (2015)",
+   "cite": "Newman, R. S., Chatterjee, M., Morini, G., & Remez, R. E. (2015). Toddlers' comprehension of degraded signals: Noise-vocoded versus sine-wave analogs. The Journal of the Acoustical Society of America, 138(3), EL311-EL317.",
+   "n_subjects": 24,
+   "n_admins": 24,
+   "n_trials": 334,
+   "age_min": 25.7,
+   "age_max": 28.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 6,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 26
+  },
+  {
+   "name": "nordmeyer_negtracker_2014",
+   "shortcite": "Nordmeyer & Frank (2014)",
+   "cite": "Nordmeyer, A. E., Frank, M. C. (2014). The role of context in young children's comprehension of negation. Journal of Memory and Language, 77, 25\u201339.",
+   "n_subjects": 93,
+   "n_admins": 93,
+   "n_trials": 670,
+   "age_min": 24.0,
+   "age_max": 59.5,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 16,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 91
+  },
+  {
+   "name": "perry_cowpig",
+   "shortcite": "Perry & Saffran (2017)",
+   "cite": "Perry, L. K., & Saffran, J. R. (2017). Is a pink cow still a cow? Individual differences in toddlers' vocabulary knowledge and lexical representations. Cognitive Science, 41(4), 1090-1105. doi: 10.1111/cogs.12370",
+   "n_subjects": 45,
+   "n_admins": 45,
+   "n_trials": 1560,
+   "age_min": 19.0,
+   "age_max": 22.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 145
+  },
+  {
+   "name": "pomper_dimy",
+   "shortcite": "Pomper & Saffran (unpublished)",
+   "cite": "Pomper, R., & Saffran, J. (unpublished). Unpublished 'Dimy' study: Do infants learn to associate diminutive forms with animates?",
+   "n_subjects": 82,
+   "n_admins": 82,
+   "n_trials": 1631,
+   "age_min": 14.0,
+   "age_max": 19.0,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 30,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 293
+  },
+  {
+   "name": "pomper_prime",
+   "shortcite": "Pomper & Saffran (unpublished)",
+   "cite": "Pomper, R. & Saffran, J. R. (unpublished). Unpublished \"Prime\" study: Modulating attention to different features of objects during word learning.",
+   "n_subjects": 63,
+   "n_admins": 63,
+   "n_trials": 984,
+   "age_min": 37.9,
+   "age_max": 42.0,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 24,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 101
+  },
+  {
+   "name": "pomper_saffran_2016",
+   "shortcite": "Pomper & Saffran (2016)",
+   "cite": "Pomper, R., & Saffran, J. R. (2016). Roses are red, socks are blue: Switching dimensions disrupts young children's language comprehension. Plos one, 11(6), e0158459.\nChicago",
+   "n_subjects": 60,
+   "n_admins": 60,
+   "n_trials": 957,
+   "age_min": 41.0,
+   "age_max": 47.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 40,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 86
+  },
+  {
+   "name": "pomper_salientme",
+   "shortcite": "Pomper & Saffran (2019)",
+   "cite": "Pomper, R., & Saffran, J. R. (2019). Familiar object salience affects novel word learning. Child Development, 90(2), e246-e262. doi:10.1111/cdev.13053",
+   "n_subjects": 44,
+   "n_admins": 44,
+   "n_trials": 1669,
+   "age_min": 38.0,
+   "age_max": 43.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 16,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 154
+  },
+  {
+   "name": "pomper_yumme",
+   "shortcite": "Pomper & Saffran (2018)",
+   "cite": "Pomper, R., & Saffran, J. R. (2018). More than distractors: Familiar objects influence toddlers' semantic representations in novel word learning. XXI Biennial International Congress of Infant Studies. Philadelphia, PA (poster).",
+   "n_subjects": 69,
+   "n_admins": 69,
+   "n_trials": 1620,
+   "age_min": 25.0,
+   "age_max": 43.0,
+   "methods": [
+    "manual gaze coding",
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 25,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 144
+  },
+  {
+   "name": "potter_canine",
+   "shortcite": "Potter, C., & Lew-Williams, C. (2024)",
+   "cite": "Potter, C. E., & Lew-Williams, C. (2024). Frequent vs. infrequent words shape toddlers\u2019 real-time sentence comprehension. Journal of Child Language. 2024;51(6):1478-1488.",
+   "n_subjects": 70,
+   "n_admins": 70,
+   "n_trials": 1822,
+   "age_min": 21.0,
+   "age_max": 27.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 30,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 170
+  },
+  {
+   "name": "potter_remix",
+   "shortcite": "Potter et al. (2019)",
+   "cite": "Potter, C.E., Fourakis, E., Morin-Lessard, E., Byers-Heinlein, K., & Lew-Williams, C. (2019). Bilingual toddlers' comprehension of mixed sentences is asymmetrical across their two languages. Developmental Science, 22(4), e12794. https://doi.org/10.1111/desc.12794",
+   "n_subjects": 23,
+   "n_admins": 44,
+   "n_trials": 616,
+   "age_min": 18.0,
+   "age_max": 29.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng",
+    "multiple",
+    "spa"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "spa, eng"
+   ],
+   "kb": 54
+  },
+  {
+   "name": "reflook_socword",
+   "shortcite": "Yurovsky et al., 2013",
+   "cite": "Yurovsky, D., Wade, A., & Frank, M. C. (2013). Online processing of speech and social information in early word learning. In Proceedings of the 35th Annual Meeting of the Cognitive Science Society.",
+   "n_subjects": 427,
+   "n_admins": 427,
+   "n_trials": 8512,
+   "age_min": 11.9,
+   "age_max": 69.7,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 6,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 1268
+  },
+  {
+   "name": "reflook_v4",
+   "shortcite": "Yurovsky et al. (2024)",
+   "cite": "Yurovsky, D., Wade, A., Kraus, A. M., Gengoux, G. W., Hardan, A. Y., Frank, M. C. (2024). Developmental changes in the speed of social attention in early word learning. https://osf.io/preprints/psyarxiv/bcrj2_v1",
+   "n_subjects": 347,
+   "n_admins": 347,
+   "n_trials": 5449,
+   "age_min": 8.4,
+   "age_max": 83.8,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 10,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 658
+  },
+  {
+   "name": "ronfard_2021",
+   "shortcite": "Ronfard, Wei, & Rowe (2021)",
+   "cite": "Ronfard, S., Wei, R., & Rowe, M. (2021). Uncovering the linguistic, social, and cognitive skills underlying processing efficiency as measured by the looking-while-listening paradigm. Journal of Child Language, 49(2), 302\u2013325.",
+   "n_subjects": 40,
+   "n_admins": 40,
+   "n_trials": 738,
+   "age_min": 18.0,
+   "age_max": 24.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 41
+  },
+  {
+   "name": "sander-montant_2022",
+   "shortcite": "Sander-Montant et al. 2023",
+   "cite": "Sander-Montant, A., Byers-Heinlein, K., & Perez, M. L. (2023). The more they hear the more they learn? Using data from bilinguals to test models of early lexical development. Cognition, 238, 105525.",
+   "n_subjects": 123,
+   "n_admins": 123,
+   "n_trials": 2566,
+   "age_min": 12.0,
+   "age_max": 31.1,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng",
+    "fre",
+    "multiple"
+   ],
+   "n_words": 21,
+   "native_languages": [
+    "eng, fre"
+   ],
+   "kb": 305
+  },
+  {
+   "name": "swingley_aslin_2002",
+   "shortcite": "Swingley & Aslin (2002)",
+   "cite": "Swingley, D., & Aslin, R. N. (2002). Lexical Neighborhoods and the Word-Form Representations of 14-Month-Olds. Psychological Science, 13(5), 480-484. https://doi.org/10.1111/1467-9280.00485",
+   "n_subjects": 50,
+   "n_admins": 50,
+   "n_trials": 1111,
+   "age_min": 14.1,
+   "age_max": 16.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 22,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 85
+  },
+  {
+   "name": "valleau_2018",
+   "shortcite": "Valleau et al. (2018)",
+   "cite": "Valleau, M. J., Konishi, H., Golinkoff, R. M., Hirsh-Pasek, K., & Arunachalam, S. (2018). An eye-tracking study of receptive verb knowledge in toddlers. Journal of speech, language, and hearing research, 61(12), 2917-2933.",
+   "n_subjects": 40,
+   "n_admins": 40,
+   "n_trials": 779,
+   "age_min": 22.1,
+   "age_max": 26.1,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 50,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 63
+  },
+  {
+   "name": "weaver_saffran_2026",
+   "shortcite": "Weaver & Saffran (2026)",
+   "cite": "Weaver H, Saffran JR. Interrogating Early Word Knowledge: Factors That Influence the Alignment Between Caregiver-Report and Experimental Measures. Dev Sci. 2026 Jan;29(1):e70088. doi: 10.1111/desc.70088. PMID: 41217046.",
+   "n_subjects": 69,
+   "n_admins": 69,
+   "n_trials": 1948,
+   "age_min": 18.1,
+   "age_max": 20.1,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 436
+  },
+  {
+   "name": "weaver_zettersten_2024",
+   "shortcite": "Weaver et al. (2024)",
+   "cite": "Weaver, H., Zettersten, M., & Saffran, J. (2024). Becoming word meaning experts: Infants\u2019 processing of familiar words in the context of typical and atypical exemplars. Child Development, 95(5), e352-e372.",
+   "n_subjects": 141,
+   "n_admins": 248,
+   "n_trials": 4959,
+   "age_min": 13.5,
+   "age_max": 23.6,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 4,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 501
+  },
+  {
+   "name": "weisleder_stl",
+   "shortcite": "Weisleder & Fernald (2013)",
+   "cite": "Weisleder, A., & Fernald, A. (2013). Talking to children matters: Early language experience strengthens processing and builds vocabulary. Psychological Science, 24(11), 2143\u20132152. https://doi.org/10.1177/0956797613488145",
+   "n_subjects": 29,
+   "n_admins": 58,
+   "n_trials": 1929,
+   "age_min": 18.0,
+   "age_max": 27.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "spa"
+   ],
+   "n_words": 12,
+   "native_languages": [
+    "spa"
+   ],
+   "kb": 151
+  },
+  {
+   "name": "xsectional_2007",
+   "shortcite": "Hurtado, Marchman, & Fernald (2007)",
+   "cite": "Hurtado, N., Marchman, V. A., & Fernald, A. (2007). Spoken word recognition by Latino children learning Spanish as their first language. Journal of Child Language, 34(2), 227-249.",
+   "n_subjects": 49,
+   "n_admins": 49,
+   "n_trials": 1010,
+   "age_min": 15.0,
+   "age_max": 37.0,
+   "methods": [
+    "manual gaze coding"
+   ],
+   "languages": [
+    "spa"
+   ],
+   "n_words": 8,
+   "native_languages": [
+    "spa"
+   ],
+   "kb": 68
+  },
+  {
+   "name": "yoon_simpimp_2015",
+   "shortcite": "Yoon & Frank (2015)",
+   "cite": "Yoon, E. J., Wu, Y. C., Frank, M. C. (2015). Children's Online Processing of Ad-Hoc Implicatures. Proceedings of the 37th Annual Conference of the Cognitive Science Society.",
+   "n_subjects": 261,
+   "n_admins": 261,
+   "n_trials": 4031,
+   "age_min": 13.2,
+   "age_max": 78.0,
+   "methods": [
+    "eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 13,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 623
+  },
+  {
+   "name": "yurovsky_2017",
+   "shortcite": "Yurovsky & Frank (2017)",
+   "cite": "Yurovsky, D., & Frank, M. C. (2017). Beyond na\u00efve cue combination: Salience and social cues in early word learning. Developmental Science, 20(2), e12349. doi: 10.1111/desc.12349.",
+   "n_subjects": 288,
+   "n_admins": 288,
+   "n_trials": 5760,
+   "age_min": 12.6,
+   "age_max": 58.7,
+   "methods": [
+    "preprocessed eyetracking"
+   ],
+   "languages": [
+    "eng"
+   ],
+   "n_words": 6,
+   "native_languages": [
+    "eng"
+   ],
+   "kb": 603
+  }
+ ]
+}
