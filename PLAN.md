@@ -144,10 +144,22 @@
   README on OSF; coordinate with OSF sunset timeline.
 
 ### Stage 5 — data-import repo re-target
-- Swap `helper_functions/osf.R` for Redivis file download/upload.
+- Swap `helper_functions/osf.R` for Redivis file download/upload
+  (peekbank_files dataset; `table$download_files()` filtered by name prefix).
 - New release path: pipeline output → global-ID assignment + parquet build +
-  Redivis version push (replaces Django/MySQL entirely). Document the new
-  release runbook. Keep the Docker option.
+  Redivis version push (replaces Django/MySQL entirely; port the ID
+  assignment + RLE build from the Django populate/promote commands with a
+  characterization diff against 2026.1). Document the new release runbook.
+  Keep the Docker option.
+- Design note: today's dev schemas (peekbank_dev, workshop_2024_dev,
+  grant_2024_dev) are the team's pre-release QA surface; their Redivis
+  analog is the *unreleased draft next version* (visible to org members
+  only). The release-build script should support "stage draft, don't
+  release" for exactly this.
+- Site refresh path: `scripts/build_slices.py` currently reads the local
+  staging parquet; add a --from-redivis mode (download release tables,
+  rebuild slices, commit) so future releases regenerate the datapage
+  without the MySQL export step.
 - Later experiment (not blocking): Redivis workflow that reruns the full
   import for a release in-cloud.
 
