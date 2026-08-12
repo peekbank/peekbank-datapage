@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -46,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d42608f3effdab8ea90152421d48789d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-725e7edb04494c33f7530bb18b24f015.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -91,6 +126,8 @@ ul.task-list li input[type="checkbox"] {
 background: var(--bs-light);
       }
 </style>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
@@ -181,7 +218,7 @@ background: var(--bs-light);
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">About this site</h1>
+      <h1 class="title">About Peekbank</h1>
                       </div>
   </div>
     
@@ -205,24 +242,88 @@ background: var(--bs-light);
 
 
 
-<p>This site is the home of <strong>Peekbank</strong>, an open database of developmental eye-tracking data from looking-while-listening studies of children’s word recognition, with interactive visualizations computed in your browser from the current database release.</p>
-<p>All plots are computed in your browser from compact per-dataset extracts of the current database release, which is versioned and hosted on <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis</a>. For full data access use the <a href="https://github.com/peekbank/peekbankr">peekbankr</a> R package, query the dataset directly on Redivis, or see the <a href="dataaccess.html">data access documentation</a>.</p>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>If you use Peekbank data, please cite the database paper and the original publications for each dataset you use (listed on the <a href="datasets.html">Datasets</a> page):</p>
-<blockquote class="blockquote">
-<p>Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N. S., Bergey, C. A., &amp; Frank, M. C. (2023). Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition. <em>Behavior Research Methods</em>, 55(5), 2485–2500. <a href="https://doi.org/10.3758/s13428-022-01906-4">doi:10.3758/s13428-022-01906-4</a></p>
-</blockquote>
+<p>The Peekbank project aims to make developmental eye-tracking data more accessible for sharing and reuse. We do this by reducing the amount of preprocessing necessary to perform typical analyses and by storing data in a common, tidy format that allows for easy cross-dataset comparisons.</p>
+<p>We release new dated versions periodically to facilitate reproducibility (see <a href="docs.html#releases">Releases</a>), and support an API via the <a href="https://peekbank.github.io/peekbankr/">peekbankr</a> R package, which lets users access the data in Peekbank without writing queries.</p>
+<p>Peekbank is open source and under active development. If you encounter a problem, please file an issue in the <a href="https://github.com/peekbank">GitHub Issues page</a> of the appropriate repository. If you would like to contact us directly, email us at <a href="mailto:peekbank-dev@lists.stanford.edu">peekbank-dev@lists.stanford.edu</a>.</p>
+<section id="publications" class="level2">
+<h2 class="anchored" data-anchor-id="publications">Publications</h2>
+<p>Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N., Bergey, C. A., &amp; Frank, M. C. (2023). <strong>Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition.</strong> <em>Behavior Research Methods, 55,</em> 2485–2500. <a href="https://doi.org/10.3758/s13428-022-01906-4">doi:10.3758/s13428-022-01906-4</a> <a href="https://psyarxiv.com/tgnzv">[preprint]</a></p>
+<p>Frank, M. C., Marchman, V. A., Bergey, C. A., Boyce, V., Braginsky, M., Kachergis, G., Mankewitz, J., Meylan, S. C., Prystawski, B., Ram, N., Sparks, R. Z., Steffan, A., Tan, A. W. M., &amp; Zettersten, M. (2025). <strong>Continuous developmental changes in word recognition and language learning across early childhood.</strong> <em>eLife</em>, 14:RP109636. <a href="https://doi.org/10.7554/eLife.109636">doi:10.7554/eLife.109636</a></p>
+<p>Zettersten, M., Bergey, C. A., Bhatt, N., Boyce, V., Braginsky, M., Carstensen, A., deMayo, B., Kachergis, G., Lewis, M., Long, B., MacDonald, K., Mankewitz, J., Meylan, S. C., Saleh, A. N., Schneider, R. M., Tsui, A., Uner, S., Xu, T. L., Yurovsky, D., &amp; Frank, M. C. (2021). <strong>Peekbank: Exploring children’s word recognition through an open, large-scale repository for developmental eye-tracking data.</strong> <em>Proceedings of the 43rd Annual Conference of the Cognitive Science Society</em>. <a href="https://psyarxiv.com/ep693/">[preprint]</a></p>
+<p>For the database citation policy, see <a href="dataaccess.html#citation">Data Access</a>.</p>
 </section>
-<section id="the-analyses" class="level2">
-<h2 class="anchored" data-anchor-id="the-analyses">The analyses</h2>
-<p>The visualizations follow standard analysis conventions for looking-while-listening data (Fernald, Zangl, Portillo, &amp; Marchman, 2008): proportion target looking among target-and-distractor looks; landing-time reaction times on distractor-initial trials; onset-contingent looking curves. Trials excluded by the contributing labs are included by default (Peekbank archives all contributed data), and can be filtered with the “Include lab-excluded trials” toggle.</p>
+<section id="meet-the-peekbank-team" class="level2">
+<h2 class="anchored" data-anchor-id="meet-the-peekbank-team">Meet the Peekbank team</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="56" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 55;"><span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>teamMembers <span class="op">=</span> [</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Claire Bergey"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"claire.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://github.com/cbergey"</span> }<span class="op">,</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Naiti Bhatt"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"naiti.jpeg"</span> }<span class="op">,</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Veronica Boyce"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"vboyce.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://vboyce.github.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Mika Braginsky"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"mika.jpeg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://mikabr.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Michael C. Frank"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"mike.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://web.stanford.edu/~mcfrank/"</span> }<span class="op">,</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Federico Giovannetti"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"fede.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://fedegiovannetti.github.io/en/"</span> }<span class="op">,</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Kunal Handa"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"kunal.jpg"</span> }<span class="op">,</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"George Kachergis"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"george.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"http://www.kachergis.com/"</span> }<span class="op">,</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Molly Lewis"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"molly.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"http://www.andrew.cmu.edu/user/mollylew/"</span> }<span class="op">,</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Bria Long"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"bria.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://www.brialong.com/"</span> }<span class="op">,</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Kyle MacDonald"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"km_2018.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://kemacdonald.com"</span> }<span class="op">,</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Jessica Mankewitz"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"jess.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://github.com/JMankewitz"</span> }<span class="op">,</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Virginia Marchman"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"virginia.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://profiles.stanford.edu/virginia-marchman"</span> }<span class="op">,</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Stephan Meylan"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"stephan.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://stephanmeylan.com/"</span> }<span class="op">,</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Ben Prystawski"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"ben.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://benprystawski.com/"</span> }<span class="op">,</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Annissa Saleh"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"annissa.jpg"</span> }<span class="op">,</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Rose M. Schneider"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"rose.jpeg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://rosemschneider.github.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Adrian Steffan"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"adrian.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://adriansteffan.com"</span> }<span class="op">,</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Alvin Tan"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"alvin.jpeg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://alvinwmtan.github.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Angeline Tsui"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"angeline.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://angelinetsui.github.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Sarp Uner"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"sarp.jpg"</span> }<span class="op">,</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Tian Linger Xu"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"linger.jpg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"http://homes.sice.indiana.edu/txu/"</span> }<span class="op">,</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">name</span><span class="op">:</span> <span class="st">"Martin Zettersten"</span><span class="op">,</span> <span class="dt">image</span><span class="op">:</span> <span class="st">"martin.jpeg"</span><span class="op">,</span> <span class="dt">link</span><span class="op">:</span> <span class="st">"https://mzettersten.github.io/"</span> }<span class="op">,</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="pb-team-grid"&gt;</span><span class="sc">${</span>teamMembers<span class="op">.</span><span class="fu">map</span>((m) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> card <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;img src="images/people/</span><span class="sc">${</span>m<span class="op">.</span><span class="at">image</span><span class="sc">}</span><span class="vs">" alt="</span><span class="sc">${</span>m<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">" loading="lazy"&gt;</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div class="pb-team-name"&gt;</span><span class="sc">${</span>m<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> m<span class="op">.</span><span class="at">link</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;a class="pb-team-card" href="</span><span class="sc">${</span>m<span class="op">.</span><span class="at">link</span><span class="sc">}</span><span class="vs">" target="_blank" rel="noopener"&gt;</span><span class="sc">${</span>card<span class="sc">}</span><span class="vs">&lt;/a&gt;`</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> <span class="fu">html</span><span class="vs">`&lt;div class="pb-team-card"&gt;</span><span class="sc">${</span>card<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>})<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="about-this-site" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-site">About this site</h2>
+<p>The visualizations follow standard analysis conventions for looking-while-listening data (Fernald, Zangl, Portillo, &amp; Marchman, 2008): proportion target looking among target-and-distractor looks; landing-time reaction times on distractor-initial trials; onset-contingent looking curves. Trials excluded by the contributing labs are included by default (Peekbank archives all contributed data), and can be filtered with the “Excluded trials” toggle. Everything is computed in your browser from compact extracts of the current release; the full data live on <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis</a>.</p>
 <p>Built with <a href="https://quarto.org">Quarto</a> and <a href="https://observablehq.com/plot/">Observable</a>; source at <a href="https://github.com/peekbank/peekbank-datapage">peekbank/peekbank-datapage</a>.</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InRlYW1NZW1iZXJzID0gW1xuICB7IG5hbWU6IFwiQ2xhaXJlIEJlcmdleVwiLCBpbWFnZTogXCJjbGFpcmUuanBnXCIsIGxpbms6IFwiaHR0cHM6Ly9naXRodWIuY29tL2NiZXJnZXlcIiB9LFxuICB7IG5hbWU6IFwiTmFpdGkgQmhhdHRcIiwgaW1hZ2U6IFwibmFpdGkuanBlZ1wiIH0sXG4gIHsgbmFtZTogXCJWZXJvbmljYSBCb3ljZVwiLCBpbWFnZTogXCJ2Ym95Y2UuanBnXCIsIGxpbms6IFwiaHR0cHM6Ly92Ym95Y2UuZ2l0aHViLmlvL1wiIH0sXG4gIHsgbmFtZTogXCJNaWthIEJyYWdpbnNreVwiLCBpbWFnZTogXCJtaWthLmpwZWdcIiwgbGluazogXCJodHRwczovL21pa2Fici5pby9cIiB9LFxuICB7IG5hbWU6IFwiTWljaGFlbCBDLiBGcmFua1wiLCBpbWFnZTogXCJtaWtlLmpwZ1wiLCBsaW5rOiBcImh0dHBzOi8vd2ViLnN0YW5mb3JkLmVkdS9+bWNmcmFuay9cIiB9LFxuICB7IG5hbWU6IFwiRmVkZXJpY28gR2lvdmFubmV0dGlcIiwgaW1hZ2U6IFwiZmVkZS5qcGdcIiwgbGluazogXCJodHRwczovL2ZlZGVnaW92YW5uZXR0aS5naXRodWIuaW8vZW4vXCIgfSxcbiAgeyBuYW1lOiBcIkt1bmFsIEhhbmRhXCIsIGltYWdlOiBcImt1bmFsLmpwZ1wiIH0sXG4gIHsgbmFtZTogXCJHZW9yZ2UgS2FjaGVyZ2lzXCIsIGltYWdlOiBcImdlb3JnZS5qcGdcIiwgbGluazogXCJodHRwOi8vd3d3LmthY2hlcmdpcy5jb20vXCIgfSxcbiAgeyBuYW1lOiBcIk1vbGx5IExld2lzXCIsIGltYWdlOiBcIm1vbGx5LmpwZ1wiLCBsaW5rOiBcImh0dHA6Ly93d3cuYW5kcmV3LmNtdS5lZHUvdXNlci9tb2xseWxldy9cIiB9LFxuICB7IG5hbWU6IFwiQnJpYSBMb25nXCIsIGltYWdlOiBcImJyaWEuanBnXCIsIGxpbms6IFwiaHR0cHM6Ly93d3cuYnJpYWxvbmcuY29tL1wiIH0sXG4gIHsgbmFtZTogXCJLeWxlIE1hY0RvbmFsZFwiLCBpbWFnZTogXCJrbV8yMDE4LmpwZ1wiLCBsaW5rOiBcImh0dHBzOi8va2VtYWNkb25hbGQuY29tXCIgfSxcbiAgeyBuYW1lOiBcIkplc3NpY2EgTWFua2V3aXR6XCIsIGltYWdlOiBcImplc3MuanBnXCIsIGxpbms6IFwiaHR0cHM6Ly9naXRodWIuY29tL0pNYW5rZXdpdHpcIiB9LFxuICB7IG5hbWU6IFwiVmlyZ2luaWEgTWFyY2htYW5cIiwgaW1hZ2U6IFwidmlyZ2luaWEuanBnXCIsIGxpbms6IFwiaHR0cHM6Ly9wcm9maWxlcy5zdGFuZm9yZC5lZHUvdmlyZ2luaWEtbWFyY2htYW5cIiB9LFxuICB7IG5hbWU6IFwiU3RlcGhhbiBNZXlsYW5cIiwgaW1hZ2U6IFwic3RlcGhhbi5qcGdcIiwgbGluazogXCJodHRwczovL3N0ZXBoYW5tZXlsYW4uY29tL1wiIH0sXG4gIHsgbmFtZTogXCJCZW4gUHJ5c3Rhd3NraVwiLCBpbWFnZTogXCJiZW4uanBnXCIsIGxpbms6IFwiaHR0cHM6Ly9iZW5wcnlzdGF3c2tpLmNvbS9cIiB9LFxuICB7IG5hbWU6IFwiQW5uaXNzYSBTYWxlaFwiLCBpbWFnZTogXCJhbm5pc3NhLmpwZ1wiIH0sXG4gIHsgbmFtZTogXCJSb3NlIE0uIFNjaG5laWRlclwiLCBpbWFnZTogXCJyb3NlLmpwZWdcIiwgbGluazogXCJodHRwczovL3Jvc2Vtc2NobmVpZGVyLmdpdGh1Yi5pby9cIiB9LFxuICB7IG5hbWU6IFwiQWRyaWFuIFN0ZWZmYW5cIiwgaW1hZ2U6IFwiYWRyaWFuLmpwZ1wiLCBsaW5rOiBcImh0dHBzOi8vYWRyaWFuc3RlZmZhbi5jb21cIiB9LFxuICB7IG5hbWU6IFwiQWx2aW4gVGFuXCIsIGltYWdlOiBcImFsdmluLmpwZWdcIiwgbGluazogXCJodHRwczovL2Fsdmlud210YW4uZ2l0aHViLmlvL1wiIH0sXG4gIHsgbmFtZTogXCJBbmdlbGluZSBUc3VpXCIsIGltYWdlOiBcImFuZ2VsaW5lLmpwZ1wiLCBsaW5rOiBcImh0dHBzOi8vYW5nZWxpbmV0c3VpLmdpdGh1Yi5pby9cIiB9LFxuICB7IG5hbWU6IFwiU2FycCBVbmVyXCIsIGltYWdlOiBcInNhcnAuanBnXCIgfSxcbiAgeyBuYW1lOiBcIlRpYW4gTGluZ2VyIFh1XCIsIGltYWdlOiBcImxpbmdlci5qcGdcIiwgbGluazogXCJodHRwOi8vaG9tZXMuc2ljZS5pbmRpYW5hLmVkdS90eHUvXCIgfSxcbiAgeyBuYW1lOiBcIk1hcnRpbiBaZXR0ZXJzdGVuXCIsIGltYWdlOiBcIm1hcnRpbi5qcGVnXCIsIGxpbms6IFwiaHR0cHM6Ly9temV0dGVyc3Rlbi5naXRodWIuaW8vXCIgfSxcbl1cblxuaHRtbGA8ZGl2IGNsYXNzPVwicGItdGVhbS1ncmlkXCI+JHt0ZWFtTWVtYmVycy5tYXAoKG0pID0+IHtcbiAgY29uc3QgY2FyZCA9IGh0bWxgPGltZyBzcmM9XCJpbWFnZXMvcGVvcGxlLyR7bS5pbWFnZX1cIiBhbHQ9XCIke20ubmFtZX1cIiBsb2FkaW5nPVwibGF6eVwiPlxuICAgIDxkaXYgY2xhc3M9XCJwYi10ZWFtLW5hbWVcIj4ke20ubmFtZX08L2Rpdj5gO1xuICByZXR1cm4gbS5saW5rXG4gICAgPyBodG1sYDxhIGNsYXNzPVwicGItdGVhbS1jYXJkXCIgaHJlZj1cIiR7bS5saW5rfVwiIHRhcmdldD1cIl9ibGFua1wiIHJlbD1cIm5vb3BlbmVyXCI+JHtjYXJkfTwvYT5gXG4gICAgOiBodG1sYDxkaXYgY2xhc3M9XCJwYi10ZWFtLWNhcmRcIj4ke2NhcmR9PC9kaXY+YDtcbn0pfTwvZGl2PmBcbiJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

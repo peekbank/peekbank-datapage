@@ -114,23 +114,30 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About this site",
+    "title": "About Peekbank",
     "section": "",
-    "text": "This site is the home of Peekbank, an open database of developmental eye-tracking data from looking-while-listening studies of children’s word recognition, with interactive visualizations computed in your browser from the current database release.\nAll plots are computed in your browser from compact per-dataset extracts of the current database release, which is versioned and hosted on Redivis. For full data access use the peekbankr R package, query the dataset directly on Redivis, or see the data access documentation."
+    "text": "The Peekbank project aims to make developmental eye-tracking data more accessible for sharing and reuse. We do this by reducing the amount of preprocessing necessary to perform typical analyses and by storing data in a common, tidy format that allows for easy cross-dataset comparisons.\nWe release new dated versions periodically to facilitate reproducibility (see Releases), and support an API via the peekbankr R package, which lets users access the data in Peekbank without writing queries.\nPeekbank is open source and under active development. If you encounter a problem, please file an issue in the GitHub Issues page of the appropriate repository. If you would like to contact us directly, email us at peekbank-dev@lists.stanford.edu."
   },
   {
-    "objectID": "about.html#citation",
-    "href": "about.html#citation",
-    "title": "About this site",
-    "section": "Citation",
-    "text": "Citation\nIf you use Peekbank data, please cite the database paper and the original publications for each dataset you use (listed on the Datasets page):\n\nZettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N. S., Bergey, C. A., & Frank, M. C. (2023). Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition. Behavior Research Methods, 55(5), 2485–2500. doi:10.3758/s13428-022-01906-4"
+    "objectID": "about.html#publications",
+    "href": "about.html#publications",
+    "title": "About Peekbank",
+    "section": "Publications",
+    "text": "Publications\nZettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N., Bergey, C. A., & Frank, M. C. (2023). Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition. Behavior Research Methods, 55, 2485–2500. doi:10.3758/s13428-022-01906-4 [preprint]\nFrank, M. C., Marchman, V. A., Bergey, C. A., Boyce, V., Braginsky, M., Kachergis, G., Mankewitz, J., Meylan, S. C., Prystawski, B., Ram, N., Sparks, R. Z., Steffan, A., Tan, A. W. M., & Zettersten, M. (2025). Continuous developmental changes in word recognition and language learning across early childhood. eLife, 14:RP109636. doi:10.7554/eLife.109636\nZettersten, M., Bergey, C. A., Bhatt, N., Boyce, V., Braginsky, M., Carstensen, A., deMayo, B., Kachergis, G., Lewis, M., Long, B., MacDonald, K., Mankewitz, J., Meylan, S. C., Saleh, A. N., Schneider, R. M., Tsui, A., Uner, S., Xu, T. L., Yurovsky, D., & Frank, M. C. (2021). Peekbank: Exploring children’s word recognition through an open, large-scale repository for developmental eye-tracking data. Proceedings of the 43rd Annual Conference of the Cognitive Science Society. [preprint]\nFor the database citation policy, see Data Access."
   },
   {
-    "objectID": "about.html#the-analyses",
-    "href": "about.html#the-analyses",
-    "title": "About this site",
-    "section": "The analyses",
-    "text": "The analyses\nThe visualizations follow standard analysis conventions for looking-while-listening data (Fernald, Zangl, Portillo, & Marchman, 2008): proportion target looking among target-and-distractor looks; landing-time reaction times on distractor-initial trials; onset-contingent looking curves. Trials excluded by the contributing labs are included by default (Peekbank archives all contributed data), and can be filtered with the “Include lab-excluded trials” toggle.\nBuilt with Quarto and Observable; source at peekbank/peekbank-datapage."
+    "objectID": "about.html#meet-the-peekbank-team",
+    "href": "about.html#meet-the-peekbank-team",
+    "title": "About Peekbank",
+    "section": "Meet the Peekbank team",
+    "text": "Meet the Peekbank team\n\nteamMembers = [\n  { name: \"Claire Bergey\", image: \"claire.jpg\", link: \"https://github.com/cbergey\" },\n  { name: \"Naiti Bhatt\", image: \"naiti.jpeg\" },\n  { name: \"Veronica Boyce\", image: \"vboyce.jpg\", link: \"https://vboyce.github.io/\" },\n  { name: \"Mika Braginsky\", image: \"mika.jpeg\", link: \"https://mikabr.io/\" },\n  { name: \"Michael C. Frank\", image: \"mike.jpg\", link: \"https://web.stanford.edu/~mcfrank/\" },\n  { name: \"Federico Giovannetti\", image: \"fede.jpg\", link: \"https://fedegiovannetti.github.io/en/\" },\n  { name: \"Kunal Handa\", image: \"kunal.jpg\" },\n  { name: \"George Kachergis\", image: \"george.jpg\", link: \"http://www.kachergis.com/\" },\n  { name: \"Molly Lewis\", image: \"molly.jpg\", link: \"http://www.andrew.cmu.edu/user/mollylew/\" },\n  { name: \"Bria Long\", image: \"bria.jpg\", link: \"https://www.brialong.com/\" },\n  { name: \"Kyle MacDonald\", image: \"km_2018.jpg\", link: \"https://kemacdonald.com\" },\n  { name: \"Jessica Mankewitz\", image: \"jess.jpg\", link: \"https://github.com/JMankewitz\" },\n  { name: \"Virginia Marchman\", image: \"virginia.jpg\", link: \"https://profiles.stanford.edu/virginia-marchman\" },\n  { name: \"Stephan Meylan\", image: \"stephan.jpg\", link: \"https://stephanmeylan.com/\" },\n  { name: \"Ben Prystawski\", image: \"ben.jpg\", link: \"https://benprystawski.com/\" },\n  { name: \"Annissa Saleh\", image: \"annissa.jpg\" },\n  { name: \"Rose M. Schneider\", image: \"rose.jpeg\", link: \"https://rosemschneider.github.io/\" },\n  { name: \"Adrian Steffan\", image: \"adrian.jpg\", link: \"https://adriansteffan.com\" },\n  { name: \"Alvin Tan\", image: \"alvin.jpeg\", link: \"https://alvinwmtan.github.io/\" },\n  { name: \"Angeline Tsui\", image: \"angeline.jpg\", link: \"https://angelinetsui.github.io/\" },\n  { name: \"Sarp Uner\", image: \"sarp.jpg\" },\n  { name: \"Tian Linger Xu\", image: \"linger.jpg\", link: \"http://homes.sice.indiana.edu/txu/\" },\n  { name: \"Martin Zettersten\", image: \"martin.jpeg\", link: \"https://mzettersten.github.io/\" },\n]\n\nhtml`&lt;div class=\"pb-team-grid\"&gt;${teamMembers.map((m) =&gt; {\n  const card = html`&lt;img src=\"images/people/${m.image}\" alt=\"${m.name}\" loading=\"lazy\"&gt;\n    &lt;div class=\"pb-team-name\"&gt;${m.name}&lt;/div&gt;`;\n  return m.link\n    ? html`&lt;a class=\"pb-team-card\" href=\"${m.link}\" target=\"_blank\" rel=\"noopener\"&gt;${card}&lt;/a&gt;`\n    : html`&lt;div class=\"pb-team-card\"&gt;${card}&lt;/div&gt;`;\n})}&lt;/div&gt;`"
+  },
+  {
+    "objectID": "about.html#about-this-site",
+    "href": "about.html#about-this-site",
+    "title": "About Peekbank",
+    "section": "About this site",
+    "text": "About this site\nThe visualizations follow standard analysis conventions for looking-while-listening data (Fernald, Zangl, Portillo, & Marchman, 2008): proportion target looking among target-and-distractor looks; landing-time reaction times on distractor-initial trials; onset-contingent looking curves. Trials excluded by the contributing labs are included by default (Peekbank archives all contributed data), and can be filtered with the “Excluded trials” toggle. Everything is computed in your browser from compact extracts of the current release; the full data live on Redivis.\nBuilt with Quarto and Observable; source at peekbank/peekbank-datapage."
   },
   {
     "objectID": "cdi.html",
@@ -149,23 +156,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Peekbank",
+    "title": "What is peekbank?",
     "section": "",
-    "text": "manifest = d3.json(\"slices/manifest.json\")\ntotals = ({\n  datasets: manifest.datasets.length,\n  admins: d3.sum(manifest.datasets, (d) =&gt; d.n_admins),\n  subjects: d3.sum(manifest.datasets, (d) =&gt; d.n_subjects),\n  trials: d3.sum(manifest.datasets, (d) =&gt; d.n_trials),\n})\nhtml`&lt;div class=\"pb-stats\"&gt;Peekbank release ${manifest.version} contains\n${totals.datasets} datasets: ${totals.subjects.toLocaleString()} children,\n${totals.admins.toLocaleString()} test sessions, and\n${totals.trials.toLocaleString()} experimental trials.&lt;/div&gt;`"
-  },
-  {
-    "objectID": "index.html#what-is-peekbank",
-    "href": "index.html#what-is-peekbank",
-    "title": "Peekbank",
-    "section": "What is Peekbank?",
-    "text": "What is Peekbank?\nThe Peekbank project aggregates eye-tracking data from studies of children’s word recognition using the looking-while-listening paradigm: children see two pictures and hear a sentence naming one of them, and their gaze reveals how quickly and accurately they recognize the word. Individual studies are small; pooled in a common format, they let us map the developmental trajectory of word recognition across ages, items, and languages.\nThis site provides interactive, in-browser visualizations of the current database release, plus data access via the peekbankr R package and Redivis. To contribute a dataset, contact peekbank-dev@lists.stanford.edu."
-  },
-  {
-    "objectID": "index.html#datasets-at-a-glance",
-    "href": "index.html#datasets-at-a-glance",
-    "title": "Peekbank",
-    "section": "Datasets at a glance",
-    "text": "Datasets at a glance\n\nhtml`&lt;div style=\"overflow-x:auto\"&gt;&lt;table class=\"pb-plain-table\"&gt;\n  &lt;thead&gt;&lt;tr&gt;\n    &lt;th&gt;dataset&lt;/th&gt;&lt;th&gt;citation&lt;/th&gt;&lt;th style=\"text-align:right\"&gt;children&lt;/th&gt;\n    &lt;th style=\"text-align:right\"&gt;sessions&lt;/th&gt;&lt;th&gt;age range (mo)&lt;/th&gt;&lt;th&gt;languages&lt;/th&gt;\n  &lt;/tr&gt;&lt;/thead&gt;\n  &lt;tbody&gt;${manifest.datasets.map((d) =&gt; html`&lt;tr&gt;\n    &lt;td&gt;&lt;a href=\"datasets.html\"&gt;${d.name}&lt;/a&gt;&lt;/td&gt;\n    &lt;td&gt;${d.shortcite ?? \"\"}&lt;/td&gt;\n    &lt;td style=\"text-align:right\"&gt;${d.n_subjects.toLocaleString()}&lt;/td&gt;\n    &lt;td style=\"text-align:right\"&gt;${d.n_admins.toLocaleString()}&lt;/td&gt;\n    &lt;td&gt;${d.age_min}–${d.age_max}&lt;/td&gt;\n    &lt;td&gt;${(d.languages ?? []).join(\", \")}&lt;/td&gt;\n  &lt;/tr&gt;`)}&lt;/tbody&gt;\n&lt;/table&gt;&lt;/div&gt;`"
+    "text": "Where's the ?\n  \n    \n      \n      \n    \n    \n      \n        \n          \n            \n            \n          \n          \n          \n          \n          \n            \n            \n            \n          \n          \n            \n            \n          \n          \n          \n          \n          \n            \n            \n            \n          \n          \n          \n          \n          \n        \n      \n    \n    \n      \n      \n    \n  \n\n\n\n\n\n\nmanifest = d3.json(\"slices/manifest.json\")\ntotals = ({\n  datasets: manifest.datasets.length,\n  subjects: d3.sum(manifest.datasets, (d) =&gt; d.n_subjects),\n})\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  Peekbank is an open database of infant looking-while-listening data\n\n\nGet Started →   Get the data\n\n\n\nWhat is peekbank?\n\nhtml`&lt;p&gt;The &lt;b&gt;peekbank&lt;/b&gt; project aims to democratize access to\ndevelopmental eye-tracking datasets. The project (1) collects a large set\nof eye-tracking datasets using the looking-while-listening paradigm —\ncurrently &lt;b&gt;${totals.datasets} datasets&lt;/b&gt; with a total of\n&lt;b&gt;${totals.subjects.toLocaleString()} children&lt;/b&gt; tested — (2) introduces\na common format and processing tools for such data, and (3) provides\ninteractive tools and an API for accessing and analyzing the data.&lt;/p&gt;`\n\n\n\n\n\n\nYou can explore the data right in your browser, read the documentation, access the full database via R, Python, or SQL, and browse every dataset. To contribute a dataset, contact peekbank-dev@lists.stanford.edu.\n\nGet Started →"
   },
   {
     "objectID": "longitudinal.html",

@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d42608f3effdab8ea90152421d48789d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-725e7edb04494c33f7530bb18b24f015.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -494,20 +494,12 @@ background: var(--bs-light);
   }, 5000);
 })();
 </script>
-<div class="pb-hero" style="justify-content: center; text-align: center;">
-  <div>
-    <div class="pb-title" role="heading" aria-level="1">Peekbank</div>
-    <p>An open database of infant looking-while-listening data</p>
-  </div>
-</div>
 <div class="cell hidden">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="18" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>manifest <span class="op">=</span> d3<span class="op">.</span><span class="fu">json</span>(<span class="st">"slices/manifest.json"</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> ({</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">datasets</span><span class="op">:</span> manifest<span class="op">.</span><span class="at">datasets</span><span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">admins</span><span class="op">:</span> d3<span class="op">.</span><span class="fu">sum</span>(manifest<span class="op">.</span><span class="at">datasets</span><span class="op">,</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">n_admins</span>)<span class="op">,</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">subjects</span><span class="op">:</span> d3<span class="op">.</span><span class="fu">sum</span>(manifest<span class="op">.</span><span class="at">datasets</span><span class="op">,</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">n_subjects</span>)<span class="op">,</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">trials</span><span class="op">:</span> d3<span class="op">.</span><span class="fu">sum</span>(manifest<span class="op">.</span><span class="at">datasets</span><span class="op">,</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">n_trials</span>)<span class="op">,</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="9" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 8;"><span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>manifest <span class="op">=</span> d3<span class="op">.</span><span class="fu">json</span>(<span class="st">"slices/manifest.json"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> ({</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">datasets</span><span class="op">:</span> manifest<span class="op">.</span><span class="at">datasets</span><span class="op">.</span><span class="at">length</span><span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">subjects</span><span class="op">:</span> d3<span class="op">.</span><span class="fu">sum</span>(manifest<span class="op">.</span><span class="at">datasets</span><span class="op">,</span> (d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">n_subjects</span>)<span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display hidden">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -523,47 +515,32 @@ background: var(--bs-light);
 </div>
 </div>
 </div>
+<div class="pb-headline">
+  Peekbank is an open database of infant looking-while-listening data
+</div>
+<div style="text-align:center; margin: 1.6rem 0 2.6rem 0;">
+<p><a class="pb-cta" href="accuracy.html">Get Started →</a>&nbsp;&nbsp; <a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="dataaccess.html">Get the data</a></p>
+</div>
+<p><img src="images/peekbank_item_vis.png" class="img-fluid" style="width:100.0%" alt="Proportion target looking curves for each item across fifteen Peekbank datasets"></p>
+<section id="what-is-peekbank" class="level1 pb-serif">
+<h1 class="pb-serif">What is peekbank?</h1>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="27" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 26;"><span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div class="pb-stats"&gt;Peekbank release </span><span class="sc">${</span>manifest<span class="op">.</span><span class="at">version</span><span class="sc">}</span><span class="vs"> contains</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>totals<span class="op">.</span><span class="at">datasets</span><span class="sc">}</span><span class="vs"> datasets: </span><span class="sc">${</span>totals<span class="op">.</span><span class="at">subjects</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> children,</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>totals<span class="op">.</span><span class="at">admins</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> test sessions, and</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="sc">${</span>totals<span class="op">.</span><span class="at">trials</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> experimental trials.&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="31" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 30;"><span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;p&gt;The &lt;b&gt;peekbank&lt;/b&gt; project aims to democratize access to</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="vs">developmental eye-tracking datasets. The project (1) collects a large set</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="vs">of eye-tracking datasets using the looking-while-listening paradigm —</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="vs">currently &lt;b&gt;</span><span class="sc">${</span>totals<span class="op">.</span><span class="at">datasets</span><span class="sc">}</span><span class="vs"> datasets&lt;/b&gt; with a total of</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;b&gt;</span><span class="sc">${</span>totals<span class="op">.</span><span class="at">subjects</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> children&lt;/b&gt; tested — (2) introduces</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="vs">a common format and processing tools for such data, and (3) provides</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="vs">interactive tools and an API for accessing and analyzing the data.&lt;/p&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
 </div>
 </div>
 </div>
-<div style="text-align:center; margin: 1.2rem 0 2rem 0;">
-<p><a class="pb-cta" href="accuracy.html">Explore the data →</a>&nbsp;&nbsp; <a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="dataaccess.html">Get the data</a></p>
-</div>
-<section id="what-is-peekbank" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-peekbank">What is Peekbank?</h2>
-<p>The Peekbank project aggregates eye-tracking data from studies of children’s word recognition using the looking-while-listening paradigm: children see two pictures and hear a sentence naming one of them, and their gaze reveals how quickly and accurately they recognize the word. Individual studies are small; pooled in a common format, they let us map the developmental trajectory of word recognition across ages, items, and languages.</p>
-<p>This site provides interactive, in-browser visualizations of the current database release, plus <a href="dataaccess.html">data access</a> via the <a href="https://github.com/peekbank/peekbankr">peekbankr</a> R package and <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis</a>. To contribute a dataset, contact <a href="mailto:peekbank-dev@lists.stanford.edu">peekbank-dev@lists.stanford.edu</a>.</p>
-</section>
-<section id="datasets-at-a-glance" class="level2">
-<h2 class="anchored" data-anchor-id="datasets-at-a-glance">Datasets at a glance</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="57" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 56;"><span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="pb-plain-table"&gt;</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;th&gt;dataset&lt;/th&gt;&lt;th&gt;citation&lt;/th&gt;&lt;th style="text-align:right"&gt;children&lt;/th&gt;</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;th style="text-align:right"&gt;sessions&lt;/th&gt;&lt;th&gt;age range (mo)&lt;/th&gt;&lt;th&gt;languages&lt;/th&gt;</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tr&gt;&lt;/thead&gt;</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>manifest<span class="op">.</span><span class="at">datasets</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;&lt;a href="datasets.html"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">&lt;/a&gt;&lt;/td&gt;</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">shortcite</span> <span class="op">??</span> <span class="st">""</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="text-align:right"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">n_subjects</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="text-align:right"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">n_admins</span><span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">age_min</span><span class="sc">}</span><span class="vs">–</span><span class="sc">${</span>d<span class="op">.</span><span class="at">age_max</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>(d<span class="op">.</span><span class="at">languages</span> <span class="op">??</span> [])<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tr&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tbody&gt;</span></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-3" data-nodetype="expression">
-
-</div>
-</div>
+<p>You can <a href="accuracy.html">explore the data</a> right in your browser, read the <a href="docs.html">documentation</a>, <a href="dataaccess.html">access the full database</a> via R, Python, or SQL, and <a href="datasets.html">browse every dataset</a>. To contribute a dataset, contact <a href="mailto:peekbank-dev@lists.stanford.edu">peekbank-dev@lists.stanford.edu</a>.</p>
+<div style="text-align:center; margin: 1.6rem 0 1rem 0;">
+<p><a class="pb-cta" href="accuracy.html">Get Started →</a></p>
 </div>
 
 
@@ -571,7 +548,7 @@ background: var(--bs-light);
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im1hbmlmZXN0ID0gZDMuanNvbihcInNsaWNlcy9tYW5pZmVzdC5qc29uXCIpXG50b3RhbHMgPSAoe1xuICBkYXRhc2V0czogbWFuaWZlc3QuZGF0YXNldHMubGVuZ3RoLFxuICBhZG1pbnM6IGQzLnN1bShtYW5pZmVzdC5kYXRhc2V0cywgKGQpID0+IGQubl9hZG1pbnMpLFxuICBzdWJqZWN0czogZDMuc3VtKG1hbmlmZXN0LmRhdGFzZXRzLCAoZCkgPT4gZC5uX3N1YmplY3RzKSxcbiAgdHJpYWxzOiBkMy5zdW0obWFuaWZlc3QuZGF0YXNldHMsIChkKSA9PiBkLm5fdHJpYWxzKSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgY2xhc3M9XCJwYi1zdGF0c1wiPlBlZWtiYW5rIHJlbGVhc2UgJHttYW5pZmVzdC52ZXJzaW9ufSBjb250YWluc1xuJHt0b3RhbHMuZGF0YXNldHN9IGRhdGFzZXRzOiAke3RvdGFscy5zdWJqZWN0cy50b0xvY2FsZVN0cmluZygpfSBjaGlsZHJlbixcbiR7dG90YWxzLmFkbWlucy50b0xvY2FsZVN0cmluZygpfSB0ZXN0IHNlc3Npb25zLCBhbmRcbiR7dG90YWxzLnRyaWFscy50b0xvY2FsZVN0cmluZygpfSBleHBlcmltZW50YWwgdHJpYWxzLjwvZGl2PmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBzdHlsZT1cIm92ZXJmbG93LXg6YXV0b1wiPjx0YWJsZSBjbGFzcz1cInBiLXBsYWluLXRhYmxlXCI+XG4gIDx0aGVhZD48dHI+XG4gICAgPHRoPmRhdGFzZXQ8L3RoPjx0aD5jaXRhdGlvbjwvdGg+PHRoIHN0eWxlPVwidGV4dC1hbGlnbjpyaWdodFwiPmNoaWxkcmVuPC90aD5cbiAgICA8dGggc3R5bGU9XCJ0ZXh0LWFsaWduOnJpZ2h0XCI+c2Vzc2lvbnM8L3RoPjx0aD5hZ2UgcmFuZ2UgKG1vKTwvdGg+PHRoPmxhbmd1YWdlczwvdGg+XG4gIDwvdHI+PC90aGVhZD5cbiAgPHRib2R5PiR7bWFuaWZlc3QuZGF0YXNldHMubWFwKChkKSA9PiBodG1sYDx0cj5cbiAgICA8dGQ+PGEgaHJlZj1cImRhdGFzZXRzLmh0bWxcIj4ke2QubmFtZX08L2E+PC90ZD5cbiAgICA8dGQ+JHtkLnNob3J0Y2l0ZSA/PyBcIlwifTwvdGQ+XG4gICAgPHRkIHN0eWxlPVwidGV4dC1hbGlnbjpyaWdodFwiPiR7ZC5uX3N1YmplY3RzLnRvTG9jYWxlU3RyaW5nKCl9PC90ZD5cbiAgICA8dGQgc3R5bGU9XCJ0ZXh0LWFsaWduOnJpZ2h0XCI+JHtkLm5fYWRtaW5zLnRvTG9jYWxlU3RyaW5nKCl9PC90ZD5cbiAgICA8dGQ+JHtkLmFnZV9taW594oCTJHtkLmFnZV9tYXh9PC90ZD5cbiAgICA8dGQ+JHsoZC5sYW5ndWFnZXMgPz8gW10pLmpvaW4oXCIsIFwiKX08L3RkPlxuICA8L3RyPmApfTwvdGJvZHk+XG48L3RhYmxlPjwvZGl2PmBcbiJ9XX0=
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Im1hbmlmZXN0ID0gZDMuanNvbihcInNsaWNlcy9tYW5pZmVzdC5qc29uXCIpXG50b3RhbHMgPSAoe1xuICBkYXRhc2V0czogbWFuaWZlc3QuZGF0YXNldHMubGVuZ3RoLFxuICBzdWJqZWN0czogZDMuc3VtKG1hbmlmZXN0LmRhdGFzZXRzLCAoZCkgPT4gZC5uX3N1YmplY3RzKSxcbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxwPlRoZSA8Yj5wZWVrYmFuazwvYj4gcHJvamVjdCBhaW1zIHRvIGRlbW9jcmF0aXplIGFjY2VzcyB0b1xuZGV2ZWxvcG1lbnRhbCBleWUtdHJhY2tpbmcgZGF0YXNldHMuIFRoZSBwcm9qZWN0ICgxKSBjb2xsZWN0cyBhIGxhcmdlIHNldFxub2YgZXllLXRyYWNraW5nIGRhdGFzZXRzIHVzaW5nIHRoZSBsb29raW5nLXdoaWxlLWxpc3RlbmluZyBwYXJhZGlnbSDigJRcbmN1cnJlbnRseSA8Yj4ke3RvdGFscy5kYXRhc2V0c30gZGF0YXNldHM8L2I+IHdpdGggYSB0b3RhbCBvZlxuPGI+JHt0b3RhbHMuc3ViamVjdHMudG9Mb2NhbGVTdHJpbmcoKX0gY2hpbGRyZW48L2I+IHRlc3RlZCDigJQgKDIpIGludHJvZHVjZXNcbmEgY29tbW9uIGZvcm1hdCBhbmQgcHJvY2Vzc2luZyB0b29scyBmb3Igc3VjaCBkYXRhLCBhbmQgKDMpIHByb3ZpZGVzXG5pbnRlcmFjdGl2ZSB0b29scyBhbmQgYW4gQVBJIGZvciBhY2Nlc3NpbmcgYW5kIGFuYWx5emluZyB0aGUgZGF0YS48L3A+YFxuIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
