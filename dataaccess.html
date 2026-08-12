@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Peekbank | Visualizations – Peekbank</title>
+<title>Peekbank | Data Access – Peekbank</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -91,7 +126,6 @@ ul.task-list li input[type="checkbox"] {
 background: var(--bs-light);
       }
 </style>
-<meta http-equiv="refresh" content="0; url=accuracy.html">
 
 
 </head>
@@ -153,7 +187,7 @@ background: var(--bs-light);
 <span class="menu-text">Datasets</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./dataaccess.html"> 
+    <a class="nav-link active" href="./dataaccess.html" aria-current="page"> 
 <span class="menu-text">Data Access</span></a>
   </li>  
   <li class="nav-item">
@@ -175,7 +209,23 @@ background: var(--bs-light);
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block"></header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data access</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
@@ -185,9 +235,62 @@ background: var(--bs-light);
 
 
 
-<p>The visualizations have moved: this page is now the <a href="accuracy.html">Accuracy Explorer</a>. See also the <a href="rt.html">Reaction Time</a>, <a href="longitudinal.html">Longitudinal</a>, <a href="cdi.html">CDI</a>, and <a href="reliability.html">Reliability</a> explorers.</p>
+
+<p>Peekbank data live in two versioned, public datasets on <a href="https://redivis.com/datapages">Redivis</a>: <a href="https://redivis.com/datapages/datasets/peekbank"><strong>peekbank</strong></a> (the relational tables) and <a href="https://redivis.com/datapages/datasets/peekbank_files"><strong>peekbank_files</strong></a> (raw data, processed intermediates, stimuli, and per-dataset READMEs). Access requires a free Redivis account; the first request from any client opens a browser window to authorize (or set a <code>REDIVIS_API_TOKEN</code>).</p>
+<section id="r-peekbankr-recommended" class="level2">
+<h2 class="anchored" data-anchor-id="r-peekbankr-recommended">R: peekbankr (recommended)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"redivis"</span>, <span class="at">repos =</span> <span class="st">"https://langcog.r-universe.dev"</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"peekbank/peekbankr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(peekbankr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">connect_to_peekbank</span>()   <span class="co"># pins the current release; prints which one</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>aoi_timepoints <span class="ot">&lt;-</span> <span class="fu">get_aoi_timepoints</span>(<span class="at">connection =</span> con, <span class="at">dataset_name =</span> <span class="st">"pomper_saffran_2016"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>administrations <span class="ot">&lt;-</span> <span class="fu">get_administrations</span>(<span class="at">connection =</span> con, <span class="at">dataset_name =</span> <span class="st">"pomper_saffran_2016"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ps_data <span class="ot">&lt;-</span> aoi_timepoints <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(administrations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Accessors: <code>get_datasets()</code>, <code>get_subjects()</code>, <code>get_administrations()</code>, <code>get_trials()</code>, <code>get_trial_types()</code>, <code>get_stimuli()</code>, <code>get_aoi_region_sets()</code>, <code>get_aoi_timepoints()</code>, <code>get_xy_timepoints()</code>, plus <code>unpack_aux_data()</code> for the JSON aux columns (CDI scores etc.), <code>download_stimuli()</code> and <code>get_readmes()</code> for files, and <code>get_sql_query()</code> for arbitrary SQL. Full reference: <a href="https://peekbank.github.io/peekbankr/">peekbank.github.io/peekbankr</a>.</p>
+<section id="versions" class="level3">
+<h3 class="anchored" data-anchor-id="versions">Versions</h3>
+<p>Peekbank is released in named versions. <code>connect_to_peekbank()</code> uses the latest release by default and announces it; pin any release for reproducibility:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">connect_to_peekbank</span>(<span class="at">db_version =</span> <span class="st">"2025.1"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_db_info</span>()   <span class="co"># lists all available versions</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Redivis-hosted versions correspond to the historical releases 2021.1, 2022.1, 2025.1, 2025.2, and 2026.1 (2021.1 and 2022.1 contain identical data; both are kept for citation stability).</p>
+</section>
+</section>
+<section id="python-and-other-languages" class="level2">
+<h2 class="anchored" data-anchor-id="python-and-other-languages">Python and other languages</h2>
+<p>The <a href="https://apidocs.redivis.com/client-libraries/redivis-python">redivis-python</a> client reads the same tables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> redivis</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> redivis.organization(<span class="st">"datapages"</span>).dataset(<span class="st">"peekbank"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> ds.table(<span class="st">"datasets"</span>).to_pandas_dataframe()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>aoi <span class="op">=</span> ds.query(<span class="st">"""</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">  SELECT * FROM aoi_timepoints_rle</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">  WHERE administration_id IN (</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT administration_id FROM administrations WHERE dataset_id = 25)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).to_pandas_dataframe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Pin versions with <code>dataset("peekbank", version="v1.2")</code>; each version’s <code>release_info</code> table names the Peekbank release it holds. You can also query, explore, and export every table interactively on the <a href="https://redivis.com/datapages/datasets/peekbank">Redivis dataset page</a>.</p>
+</section>
+<section id="sql" class="level2">
+<h2 class="anchored" data-anchor-id="sql">SQL</h2>
+<p>Redivis datasets are queryable with standard (BigQuery-dialect) SQL — in the browser via each dataset’s <em>Query</em> tab, or through the clients as above. Note for users of the retired MySQL server: string comparison is now case-sensitive, and the <code>aoi_timepoints_indexed</code> helper table no longer exists (<code>aoi_timepoints_rle</code> remains).</p>
+</section>
+<section id="raw-data-and-stimuli" class="level2">
+<h2 class="anchored" data-anchor-id="raw-data-and-stimuli">Raw data and stimuli</h2>
+<p>Every dataset’s raw eye-tracking exports, processed peekds CSVs, stimulus images/audio, and README are files in <a href="https://redivis.com/datapages/datasets/peekbank_files">peekbank_files</a>, named by path (<code>&lt;dataset&gt;/raw_data/...</code>, <code>&lt;dataset&gt;/processed_data/...</code>, <code>&lt;dataset&gt;/README.md</code>). Use <code>peekbankr::download_stimuli()</code> / <code>get_readmes()</code>, or browse and download from Redivis directly.</p>
+</section>
+<section id="citation" class="level2">
+<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<p>Please cite the database paper <strong>and</strong> the original publication for each dataset you use (listed on the <a href="datasets.html">Datasets</a> page, with the database release you used, e.g.&nbsp;“Peekbank 2026.1”):</p>
+<blockquote class="blockquote">
+<p>Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N. S., Bergey, C. A., &amp; Frank, M. C. (2023). Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition. <em>Behavior Research Methods</em>, 55(5), 2485–2500. <a href="https://doi.org/10.3758/s13428-022-01906-4">doi:10.3758/s13428-022-01906-4</a></p>
+</blockquote>
+<p>To contribute a dataset, contact <a href="mailto:peekbank-dev@lists.stanford.edu">peekbank-dev@lists.stanford.edu</a>.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
