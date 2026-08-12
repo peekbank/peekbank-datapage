@@ -33,7 +33,7 @@ ${totals.trials.toLocaleString()} experimental trials.</div>`
 
 <div style="text-align:center; margin: 1.2rem 0 2rem 0;">
 <a class="pb-cta" href="accuracy.html">Explore the data →</a>&nbsp;&nbsp;
-<a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="https://peekbank.github.io/peekbank-website/">Documentation ↗</a>
+<a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="dataaccess.html">Get the data</a>
 </div>
 
 ## What is Peekbank?
@@ -46,10 +46,11 @@ pooled in a common format, they let us map the developmental trajectory of
 word recognition across ages, items, and languages.
 
 This site provides interactive, in-browser visualizations of the current
-database release. For documentation, data access via the
-[peekbankr](https://github.com/peekbank/peekbankr) R package, and information
-about contributing a dataset, see the
-[main Peekbank site](https://peekbank.github.io/peekbank-website/).
+database release, plus [data access](dataaccess.html) via the
+[peekbankr](https://github.com/peekbank/peekbankr) R package and
+[Redivis](https://redivis.com/datapages/datasets/peekbank). To contribute a
+dataset, contact
+[peekbank-dev@lists.stanford.edu](mailto:peekbank-dev@lists.stanford.edu).
 
 ## Datasets at a glance
 
@@ -63,6 +64,6 @@ Inputs.table(
     "age range (mo)": `${d.age_min}–${d.age_max}`,
     languages: d.languages.join(", "),
   })),
-  { maxHeight: 500 }
+  { rows: 50, maxHeight: 2000 }
 )
 ```

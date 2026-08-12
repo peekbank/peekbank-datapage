@@ -34,6 +34,8 @@ website:
             text: Reliability Explorer
       - href: datasets.qmd
         text: Datasets
+      - href: dataaccess.qmd
+        text: Data Access
       - href: about.qmd
         text: About
     right:
@@ -43,9 +45,9 @@ website:
   page-footer:
     center: |
       Peekbank is an open database of developmental eye-tracking data.
-      [Documentation](https://peekbank.github.io/peekbank-website/) ·
+      [Data access](dataaccess.html) ·
       [GitHub](https://github.com/peekbank) ·
-      [How to cite](https://peekbank.github.io/peekbank-website/misc/howtocite/)
+      [How to cite](dataaccess.html#citation)
 
 format:
   datapage-html:

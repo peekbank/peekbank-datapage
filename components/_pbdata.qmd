@@ -3,6 +3,19 @@
 manifest = d3.json("slices/manifest.json")
 datasetNames = manifest.datasets.map((d) => d.name)
 
+// display datasets by citation (team preference), disambiguating
+// duplicate shortcites with the internal name; data tables and legends
+// keep the internal dataset_name, which is the key peekbankr users need
+datasetLabel = {
+  const counts = d3.rollup(manifest.datasets, (v) => v.length,
+    (d) => d.shortcite ?? d.name);
+  const m = new Map(manifest.datasets.map((d) => {
+    const cite = d.shortcite ?? d.name;
+    return [d.name, counts.get(cite) > 1 ? `${cite} · ${d.name}` : cite];
+  }));
+  return (name) => m.get(name) ?? name;
+}
+
 sliceCache = new Map()
 
 async function loadSlice(name) {

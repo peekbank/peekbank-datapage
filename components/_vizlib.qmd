@@ -109,24 +109,32 @@ function trialRT(t0, runs) {
 
 ```{ojs vizlib-misc}
 //| output: false
-// equal-width age bins like R's cut(age, n); returns {index, label} helpers
+// equal-width age bins with whole-month edges (team preference over the
+// R cut()-style fractional edges): the requested range is widened to
+// integer months and the bin width rounded up to a whole month, so labels
+// read (6,9] rather than (6.2,9.4]. Right-closed intervals; the realized
+// number of bins can be smaller than requested when the range is narrow.
 function makeAgeBinner(ages, nbins) {
   if (nbins <= 1 || ages.length === 0) {
     return ({ bin: () => 0, labels: ["all ages"] });
   }
-  const lo = Math.min(...ages), hi = Math.max(...ages);
-  // R's cut() widens the range by 0.1% to include the endpoints
-  const pad = (hi - lo || 1) * 0.001;
-  const start = lo - pad, end = hi + pad;
-  const w = (end - start) / nbins;
-  const fmt = (x) => +x.toFixed(1);
-  const labels = Array.from({ length: nbins }, (_, i) =>
-    `(${fmt(start + i * w)},${fmt(start + (i + 1) * w)}]`);
+  const lo = Math.floor(Math.min(...ages));
+  const hi = Math.ceil(Math.max(...ages));
+  const w = Math.max(1, Math.ceil((hi - lo) / nbins));
+  const n = Math.max(1, Math.ceil((hi - lo) / w));
+  const labels = Array.from({ length: n }, (_, i) =>
+    `(${lo + i * w},${lo + (i + 1) * w}]`);
   return ({
-    // right-closed (lo, hi] intervals, matching R's cut()
-    bin: (a) => Math.min(nbins - 1, Math.max(0, Math.ceil((a - start) / w) - 1)),
+    bin: (a) => Math.min(n - 1, Math.max(0, Math.ceil((a - lo) / w) - 1)),
     labels,
   });
+}
+
+// age-bin labels restricted to those present in the data, in bin order
+// (string sorts put (12,15] before (6,9]; use this for scale domains)
+function orderedBins(labels, data, field = "age_bin") {
+  const present = new Set(data.map((d) => d[field]));
+  return labels.filter((l) => present.has(l));
 }
 
 aoiNames = ["target", "distractor", "other", "missing"]

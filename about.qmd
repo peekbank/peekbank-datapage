@@ -3,17 +3,17 @@ pagetitle: "Peekbank | About"
 title: "About this site"
 ---
 
-This site provides interactive visualizations of the
-[Peekbank](https://peekbank.github.io/peekbank-website/) database, an open
-repository of developmental eye-tracking data from looking-while-listening
-studies of children's word recognition.
+This site is the home of **Peekbank**, an open database of developmental
+eye-tracking data from looking-while-listening studies of children's word
+recognition, with interactive visualizations computed in your browser from
+the current database release.
 
 All plots are computed in your browser from compact per-dataset extracts of
 the current database release, which is versioned and hosted on
 [Redivis](https://redivis.com/datapages/datasets/peekbank). For full data
 access use the [peekbankr](https://github.com/peekbank/peekbankr) R package,
 query the dataset directly on Redivis, or see the
-[data access documentation](https://peekbank.github.io/peekbank-website/start/dataaccess/).
+[data access documentation](dataaccess.html).
 
 ## Citation
 

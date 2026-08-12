@@ -20,9 +20,11 @@ and speed.
 ```{ojs long-inputs}
 longitudinalNames = manifest.datasets.filter((d) => d.longitudinal).map((d) => d.name)
 
+viewof all_datasets = Inputs.toggle({ label: "All longitudinal datasets", value: false })
 viewof sel_datasets = Inputs.select(longitudinalNames, {
   label: "Datasets (longitudinal)", multiple: 8,
   value: ["adams_marchman_2018", "fernald_marchman_2012", "fernald_totlot", "fmw_2013"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof measure = Inputs.select(["Accuracy", "Reaction time"], {
   label: "Measure", value: "Accuracy",
@@ -37,9 +39,7 @@ viewof min_sessions = Inputs.range([1, 4], {
 viewof min_trials = Inputs.range([1, 10], {
   step: 1, value: 4, label: "Min trials per session",
 })
-viewof include_excluded = Inputs.toggle({
-  label: "Lab-excluded trials", value: true,
-})
+viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true })
 ```
 
 :::
@@ -48,7 +48,8 @@ viewof include_excluded = Inputs.toggle({
 
 ```{ojs long-data}
 //| output: false
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? longitudinalNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 
 adminMeasures = {
   const rows = buildRows(slices, { includeExcluded: include_excluded, collapseWords: true });

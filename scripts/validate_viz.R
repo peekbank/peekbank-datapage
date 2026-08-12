@@ -36,10 +36,21 @@ aoi <- open_dataset(Sys.glob(file.path(staging, "aoi_timepoints", "part-*.parque
   select(administration_id, trial_id, t_norm, aoi) %>%
   collect()
 
-# age bins exactly as R's cut(x, 2)
+# age bins: whole-month edges matching the page's makeAgeBinner (deliberate
+# UX deviation from R's cut(); see components/_vizlib.qmd)
+month_bins <- function(age, nbins) {
+  lo <- floor(min(age, na.rm = TRUE))
+  hi <- ceiling(max(age, na.rm = TRUE))
+  w <- max(1, ceiling((hi - lo) / nbins))
+  n <- max(1, ceiling((hi - lo) / w))
+  idx <- pmin(n - 1, pmax(0, ceiling((age - lo) / w) - 1))
+  labels <- sprintf("(%d,%d]", lo + (0:(n - 1)) * w, lo + (1:n) * w)
+  factor(labels[idx + 1], levels = labels)
+}
+
 joined <- aoi %>%
   inner_join(admins %>% select(administration_id, age), by = "administration_id") %>%
-  mutate(age_binned = cut(age, 2))
+  mutate(age_binned = month_bins(age, 2))
 
 profile <- joined %>%
   filter(t_norm > -500, t_norm < 4000, aoi %in% c("target", "distractor")) %>%

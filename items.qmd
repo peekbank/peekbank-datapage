@@ -19,12 +19,20 @@ tested it.
 ::: {.viz-sidebar}
 
 ```{ojs items-inputs}
+viewof all_datasets = Inputs.toggle({ label: "All datasets", value: false })
 viewof sel_datasets = Inputs.select(datasetNames, {
   label: "Datasets", multiple: 5, value: ["pomper_saffran_2016"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof age_range = interval([0, 84], {
   step: 1, value: [0, 84], label: "Ages (months)",
 })
+viewof word_category = Inputs.select(
+  ["all"].concat(availableCategories),
+  { label: "Word category", value: "all" })
+viewof lexical_class = Inputs.select(
+  ["all"].concat(availableClasses),
+  { label: "Lexical class", value: "all" })
 viewof highlight_words = Inputs.select(allWords, {
   label: "Highlight words", multiple: 5, value: [],
 })
@@ -34,9 +42,7 @@ viewof plot_window = interval([-1000, 4000], {
 viewof min_n = Inputs.range([1, 50], {
   step: 1, value: 10, label: "Min looks per point",
 })
-viewof include_excluded = Inputs.toggle({
-  label: "Lab-excluded trials", value: true,
-})
+viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true })
 ```
 
 For the cross-dataset view:
@@ -57,8 +63,26 @@ viewof focus_word = Inputs.select(
 
 ```{ojs items-data}
 //| output: false
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? datasetNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 allWords = wordsOf(slices)
+
+wordCategories = d3.json("slices/word_categories.json")
+
+availableCategories = [...new Set(allWords
+  .map((w) => wordCategories[w]?.[0]).filter(Boolean))].sort()
+availableClasses = [...new Set(allWords
+  .map((w) => wordCategories[w]?.[1]).filter(Boolean))].sort()
+
+categoryWords = {
+  if (word_category === "all" && lexical_class === "all") return null;
+  return new Set(allWords.filter((w) => {
+    const c = wordCategories[w];
+    if (!c) return false;
+    return (word_category === "all" || c[0] === word_category) &&
+           (lexical_class === "all" || c[1] === lexical_class);
+  }));
+}
 
 wordCurves = {
   const [tLo, tHi] = plot_window;
@@ -82,7 +106,9 @@ wordCurves = {
   }
   return Array.from(acc.values(), (e) => ({
     dataset: e.dataset, word: e.word, t: e.t, n: e.n, prop: e.p / e.n,
-  })).filter((d) => d.n >= min_n).sort((a, b) => a.t - b.t);
+  })).filter((d) => d.n >= min_n &&
+             (categoryWords == null || categoryWords.has(d.word)))
+    .sort((a, b) => a.t - b.t);
 }
 
 datasetSmooths = {

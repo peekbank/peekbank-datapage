@@ -158,3 +158,14 @@ h1, h2, h3, .pb-serif {
     color: #374151;
   }
 }
+
+// toggle rows: keep label and checkbox on one line in the sidebar
+.viz-sidebar form:has(input[type="checkbox"]) {
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+
+  label { margin-bottom: 0; }
+  div { flex: 0 0 auto; }
+}

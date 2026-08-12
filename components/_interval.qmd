@@ -48,8 +48,27 @@ function interval(range = [], options = {}) {
 }
 #${__ns__} .range-slider {
   width: 100%;
-  margin-bottom: .3em;
+  margin-bottom: .1em;
   margin-top: .3em;
+}
+#${__ns__} .range-ticks {
+  height: 5px;
+  margin: 0 7px;
+  background-image: repeating-linear-gradient(to right, #d1d5db 0 1px, transparent 1px 10%);
+  border-right: 1px solid #d1d5db;
+}
+#${__ns__} .range-scale {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+#${__ns__} .range-scale .range-output {
+  font-size: 0.8rem;
+  color: #374151;
+  text-align: center;
 }
   `;
   
@@ -59,7 +78,7 @@ function interval(range = [], options = {}) {
 ${label == null ? '' : ihtml`<div class="label">${label}`}
 <div class=form>
   <div class=range>
-    ${$range}<div class=range-output>${$output}</div>
+    ${$range}<div class=range-ticks></div><div class=range-scale><span>${min}</span><div class=range-output>${$output}</div><span>${max}</span></div>
   </div>
 </div>
 ${ihtml`<style>${css}`}

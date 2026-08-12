@@ -20,9 +20,11 @@ pairing each test session with the child's closest-in-age CDI administration.
 ```{ojs cdi-inputs}
 cdiNames = manifest.datasets.filter((d) => d.n_subjects_with_cdi > 0).map((d) => d.name)
 
+viewof all_datasets = Inputs.toggle({ label: "All CDI datasets", value: false })
 viewof sel_datasets = Inputs.select(cdiNames, {
   label: "Datasets (with CDI)", multiple: 6,
   value: ["adams_marchman_2018", "fernald_marchman_2012", "fmw_2013"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof cdi_measure = Inputs.select(
   new Map([["Production", "prod"], ["Comprehension", "comp"]]),
@@ -55,14 +57,15 @@ cdiRaw = d3.json("slices/cdi.json")
 cdiRows = cdiRaw.rows.map((r) =>
   Object.fromEntries(cdiRaw.columns.map((c, i) => [c, r[i]])))
 
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? cdiNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 
 pairedData = {
   const rows = buildRows(slices, { includeExcluded: true, collapseWords: true });
   const byAdmin = d3.group(rows, (r) => `${r.dataset}|${r.aid}`);
   const cdiBySubj = d3.group(
     cdiRows.filter((c) => c.measure === cdi_measure &&
-      sel_datasets.includes(c.dataset) && c[cdi_scale] != null),
+      active_datasets.includes(c.dataset) && c[cdi_scale] != null),
     (c) => `${c.dataset}|${c.subject_id}`);
   const out = [];
   for (const [, g] of byAdmin) {
@@ -162,7 +165,7 @@ Plot.plot({
   marks: [
     Plot.dot(
       cdiRows.filter((c) => c.measure === cdi_measure &&
-        sel_datasets.includes(c.dataset) && c[cdi_scale] != null && c.age != null),
+        active_datasets.includes(c.dataset) && c[cdi_scale] != null && c.age != null),
       { x: "age", y: cdi_scale, fill: "dataset", r: 2.5, fillOpacity: 0.6 }),
   ],
 })

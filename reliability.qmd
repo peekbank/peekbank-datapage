@@ -19,8 +19,10 @@ of analysis windows, in your browser.
 ::: {.viz-sidebar}
 
 ```{ojs rel-inputs}
+viewof all_datasets = Inputs.toggle({ label: "All datasets", value: false })
 viewof sel_datasets = Inputs.select(datasetNames, {
   label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof age_range = interval([0, 84], {
   step: 1, value: [0, 84], label: "Ages (months)",
@@ -34,9 +36,7 @@ viewof n_splits = Inputs.range([5, 50], {
 viewof min_trials = Inputs.range([4, 20], {
   step: 1, value: 6, label: "Min trials per child",
 })
-viewof include_excluded = Inputs.toggle({
-  label: "Lab-excluded trials", value: true,
-})
+viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true })
 ```
 
 The heatmap sweeps window **start** (−500 to 1500 ms) and **end** (1000 to
@@ -133,7 +133,8 @@ function splitHalf(children, wLo, wHi, splits) {
 
 ```{ojs rel-data}
 //| output: false
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? datasetNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 
 childTrials = {
   const rows = buildRows(slices, {

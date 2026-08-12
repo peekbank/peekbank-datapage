@@ -1,0 +1,112 @@
+---
+pagetitle: "Peekbank | Data Access"
+title: "Data access"
+---
+
+Peekbank data live in two versioned, public datasets on
+[Redivis](https://redivis.com/datapages):
+[**peekbank**](https://redivis.com/datapages/datasets/peekbank) (the
+relational tables) and
+[**peekbank_files**](https://redivis.com/datapages/datasets/peekbank_files)
+(raw data, processed intermediates, stimuli, and per-dataset READMEs).
+Access requires a free Redivis account; the first request from any client
+opens a browser window to authorize (or set a `REDIVIS_API_TOKEN`).
+
+## R: peekbankr (recommended)
+
+```r
+install.packages("redivis", repos = "https://langcog.r-universe.dev", type = "source")
+remotes::install_github("peekbank/peekbankr")
+```
+
+```r
+library(tidyverse)
+library(peekbankr)
+
+con <- connect_to_peekbank()   # pins the current release; prints which one
+
+aoi_timepoints <- get_aoi_timepoints(connection = con, dataset_name = "pomper_saffran_2016")
+administrations <- get_administrations(connection = con, dataset_name = "pomper_saffran_2016")
+
+ps_data <- aoi_timepoints %>% left_join(administrations)
+```
+
+Accessors: `get_datasets()`, `get_subjects()`, `get_administrations()`,
+`get_trials()`, `get_trial_types()`, `get_stimuli()`,
+`get_aoi_region_sets()`, `get_aoi_timepoints()`, `get_xy_timepoints()`,
+plus `unpack_aux_data()` for the JSON aux columns (CDI scores etc.),
+`download_stimuli()` and `get_readmes()` for files, and `get_sql_query()`
+for arbitrary SQL. Full reference:
+[peekbank.github.io/peekbankr](https://peekbank.github.io/peekbankr/).
+
+### Versions
+
+Peekbank is released in named versions. `connect_to_peekbank()` uses the
+latest release by default and announces it; pin any release for
+reproducibility:
+
+```r
+con <- connect_to_peekbank(db_version = "2025.1")
+get_db_info()   # lists all available versions
+```
+
+The Redivis-hosted versions correspond to the historical releases 2021.1,
+2022.1, 2025.1, 2025.2, and 2026.1 (2021.1 and 2022.1 contain identical
+data; both are kept for citation stability).
+
+## Python and other languages
+
+The [redivis-python](https://apidocs.redivis.com/client-libraries/redivis-python)
+client reads the same tables:
+
+```python
+import redivis
+
+ds = redivis.organization("datapages").dataset("peekbank")
+datasets = ds.table("datasets").to_pandas_dataframe()
+aoi = ds.query("""
+  SELECT * FROM aoi_timepoints_rle
+  WHERE administration_id IN (
+    SELECT administration_id FROM administrations WHERE dataset_id = 25)
+""").to_pandas_dataframe()
+```
+
+Pin versions with `dataset("peekbank", version="v1.2")`; each version's
+`release_info` table names the Peekbank release it holds. You can also
+query, explore, and export every table interactively on the
+[Redivis dataset page](https://redivis.com/datapages/datasets/peekbank).
+
+## SQL
+
+Redivis datasets are queryable with standard (BigQuery-dialect) SQL — in
+the browser via each dataset's *Query* tab, or through the clients as
+above. Note for users of the retired MySQL server: string comparison is
+now case-sensitive, and the `aoi_timepoints_indexed` helper table no
+longer exists (`aoi_timepoints_rle` remains).
+
+## Raw data and stimuli
+
+Every dataset's raw eye-tracking exports, processed peekds CSVs, stimulus
+images/audio, and README are files in
+[peekbank_files](https://redivis.com/datapages/datasets/peekbank_files),
+named by path (`<dataset>/raw_data/...`, `<dataset>/processed_data/...`,
+`<dataset>/README.md`). Use `peekbankr::download_stimuli()` /
+`get_readmes()`, or browse and download from Redivis directly.
+
+## Citation
+
+Please cite the database paper **and** the original publication for each
+dataset you use (listed on the [Datasets](datasets.html) page, with the
+database release you used, e.g. "Peekbank 2026.1"):
+
+> Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M.,
+> Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A.,
+> Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G.,
+> Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V.,
+> Bhatt, N. S., Bergey, C. A., & Frank, M. C. (2023). Peekbank: An open,
+> large-scale repository for developmental eye-tracking data of children's
+> word recognition. *Behavior Research Methods*, 55(5), 2485–2500.
+> [doi:10.3758/s13428-022-01906-4](https://doi.org/10.3758/s13428-022-01906-4)
+
+To contribute a dataset, contact
+[peekbank-dev@lists.stanford.edu](mailto:peekbank-dev@lists.stanford.edu).

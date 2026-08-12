@@ -17,8 +17,10 @@ target-word onset.
 ::: {.viz-sidebar}
 
 ```{ojs acc-inputs}
+viewof all_datasets = Inputs.toggle({ label: "All datasets", value: false })
 viewof sel_datasets = Inputs.select(datasetNames, {
   label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof age_range = interval([0, 84], {
   step: 1, value: [0, 84], label: "Ages (months)",
@@ -36,9 +38,7 @@ viewof plot_window = interval([-1000, 4000], {
   step: 25, value: [-500, 4000], label: "Profile window (msec)",
 })
 viewof age_as_color = Inputs.toggle({ label: "Age as color", value: true })
-viewof include_excluded = Inputs.toggle({
-  label: "Lab-excluded trials", value: true,
-})
+viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true })
 ```
 
 :::
@@ -47,7 +47,8 @@ viewof include_excluded = Inputs.toggle({
 
 ```{ojs acc-data}
 //| output: false
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? datasetNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 allWords = wordsOf(slices)
 
 rows = {
@@ -122,8 +123,12 @@ accuracyData = {
     grid: true, marginRight: 40,
     x: { label: "Time (msec)" },
     y: { label: "Proportion target looking", domain: [0, 1] },
-    color: { legend: true, label: colorField === "age_bin" ? "Age group" : "Word" },
-    fy: facets.size > 1 ? { label: null } : undefined,
+    color: { legend: true, label: colorField === "age_bin" ? "Age group" : "Word",
+      ...(colorField === "age_bin"
+        ? { domain: orderedBins(binner.labels, profileData) } : {}) },
+    fy: facets.size > 1 ? { label: null,
+      ...(facetField === "age_bin"
+        ? { domain: orderedBins(binner.labels, profileData) } : {}) } : undefined,
     marks: [
       Plot.rectY([{ x1: analysis_window[0], x2: analysis_window[1] }],
         { x1: "x1", x2: "x2", y1: 0, y2: 1, fill: "#e5e7eb", opacity: 0.5 }),
@@ -151,9 +156,15 @@ accuracyData = {
   const facets = new Set(accuracyData.map((d) => d[facetField]));
   return Plot.plot({
     width, height: Math.max(380, 220 * Math.ceil(facets.size / 3)),
-    x: { label: xField === "age_bin" ? "Age (binned)" : "Word" },
+    x: { label: xField === "age_bin" ? "Age (binned)" : "Word",
+      ...(xField === "age_bin"
+        ? { domain: orderedBins(binner.labels, accuracyData) } : {}) },
     y: { label: "Proportion target looking", domain: [0, 1] },
-    fx: facets.size > 1 ? { label: null } : undefined,
+    color: { ...(xField === "age_bin"
+      ? { domain: orderedBins(binner.labels, accuracyData) } : {}) },
+    fx: facets.size > 1 ? { label: null,
+      ...(facetField === "age_bin"
+        ? { domain: orderedBins(binner.labels, accuracyData) } : {}) } : undefined,
     marks: [
       Plot.barY(accuracyData, {
         x: xField, y: "mean", fill: xField,

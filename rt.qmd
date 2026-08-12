@@ -18,8 +18,10 @@ from the initially fixated image for both trial types.
 ::: {.viz-sidebar}
 
 ```{ojs rt-inputs}
+viewof all_datasets = Inputs.toggle({ label: "All datasets", value: false })
 viewof sel_datasets = Inputs.select(datasetNames, {
   label: "Datasets", multiple: 6, value: ["pomper_saffran_2016"],
+  format: (d) => datasetLabel(d), disabled: all_datasets,
 })
 viewof age_range = interval([0, 84], {
   step: 1, value: [0, 84], label: "Ages (months)",
@@ -36,9 +38,7 @@ viewof rt_range = interval([0, 4000], {
 viewof onset_window = interval([0, 4000], {
   step: 25, value: [0, 4000], label: "Onset plot window (msec)",
 })
-viewof include_excluded = Inputs.toggle({
-  label: "Lab-excluded trials", value: true,
-})
+viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true })
 ```
 
 :::
@@ -47,7 +47,8 @@ viewof include_excluded = Inputs.toggle({
 
 ```{ojs rt-data}
 //| output: false
-slices = Promise.all(sel_datasets.map(loadSlice))
+active_datasets = all_datasets ? datasetNames : sel_datasets
+slices = Promise.all(active_datasets.map(loadSlice))
 allWords = wordsOf(slices)
 
 rows = {
@@ -131,8 +132,9 @@ onsetData = {
   const facets = new Set(rtMeans.map((d) => d.word));
   return Plot.plot({
     width, height: Math.max(380, 220 * Math.ceil(facets.size / 3)),
-    x: { label: "Age (binned)" },
+    x: { label: "Age (binned)", domain: orderedBins(binner.labels, rtMeans) },
     y: { label: "Reaction time (msec)" },
+    color: { domain: orderedBins(binner.labels, rtMeans) },
     fx: facets.size > 1 ? { label: null } : undefined,
     marks: [
       Plot.barY(rtMeans, {
@@ -155,7 +157,8 @@ Plot.plot({
   width, height: 400,
   x: { label: "RT (msec)" },
   y: { label: "Trials" },
-  color: { legend: true, label: "Age group" },
+  color: { legend: true, label: "Age group",
+    domain: orderedBins(binner.labels, rtTrials) },
   marks: [
     Plot.rectY(rtTrials.filter((d) => d.shift_type === "D-T"),
       Plot.binX({ y: "count" }, {
@@ -176,7 +179,9 @@ Plot.plot({
     grid: true,
     x: { label: "Time (msec)" },
     y: { label: "Prop. shifted from onset image", domain: [0, 1] },
-    fy: facets.size > 1 ? { label: null } : undefined,
+    fy: facets.size > 1
+      ? { label: null, domain: orderedBins(binner.labels, onsetData) }
+      : undefined,
     marks: [
       Plot.lineY(onsetData.filter((d) => d.shift_type === "D-T"), {
         x: "t", y: "prop_shifted", stroke: "#2563eb",
