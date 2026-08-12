@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Peekbank | Data Access – Peekbank</title>
+<title>Peekbank | Documentation – Peekbank</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -126,11 +126,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 background: var(--bs-light);
       }
 </style>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -187,11 +189,11 @@ background: var(--bs-light);
 <span class="menu-text">Datasets</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./dataaccess.html" aria-current="page"> 
+    <a class="nav-link" href="./dataaccess.html"> 
 <span class="menu-text">Data Access</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./docs.html"> 
+    <a class="nav-link active" href="./docs.html" aria-current="page"> 
 <span class="menu-text">Docs</span></a>
   </li>  
   <li class="nav-item">
@@ -216,7 +218,7 @@ background: var(--bs-light);
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Data access</h1>
+      <h1 class="title">Documentation</h1>
                       </div>
   </div>
     
@@ -232,7 +234,19 @@ background: var(--bs-light);
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-peekbank-works" id="toc-how-peekbank-works" class="nav-link active" data-scroll-target="#how-peekbank-works">How Peekbank works</a></li>
+  <li><a href="#data-schema" id="toc-data-schema" class="nav-link" data-scroll-target="#data-schema">Data schema</a></li>
+  <li><a href="#codebook" id="toc-codebook" class="nav-link" data-scroll-target="#codebook">Codebook</a></li>
+  <li><a href="#releases" id="toc-releases" class="nav-link" data-scroll-target="#releases">Releases</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting started</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -240,63 +254,138 @@ background: var(--bs-light);
 
 
 
-<p>Peekbank data live in two versioned, public datasets on <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis</a>: <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg"><strong>peekbank</strong></a> (the relational tables) and <a href="https://stanford.redivis.com/datasets/frvk-5c922jwkx"><strong>peekbank_files</strong></a> (raw data, processed intermediates, stimuli, and per-dataset READMEs). Access requires a free Redivis account; the first request from any client opens a browser window to authorize (or set a <code>REDIVIS_API_TOKEN</code>).</p>
-<section id="r-peekbankr-recommended" class="level2">
-<h2 class="anchored" data-anchor-id="r-peekbankr-recommended">R: peekbankr (recommended)</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"redivis"</span>, <span class="at">repos =</span> <span class="st">"https://langcog.r-universe.dev"</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"peekbank/peekbankr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(peekbankr)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">connect_to_peekbank</span>()   <span class="co"># pins the current release; prints which one</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>aoi_timepoints <span class="ot">&lt;-</span> <span class="fu">get_aoi_timepoints</span>(<span class="at">connection =</span> con, <span class="at">dataset_name =</span> <span class="st">"pomper_saffran_2016"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>administrations <span class="ot">&lt;-</span> <span class="fu">get_administrations</span>(<span class="at">connection =</span> con, <span class="at">dataset_name =</span> <span class="st">"pomper_saffran_2016"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ps_data <span class="ot">&lt;-</span> aoi_timepoints <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(administrations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Accessors: <code>get_datasets()</code>, <code>get_subjects()</code>, <code>get_administrations()</code>, <code>get_trials()</code>, <code>get_trial_types()</code>, <code>get_stimuli()</code>, <code>get_aoi_region_sets()</code>, <code>get_aoi_timepoints()</code>, <code>get_xy_timepoints()</code>, plus <code>unpack_aux_data()</code> for the JSON aux columns (CDI scores etc.), <code>download_stimuli()</code> and <code>get_readmes()</code> for files, and <code>get_sql_query()</code> for arbitrary SQL. Full reference: <a href="https://peekbank.github.io/peekbankr/">peekbank.github.io/peekbankr</a>.</p>
-<section id="versions" class="level3">
-<h3 class="anchored" data-anchor-id="versions">Versions</h3>
-<p>Peekbank is released in named versions. <code>connect_to_peekbank()</code> uses the latest release by default and announces it; pin any release for reproducibility:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">connect_to_peekbank</span>(<span class="at">db_version =</span> <span class="st">"2025.1"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_db_info</span>()   <span class="co"># lists all available versions</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The Redivis-hosted versions correspond to the historical releases 2021.1, 2022.1, 2025.1, 2025.2, and 2026.1 (2021.1 and 2022.1 contain identical data; both are kept for citation stability).</p>
+<section id="how-peekbank-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-peekbank-works">How Peekbank works</h2>
+<p>The Peekbank framework has three components:</p>
+<ol type="1">
+<li><strong>Processing raw experimental datasets.</strong> Each contributed dataset gets a reproducible import script in <a href="https://github.com/peekbank/peekbank-data-import">peekbank-data-import</a> that converts the lab’s raw eye-tracking exports into the standardized <em>peekds</em> format: times re-centered so 0 = target-word onset, gaze resampled to 40 Hz (25 ms samples), looks coded to areas of interest (target / distractor / other / missing). Validators in <a href="https://github.com/peekbank/peekbankr">peekbankr</a> check every table against the schema. Raw inputs and processed outputs are archived in the <a href="https://stanford.redivis.com/datasets/frvk-5c922jwkx">peekbank_files dataset</a>.</li>
+<li><strong>The versioned database.</strong> A release build assigns database-wide ids across datasets and publishes the relational tables as a new version of the <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">peekbank dataset</a> on Redivis. Every historical release remains available (see <a href="#releases">Releases</a>); Peekbank archives all contributed data, including trials and participants the original labs excluded, so users can apply their own criteria.</li>
+<li><strong>Interfaces.</strong> The <a href="https://peekbank.github.io/peekbankr/">peekbankr</a> R package provides high-level accessors; this site’s <a href="accuracy.html">interactive explorers</a> compute standard analyses in your browser; and the Redivis pages support queries, previews, and exports in any language. See <a href="dataaccess.html">Data Access</a> for all of these.</li>
+</ol>
 </section>
+<section id="data-schema" class="level2">
+<h2 class="anchored" data-anchor-id="data-schema">Data schema</h2>
+<p>Peekbank stores every dataset in a common tidy format so cross-dataset analyses are easy. Records are linked by numeric ids (arrows below):</p>
+<ul>
+<li><strong>datasets</strong> — one row per contributed study: citation info, lab metadata</li>
+<li><strong>subjects</strong> — one row per (de-identified) child; links longitudinal sessions</li>
+<li><strong>administrations</strong> — one experimental session: age at test, coding method, tracker and monitor properties</li>
+<li><strong>stimuli</strong> — word–image pairings, including novelty status</li>
+<li><strong>trial_types</strong> — the designed trials: target/distractor stimuli and sides, carrier phrase, point of disambiguation, condition</li>
+<li><strong>trials</strong> — the specific trials a child completed, in order</li>
+<li><strong>aoi_region_sets</strong> — screen-coordinate definitions of the areas of interest (eye-tracker datasets)</li>
+<li><strong>aoi_timepoints</strong> — looks coded to target/distractor/other/missing at 40 Hz, time-centered on target-word onset</li>
+<li><strong>xy_timepoints</strong> — raw gaze coordinates at 40 Hz (eye-tracker datasets)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/schema_3.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>Peekbank data schema</figcaption>
+</figure>
+</div>
 </section>
-<section id="python-and-other-languages" class="level2">
-<h2 class="anchored" data-anchor-id="python-and-other-languages">Python and other languages</h2>
-<p>The <a href="https://apidocs.redivis.com/client-libraries/redivis-python">redivis-python</a> client reads the same tables:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> redivis</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> redivis.organization(<span class="st">"datapages"</span>).dataset(<span class="st">"peekbank"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> ds.table(<span class="st">"datasets"</span>).to_pandas_dataframe()</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>aoi <span class="op">=</span> ds.query(<span class="st">"""</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">  SELECT * FROM aoi_timepoints_rle</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">  WHERE administration_id IN (</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT administration_id FROM administrations WHERE dataset_id = 25)</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).to_pandas_dataframe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Pin versions with <code>dataset("peekbank", version="v1.2")</code>; each version’s <code>release_info</code> table names the Peekbank release it holds. You can also query, explore, and export every table interactively on the <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis dataset page</a>.</p>
+<section id="codebook" class="level2">
+<h2 class="anchored" data-anchor-id="codebook">Codebook</h2>
+<p>Every field in every table, from the team’s codebook. Search by table, field, or description.</p>
+<div class="cell hidden">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="62" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 61;"><span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>codebook <span class="op">=</span> d3<span class="op">.</span><span class="fu">csv</span>(<span class="st">"slices/codebook.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="66" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 65;"><span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>viewof cb_query <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">search</span>(codebook<span class="op">,</span> {</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  <span class="dt">placeholder</span><span class="op">:</span> <span class="st">"Search fields…"</span><span class="op">,</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="72" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 71;"><span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="overflow-x:auto"&gt;&lt;table class="pb-plain-table"&gt;</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;table&lt;/th&gt;&lt;th&gt;field&lt;/th&gt;&lt;th&gt;class&lt;/th&gt;&lt;th&gt;description&lt;/th&gt;</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;th&gt;type&lt;/th&gt;&lt;th&gt;values&lt;/th&gt;&lt;th&gt;required&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;tbody&gt;</span><span class="sc">${</span>cb_query<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`&lt;tr&gt;</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="white-space:nowrap"&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">table</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td style="white-space:nowrap"&gt;&lt;code&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">field_name</span><span class="sc">}</span><span class="vs">&lt;/code&gt;&lt;/td&gt;</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">field_class</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">description</span><span class="sc">}${</span>d<span class="op">.</span><span class="at">notes</span> <span class="op">?</span> <span class="fu">html</span><span class="vs">` &lt;span style="color:#9ca3af"&gt;(</span><span class="sc">${</span>d<span class="op">.</span><span class="at">notes</span><span class="sc">}</span><span class="vs">)&lt;/span&gt;`</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">type</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d<span class="op">.</span><span class="at">values</span><span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;td&gt;</span><span class="sc">${</span>d[<span class="st">"required?"</span>]<span class="sc">}</span><span class="vs">&lt;/td&gt;</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/tr&gt;`</span>)<span class="sc">}</span><span class="vs">&lt;/tbody&gt;</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/table&gt;&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
 </section>
-<section id="sql" class="level2">
-<h2 class="anchored" data-anchor-id="sql">SQL</h2>
-<p>Redivis datasets are queryable with standard (BigQuery-dialect) SQL — in the browser via each dataset’s <em>Query</em> tab, or through the clients as above. Note for users of the retired MySQL server: string comparison is now case-sensitive, and the <code>aoi_timepoints_indexed</code> helper table no longer exists (<code>aoi_timepoints_rle</code> remains).</p>
+<section id="releases" class="level2">
+<h2 class="anchored" data-anchor-id="releases">Releases</h2>
+<p>Peekbank is released in named versions so analyses can be reproduced exactly; <code>connect_to_peekbank(db_version = ...)</code> pins one, and each version on Redivis carries a <code>release_info</code> table naming its release.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Release</th>
+<th>Redivis version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>2026.1</strong></td>
+<td>v1.4</td>
+<td>Current release: 44 datasets. Used by Frank et al.&nbsp;(2026), <em>eLife</em> and Boyce et al.&nbsp;(2026).</td>
+</tr>
+<tr class="even">
+<td>2025.2</td>
+<td>v1.3</td>
+<td>Incremental update to 2025.1.</td>
+</tr>
+<tr class="odd">
+<td>2025.1</td>
+<td>v1.2</td>
+<td>Reproduces the preprint of <a href="https://elifesciences.org/reviewed-preprints/109636">Frank et al., <em>eLife</em></a>.</td>
+</tr>
+<tr class="even">
+<td>2022.1</td>
+<td>v1.1</td>
+<td>Citable version for <a href="https://doi.org/10.3758/s13428-022-01906-4">Zettersten et al.&nbsp;(2023), <em>BRM</em></a>; identical data to 2021.1.</td>
+</tr>
+<tr class="odd">
+<td>2021.1</td>
+<td>v1.0</td>
+<td>Initial release, for <a href="https://psyarxiv.com/ep693">Zettersten et al.&nbsp;(2021), <em>CogSci</em></a>.</td>
+</tr>
+</tbody>
+</table>
+<p>For heavy local use, download whole tables from the <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">Redivis dataset page</a> (exports to parquet/CSV) or via the clients — the MySQL-era <code>mysqldump</code> instructions are obsolete.</p>
 </section>
-<section id="raw-data-and-stimuli" class="level2">
-<h2 class="anchored" data-anchor-id="raw-data-and-stimuli">Raw data and stimuli</h2>
-<p>Every dataset’s raw eye-tracking exports, processed peekds CSVs, stimulus images/audio, and README are files in <a href="https://stanford.redivis.com/datasets/frvk-5c922jwkx">peekbank_files</a>, named by path (<code>&lt;dataset&gt;/raw_data/...</code>, <code>&lt;dataset&gt;/processed_data/...</code>, <code>&lt;dataset&gt;/README.md</code>). Use <code>peekbankr::download_stimuli()</code> / <code>get_readmes()</code>, or browse and download from Redivis directly.</p>
-</section>
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>Please cite the database paper <strong>and</strong> the original publication for each dataset you use (listed on the <a href="datasets.html">Datasets</a> page, with the database release you used, e.g.&nbsp;“Peekbank 2026.1”):</p>
-<blockquote class="blockquote">
-<p>Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M., Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A., Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N. S., Bergey, C. A., &amp; Frank, M. C. (2023). Peekbank: An open, large-scale repository for developmental eye-tracking data of children’s word recognition. <em>Behavior Research Methods</em>, 55(5), 2485–2500. <a href="https://doi.org/10.3758/s13428-022-01906-4">doi:10.3758/s13428-022-01906-4</a></p>
-</blockquote>
-<p>To contribute a dataset, contact <a href="mailto:peekbank-dev@lists.stanford.edu">peekbank-dev@lists.stanford.edu</a>.</p>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
+<p>The fastest route is the <a href="dataaccess.html">Data Access</a> page: install peekbankr, connect, and pull tidy tables in a few lines. For a guided tour of the analyses these data support, open any page in the <em>Analyses</em> menu — every plot has a Data tab with a CSV download of exactly what is shown.</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvZGVib29rID0gZDMuY3N2KFwic2xpY2VzL2NvZGVib29rLmNzdlwiKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIGNiX3F1ZXJ5ID0gSW5wdXRzLnNlYXJjaChjb2RlYm9vaywge1xuICBwbGFjZWhvbGRlcjogXCJTZWFyY2ggZmllbGRz4oCmXCIsXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGA8ZGl2IHN0eWxlPVwib3ZlcmZsb3cteDphdXRvXCI+PHRhYmxlIGNsYXNzPVwicGItcGxhaW4tdGFibGVcIj5cbiAgPHRoZWFkPjx0cj48dGg+dGFibGU8L3RoPjx0aD5maWVsZDwvdGg+PHRoPmNsYXNzPC90aD48dGg+ZGVzY3JpcHRpb248L3RoPlxuICA8dGg+dHlwZTwvdGg+PHRoPnZhbHVlczwvdGg+PHRoPnJlcXVpcmVkPC90aD48L3RyPjwvdGhlYWQ+XG4gIDx0Ym9keT4ke2NiX3F1ZXJ5Lm1hcCgoZCkgPT4gaHRtbGA8dHI+XG4gICAgPHRkIHN0eWxlPVwid2hpdGUtc3BhY2U6bm93cmFwXCI+JHtkLnRhYmxlfTwvdGQ+XG4gICAgPHRkIHN0eWxlPVwid2hpdGUtc3BhY2U6bm93cmFwXCI+PGNvZGU+JHtkLmZpZWxkX25hbWV9PC9jb2RlPjwvdGQ+XG4gICAgPHRkPiR7ZC5maWVsZF9jbGFzc308L3RkPlxuICAgIDx0ZD4ke2QuZGVzY3JpcHRpb259JHtkLm5vdGVzID8gaHRtbGAgPHNwYW4gc3R5bGU9XCJjb2xvcjojOWNhM2FmXCI+KCR7ZC5ub3Rlc30pPC9zcGFuPmAgOiBcIlwifTwvdGQ+XG4gICAgPHRkPiR7ZC50eXBlfTwvdGQ+XG4gICAgPHRkPiR7ZC52YWx1ZXN9PC90ZD5cbiAgICA8dGQ+JHtkW1wicmVxdWlyZWQ/XCJdfTwvdGQ+XG4gIDwvdHI+YCl9PC90Ym9keT5cbjwvdGFibGU+PC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdjYl9xdWVyeScpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
