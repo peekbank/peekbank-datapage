@@ -54,6 +54,7 @@ website:
 format:
   datapage-html:
     theme: theme.scss
+    include-in-header: _embed.html
     mainfont: "ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif"
     fontsize: 15px
 
