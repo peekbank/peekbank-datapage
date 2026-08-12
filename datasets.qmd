@@ -44,7 +44,7 @@ html`<div>${ds_query.map((d) => html`
         d.n_subjects_with_cdi > 0
         ? html` · <a href="cdi.html">CDI</a>` : ""} explorers,
       or in the
-      <a href="https://redivis.com/datapages/datasets/peekbank">peekbank
+      <a href="https://stanford.redivis.com/datasets/a3v0-3drqa89kg">peekbank
       dataset on Redivis</a>.
     </p>
   </div>

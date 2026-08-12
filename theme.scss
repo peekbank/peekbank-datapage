@@ -169,3 +169,14 @@ h1, h2, h3, .pb-serif {
   label { margin-bottom: 0; }
   div { flex: 0 0 auto; }
 }
+
+// plain (selection-free) table for the landing page
+.pb-plain-table {
+  width: 100%;
+  font-size: 0.88rem;
+  border-collapse: collapse;
+
+  th, td { padding: 0.3rem 0.6rem; border-bottom: 1px solid #e5e7eb; }
+  th { text-align: left; color: #374151; }
+  td a { text-decoration: none; }
+}

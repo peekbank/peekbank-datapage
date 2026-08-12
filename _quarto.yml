@@ -36,6 +36,8 @@ website:
         text: Datasets
       - href: dataaccess.qmd
         text: Data Access
+      - href: docs.qmd
+        text: Docs
       - href: about.qmd
         text: About
     right:

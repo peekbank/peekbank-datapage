@@ -48,22 +48,25 @@ word recognition across ages, items, and languages.
 This site provides interactive, in-browser visualizations of the current
 database release, plus [data access](dataaccess.html) via the
 [peekbankr](https://github.com/peekbank/peekbankr) R package and
-[Redivis](https://redivis.com/datapages/datasets/peekbank). To contribute a
+[Redivis](https://stanford.redivis.com/datasets/a3v0-3drqa89kg). To contribute a
 dataset, contact
 [peekbank-dev@lists.stanford.edu](mailto:peekbank-dev@lists.stanford.edu).
 
 ## Datasets at a glance
 
 ```{ojs mini-table}
-Inputs.table(
-  manifest.datasets.map((d) => ({
-    dataset: d.name,
-    citation: d.shortcite,
-    children: d.n_subjects,
-    sessions: d.n_admins,
-    "age range (mo)": `${d.age_min}–${d.age_max}`,
-    languages: d.languages.join(", "),
-  })),
-  { rows: 50, maxHeight: 2000 }
-)
+html`<div style="overflow-x:auto"><table class="pb-plain-table">
+  <thead><tr>
+    <th>dataset</th><th>citation</th><th style="text-align:right">children</th>
+    <th style="text-align:right">sessions</th><th>age range (mo)</th><th>languages</th>
+  </tr></thead>
+  <tbody>${manifest.datasets.map((d) => html`<tr>
+    <td><a href="datasets.html">${d.name}</a></td>
+    <td>${d.shortcite ?? ""}</td>
+    <td style="text-align:right">${d.n_subjects.toLocaleString()}</td>
+    <td style="text-align:right">${d.n_admins.toLocaleString()}</td>
+    <td>${d.age_min}–${d.age_max}</td>
+    <td>${(d.languages ?? []).join(", ")}</td>
+  </tr>`)}</tbody>
+</table></div>`
 ```

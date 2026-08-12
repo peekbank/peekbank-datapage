@@ -4,10 +4,10 @@ title: "Data access"
 ---
 
 Peekbank data live in two versioned, public datasets on
-[Redivis](https://redivis.com/datapages):
-[**peekbank**](https://redivis.com/datapages/datasets/peekbank) (the
+[Redivis](https://stanford.redivis.com/datasets/a3v0-3drqa89kg):
+[**peekbank**](https://stanford.redivis.com/datasets/a3v0-3drqa89kg) (the
 relational tables) and
-[**peekbank_files**](https://redivis.com/datapages/datasets/peekbank_files)
+[**peekbank_files**](https://stanford.redivis.com/datasets/frvk-5c922jwkx)
 (raw data, processed intermediates, stimuli, and per-dataset READMEs).
 Access requires a free Redivis account; the first request from any client
 opens a browser window to authorize (or set a `REDIVIS_API_TOKEN`).
@@ -74,7 +74,7 @@ aoi = ds.query("""
 Pin versions with `dataset("peekbank", version="v1.2")`; each version's
 `release_info` table names the Peekbank release it holds. You can also
 query, explore, and export every table interactively on the
-[Redivis dataset page](https://redivis.com/datapages/datasets/peekbank).
+[Redivis dataset page](https://stanford.redivis.com/datasets/a3v0-3drqa89kg).
 
 ## SQL
 
@@ -88,7 +88,7 @@ longer exists (`aoi_timepoints_rle` remains).
 
 Every dataset's raw eye-tracking exports, processed peekds CSVs, stimulus
 images/audio, and README are files in
-[peekbank_files](https://redivis.com/datapages/datasets/peekbank_files),
+[peekbank_files](https://stanford.redivis.com/datasets/frvk-5c922jwkx),
 named by path (`<dataset>/raw_data/...`, `<dataset>/processed_data/...`,
 `<dataset>/README.md`). Use `peekbankr::download_stimuli()` /
 `get_readmes()`, or browse and download from Redivis directly.
