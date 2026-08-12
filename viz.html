@@ -91,6 +91,21 @@ ul.task-list li input[type="checkbox"] {
 background: var(--bs-light);
       }
 </style>
+<script>
+  // when framed (e.g. embedded in the Astro docs site), hide site chrome so
+  // only the explorer shows; same-origin embedding is used by the
+  // peekbank-website "Analyses" pages
+  if (window.self !== window.top) {
+    document.documentElement.classList.add("pb-embedded");
+  }
+</script>
+<style>
+  .pb-embedded .navbar,
+  .pb-embedded .nav-footer,
+  .pb-embedded #quarto-header { display: none !important; }
+  .pb-embedded #quarto-content { padding-top: 0 !important; }
+  .pb-embedded .quarto-title-block { margin-top: 0.5rem; }
+</style>
 <meta http-equiv="refresh" content="0; url=accuracy.html">
 
 
