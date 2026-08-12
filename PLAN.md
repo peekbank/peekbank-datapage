@@ -228,6 +228,18 @@
    and add the Quarto viz site alongside (swap the Shiny iframe/nav link).
    Recommendation: (b) — the Astro site is 6 months old and good; the
    datapage replaces the actual moving part (Shiny + DB).
+   **Resolution (Aug 2026): team chose (b) in Adrian's no-iframe form** —
+   the datapage repo becomes a `viz/` submodule of peekbank-website; a
+   build step (`scripts/build-viz.mjs`) runs `quarto render` and harvests
+   each explorer's main content + OJS module into flat Astro components.
+   PoC built and deployed: branch `datapage-flat` on peekbank-website,
+   live at peekbank.github.io/peekbank-datapage-preview (all six
+   explorers verified, no iframes; see VIZ-EMBEDDING.md on that branch).
+   Consequences once adopted: docs/landing/about live in Astro only (the
+   datapage's copies retire — but its dataaccess/docs content should be
+   ported into the Astro docs section first); the standalone datapage
+   remains the authoring + validation home for viz; the `datapage-embed`
+   iframe branch is superseded and can be deleted.
 2. **Redivis layout**: names `datapages.peekbank` + `datapages.peekbank_files`?
    Skip dev schemas? Drop RLE/indexed tables? Stage 2021.1 → 2026.1 in order?
 3. **peekbank.json `current: 2022.1`** — stale? What should current be
