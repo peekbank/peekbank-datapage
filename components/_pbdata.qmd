@@ -1,6 +1,11 @@
 ```{ojs pbdata-manifest}
 //| output: false
-manifest = d3.json("slices/manifest.json")
+// host pages (e.g. Astro embedding) may set window.PEEKBANK_DATA_BASE to an
+// absolute URL for the slices/ directory; standalone pages use the relative
+// default
+DATA_BASE = (typeof window !== "undefined" && window.PEEKBANK_DATA_BASE) || "slices/"
+
+manifest = d3.json(`${DATA_BASE}manifest.json`)
 datasetNames = manifest.datasets.map((d) => d.name)
 
 // display datasets by citation (team preference), disambiguating
@@ -20,7 +25,7 @@ sliceCache = new Map()
 
 async function loadSlice(name) {
   if (!sliceCache.has(name)) {
-    sliceCache.set(name, await d3.json(`slices/datasets/${name}.json`));
+    sliceCache.set(name, await d3.json(`${DATA_BASE}datasets/${name}.json`));
   }
   return sliceCache.get(name);
 }

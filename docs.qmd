@@ -60,7 +60,7 @@ field, or description.
 
 ```{ojs codebook-data}
 //| output: false
-codebook = d3.csv("slices/codebook.csv")
+codebook = d3.csv((typeof window !== "undefined" && window.PEEKBANK_DATA_BASE || "slices/") + "codebook.csv")
 ```
 
 ```{ojs codebook-search}

@@ -6,7 +6,7 @@ pagetitle: "Peekbank"
 
 ```{ojs stats}
 //| output: false
-manifest = d3.json("slices/manifest.json")
+manifest = d3.json((typeof window !== "undefined" && window.PEEKBANK_DATA_BASE || "slices/") + "manifest.json")
 totals = ({
   datasets: manifest.datasets.length,
   subjects: d3.sum(manifest.datasets, (d) => d.n_subjects),

@@ -52,7 +52,7 @@ viewof min_trials = Inputs.range([1, 10], {
 
 ```{ojs cdi-data}
 //| output: false
-cdiRaw = d3.json("slices/cdi.json")
+cdiRaw = d3.json(`${DATA_BASE}cdi.json`)
 
 cdiRows = cdiRaw.rows.map((r) =>
   Object.fromEntries(cdiRaw.columns.map((c, i) => [c, r[i]])))

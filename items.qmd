@@ -48,7 +48,7 @@ viewof include_excluded = Inputs.toggle({ label: "Excluded trials", value: true 
 For the cross-dataset view:
 
 ```{ojs items-word-input}
-wordIndex = d3.json("slices/words.json")
+wordIndex = d3.json(`${DATA_BASE}words.json`)
 
 viewof focus_word = Inputs.select(
   Object.keys(wordIndex).sort((a, b) =>
@@ -67,7 +67,7 @@ active_datasets = all_datasets ? datasetNames : sel_datasets
 slices = Promise.all(active_datasets.map(loadSlice))
 allWords = wordsOf(slices)
 
-wordCategories = d3.json("slices/word_categories.json")
+wordCategories = d3.json(`${DATA_BASE}word_categories.json`)
 
 availableCategories = [...new Set(allWords
   .map((w) => wordCategories[w]?.[0]).filter(Boolean))].sort()

@@ -9,7 +9,7 @@ database (see [how to cite](https://peekbank.github.io/peekbank-website/misc/how
 
 ```{ojs ds-manifest}
 //| output: false
-manifest = d3.json("slices/manifest.json")
+manifest = d3.json((typeof window !== "undefined" && window.PEEKBANK_DATA_BASE || "slices/") + "manifest.json")
 ```
 
 ```{ojs ds-search}
