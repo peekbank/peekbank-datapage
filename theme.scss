@@ -180,3 +180,47 @@ h1, h2, h3, .pb-serif {
   th { text-align: left; color: #374151; }
   td a { text-decoration: none; }
 }
+
+// team gallery (ported from the Astro site's teamgrid)
+.pb-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.8rem;
+}
+
+.pb-team-card {
+  display: block;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  text-decoration: none !important;
+  color: #111827;
+  transition: transform 0.15s ease-out, border-color 0.15s ease-out;
+  background: #fff;
+
+  &:hover { transform: scale(1.04); border-color: #6b7280; }
+
+  img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+
+  .pb-team-name {
+    padding: 0.55rem 0.4rem;
+    text-align: center;
+    font-size: 0.85rem;
+    min-height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// landing headline (matches the Astro site's serif hero line)
+.pb-headline {
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1.35;
+  color: #111827;
+  text-align: center;
+  max-width: 46rem;
+  margin: 2.2rem auto 0 auto;
+}

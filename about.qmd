@@ -1,36 +1,94 @@
 ---
 pagetitle: "Peekbank | About"
-title: "About this site"
+title: "About Peekbank"
 ---
 
-This site is the home of **Peekbank**, an open database of developmental
-eye-tracking data from looking-while-listening studies of children's word
-recognition, with interactive visualizations computed in your browser from
-the current database release.
+The Peekbank project aims to make developmental eye-tracking data more
+accessible for sharing and reuse. We do this by reducing the amount of
+preprocessing necessary to perform typical analyses and by storing data in
+a common, tidy format that allows for easy cross-dataset comparisons.
 
-All plots are computed in your browser from compact per-dataset extracts of
-the current database release, which is versioned and hosted on
-[Redivis](https://stanford.redivis.com/datasets/a3v0-3drqa89kg). For full data
-access use the [peekbankr](https://github.com/peekbank/peekbankr) R package,
-query the dataset directly on Redivis, or see the
-[data access documentation](dataaccess.html).
+We release new dated versions periodically to facilitate reproducibility
+(see [Releases](docs.html#releases)), and support an API via the
+[peekbankr](https://peekbank.github.io/peekbankr/) R package, which lets
+users access the data in Peekbank without writing queries.
 
-## Citation
+Peekbank is open source and under active development. If you encounter a
+problem, please file an issue in the
+[GitHub Issues page](https://github.com/peekbank) of the appropriate
+repository. If you would like to contact us directly, email us at
+[peekbank-dev@lists.stanford.edu](mailto:peekbank-dev@lists.stanford.edu).
 
-If you use Peekbank data, please cite the database paper and the original
-publications for each dataset you use (listed on the
-[Datasets](datasets.html) page):
+## Publications
 
-> Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M.,
-> Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V. A.,
-> Mankewitz, J., MacDonald, K., Long, B., Lewis, M., Kachergis, G.,
-> Handa, K., deMayo, B., Carstensen, A., Braginsky, M., Boyce, V.,
-> Bhatt, N. S., Bergey, C. A., & Frank, M. C. (2023). Peekbank: An open,
-> large-scale repository for developmental eye-tracking data of children's
-> word recognition. *Behavior Research Methods*, 55(5), 2485–2500.
-> [doi:10.3758/s13428-022-01906-4](https://doi.org/10.3758/s13428-022-01906-4)
+Zettersten, M., Yurovsky, D., Xu, T. L., Uner, S., Tsui, A. S. M.,
+Schneider, R. M., Saleh, A. N., Meylan, S. C., Marchman, V., Mankewitz, J.,
+MacDonald, K., Long, B., Lewis, M., Kachergis, G., Handa, K., deMayo, B.,
+Carstensen, A., Braginsky, M., Boyce, V., Bhatt, N., Bergey, C. A., &
+Frank, M. C. (2023). **Peekbank: An open, large-scale repository for
+developmental eye-tracking data of children's word recognition.**
+*Behavior Research Methods, 55,* 2485–2500.
+[doi:10.3758/s13428-022-01906-4](https://doi.org/10.3758/s13428-022-01906-4)
+[[preprint]](https://psyarxiv.com/tgnzv)
 
-## The analyses
+Frank, M. C., Marchman, V. A., Bergey, C. A., Boyce, V., Braginsky, M.,
+Kachergis, G., Mankewitz, J., Meylan, S. C., Prystawski, B., Ram, N.,
+Sparks, R. Z., Steffan, A., Tan, A. W. M., & Zettersten, M. (2025).
+**Continuous developmental changes in word recognition and language
+learning across early childhood.** *eLife*, 14:RP109636.
+[doi:10.7554/eLife.109636](https://doi.org/10.7554/eLife.109636)
+
+Zettersten, M., Bergey, C. A., Bhatt, N., Boyce, V., Braginsky, M.,
+Carstensen, A., deMayo, B., Kachergis, G., Lewis, M., Long, B.,
+MacDonald, K., Mankewitz, J., Meylan, S. C., Saleh, A. N., Schneider,
+R. M., Tsui, A., Uner, S., Xu, T. L., Yurovsky, D., & Frank, M. C. (2021).
+**Peekbank: Exploring children's word recognition through an open,
+large-scale repository for developmental eye-tracking data.** *Proceedings
+of the 43rd Annual Conference of the Cognitive Science Society*.
+[[preprint]](https://psyarxiv.com/ep693/)
+
+For the database citation policy, see
+[Data Access](dataaccess.html#citation).
+
+## Meet the Peekbank team
+
+```{ojs team-grid}
+teamMembers = [
+  { name: "Claire Bergey", image: "claire.jpg", link: "https://github.com/cbergey" },
+  { name: "Naiti Bhatt", image: "naiti.jpeg" },
+  { name: "Veronica Boyce", image: "vboyce.jpg", link: "https://vboyce.github.io/" },
+  { name: "Mika Braginsky", image: "mika.jpeg", link: "https://mikabr.io/" },
+  { name: "Michael C. Frank", image: "mike.jpg", link: "https://web.stanford.edu/~mcfrank/" },
+  { name: "Federico Giovannetti", image: "fede.jpg", link: "https://fedegiovannetti.github.io/en/" },
+  { name: "Kunal Handa", image: "kunal.jpg" },
+  { name: "George Kachergis", image: "george.jpg", link: "http://www.kachergis.com/" },
+  { name: "Molly Lewis", image: "molly.jpg", link: "http://www.andrew.cmu.edu/user/mollylew/" },
+  { name: "Bria Long", image: "bria.jpg", link: "https://www.brialong.com/" },
+  { name: "Kyle MacDonald", image: "km_2018.jpg", link: "https://kemacdonald.com" },
+  { name: "Jessica Mankewitz", image: "jess.jpg", link: "https://github.com/JMankewitz" },
+  { name: "Virginia Marchman", image: "virginia.jpg", link: "https://profiles.stanford.edu/virginia-marchman" },
+  { name: "Stephan Meylan", image: "stephan.jpg", link: "https://stephanmeylan.com/" },
+  { name: "Ben Prystawski", image: "ben.jpg", link: "https://benprystawski.com/" },
+  { name: "Annissa Saleh", image: "annissa.jpg" },
+  { name: "Rose M. Schneider", image: "rose.jpeg", link: "https://rosemschneider.github.io/" },
+  { name: "Adrian Steffan", image: "adrian.jpg", link: "https://adriansteffan.com" },
+  { name: "Alvin Tan", image: "alvin.jpeg", link: "https://alvinwmtan.github.io/" },
+  { name: "Angeline Tsui", image: "angeline.jpg", link: "https://angelinetsui.github.io/" },
+  { name: "Sarp Uner", image: "sarp.jpg" },
+  { name: "Tian Linger Xu", image: "linger.jpg", link: "http://homes.sice.indiana.edu/txu/" },
+  { name: "Martin Zettersten", image: "martin.jpeg", link: "https://mzettersten.github.io/" },
+]
+
+html`<div class="pb-team-grid">${teamMembers.map((m) => {
+  const card = html`<img src="images/people/${m.image}" alt="${m.name}" loading="lazy">
+    <div class="pb-team-name">${m.name}</div>`;
+  return m.link
+    ? html`<a class="pb-team-card" href="${m.link}" target="_blank" rel="noopener">${card}</a>`
+    : html`<div class="pb-team-card">${card}</div>`;
+})}</div>`
+```
+
+## About this site
 
 The visualizations follow standard analysis conventions for
 looking-while-listening data (Fernald, Zangl, Portillo, & Marchman, 2008):
@@ -38,7 +96,9 @@ proportion target looking among target-and-distractor looks; landing-time
 reaction times on distractor-initial trials; onset-contingent looking
 curves. Trials excluded by the contributing labs are included by default
 (Peekbank archives all contributed data), and can be filtered with the
-"Include lab-excluded trials" toggle.
+"Excluded trials" toggle. Everything is computed in your browser from
+compact extracts of the current release; the full data live on
+[Redivis](https://stanford.redivis.com/datasets/a3v0-3drqa89kg).
 
 Built with [Quarto](https://quarto.org) and
 [Observable](https://observablehq.com/plot/); source at

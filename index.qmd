@@ -4,69 +4,46 @@ pagetitle: "Peekbank"
 
 {{< include components/_hero.qmd >}}
 
-```{=html}
-<div class="pb-hero" style="justify-content: center; text-align: center;">
-  <div>
-    <div class="pb-title" role="heading" aria-level="1">Peekbank</div>
-    <p>An open database of infant looking-while-listening data</p>
-  </div>
-</div>
-```
-
 ```{ojs stats}
 //| output: false
 manifest = d3.json("slices/manifest.json")
 totals = ({
   datasets: manifest.datasets.length,
-  admins: d3.sum(manifest.datasets, (d) => d.n_admins),
   subjects: d3.sum(manifest.datasets, (d) => d.n_subjects),
-  trials: d3.sum(manifest.datasets, (d) => d.n_trials),
 })
 ```
 
-```{ojs stats-line}
-html`<div class="pb-stats">Peekbank release ${manifest.version} contains
-${totals.datasets} datasets: ${totals.subjects.toLocaleString()} children,
-${totals.admins.toLocaleString()} test sessions, and
-${totals.trials.toLocaleString()} experimental trials.</div>`
+```{=html}
+<div class="pb-headline">
+  Peekbank is an open database of infant looking-while-listening data
+</div>
 ```
 
-<div style="text-align:center; margin: 1.2rem 0 2rem 0;">
-<a class="pb-cta" href="accuracy.html">Explore the data →</a>&nbsp;&nbsp;
+<div style="text-align:center; margin: 1.6rem 0 2.6rem 0;">
+<a class="pb-cta" href="accuracy.html">Get Started →</a>&nbsp;&nbsp;
 <a class="pb-cta" style="background:#e5e7eb; color:#111827 !important;" href="dataaccess.html">Get the data</a>
 </div>
 
-## What is Peekbank?
+![](images/peekbank_item_vis.png){width=100% fig-alt="Proportion target looking curves for each item across fifteen Peekbank datasets"}
 
-The Peekbank project aggregates eye-tracking data from studies of children's
-word recognition using the looking-while-listening paradigm: children see two
-pictures and hear a sentence naming one of them, and their gaze reveals how
-quickly and accurately they recognize the word. Individual studies are small;
-pooled in a common format, they let us map the developmental trajectory of
-word recognition across ages, items, and languages.
+# What is peekbank? {.pb-serif}
 
-This site provides interactive, in-browser visualizations of the current
-database release, plus [data access](dataaccess.html) via the
-[peekbankr](https://github.com/peekbank/peekbankr) R package and
-[Redivis](https://stanford.redivis.com/datasets/a3v0-3drqa89kg). To contribute a
-dataset, contact
+```{ojs what-is}
+html`<p>The <b>peekbank</b> project aims to democratize access to
+developmental eye-tracking datasets. The project (1) collects a large set
+of eye-tracking datasets using the looking-while-listening paradigm —
+currently <b>${totals.datasets} datasets</b> with a total of
+<b>${totals.subjects.toLocaleString()} children</b> tested — (2) introduces
+a common format and processing tools for such data, and (3) provides
+interactive tools and an API for accessing and analyzing the data.</p>`
+```
+
+You can [explore the data](accuracy.html) right in your browser, read the
+[documentation](docs.html), [access the full database](dataaccess.html)
+via R, Python, or SQL, and [browse every dataset](datasets.html). To
+contribute a dataset, contact
 [peekbank-dev@lists.stanford.edu](mailto:peekbank-dev@lists.stanford.edu).
 
-## Datasets at a glance
-
-```{ojs mini-table}
-html`<div style="overflow-x:auto"><table class="pb-plain-table">
-  <thead><tr>
-    <th>dataset</th><th>citation</th><th style="text-align:right">children</th>
-    <th style="text-align:right">sessions</th><th>age range (mo)</th><th>languages</th>
-  </tr></thead>
-  <tbody>${manifest.datasets.map((d) => html`<tr>
-    <td><a href="datasets.html">${d.name}</a></td>
-    <td>${d.shortcite ?? ""}</td>
-    <td style="text-align:right">${d.n_subjects.toLocaleString()}</td>
-    <td style="text-align:right">${d.n_admins.toLocaleString()}</td>
-    <td>${d.age_min}–${d.age_max}</td>
-    <td>${(d.languages ?? []).join(", ")}</td>
-  </tr>`)}</tbody>
-</table></div>`
-```
+<div style="text-align:center; margin: 1.6rem 0 1rem 0;">
+<a class="pb-cta" href="accuracy.html">Get Started →</a>
+</div>
