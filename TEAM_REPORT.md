@@ -96,6 +96,19 @@ recommended to FIX in the next release with release-notes callouts:
   2026.1. Recommend `digits = NA` in the peekds writer before the next
   release.
 
+- **The 7 regenerable missing-processed_data datasets have been backfilled**
+  (2026-08-11): xsectional_2007, ronfard_2021, ferguson_eyetrackingr,
+  fmw_2013, bergelson_swingley_2012, sander-montant_2022, and
+  yoon_simpimp_2015 were re-imported through the new pipeline (raw data
+  from Redivis), passed all validators, and are staged in the
+  peekbank_files draft for the next files release. nih_babytoolbox_2025
+  remains blocked on its private raw data.
+- **The legacy MySQL server became unreachable during the migration day**
+  (connection timeout from 2026-08-11 afternoon; it served normally that
+  morning). All releases, fixtures, and files had already been captured.
+  Anyone still on peekbankr ≤0.3 has no working backend — upgrading to
+  0.4.0 (now on master) is the fix.
+
 ## Deliberate behavior changes in the new stack
 
 - peekbankr 0.4 returns local tibbles in all cases (previously lazy remote
