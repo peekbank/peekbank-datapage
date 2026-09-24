@@ -25,7 +25,66 @@ stack — data issues, legacy bugs, and decisions that changed behavior.*
   dataset list, same row counts, identical id checksums on the 11.8M-row
   timepoints table. Presumably 2022.1 was minted as the citable version for
   the BRM paper from an unchanged database. Both were staged to Redivis
-  faithfully (v1.0 and v1.1).
+  faithfully (v1.0 and v1.1). *See the provenance investigation below —
+  the CogSci-era 15-dataset state was never a named release.*
+
+## The missing 2021.1 (CogSci) release — provenance and recovery (Sept 2026)
+
+Adrian's finding (Sept 2026): the hosted "2021.1" carries the same 20
+datasets as 2022.1, so the 15-dataset version behind Zettersten et al.
+(2021, CogSci) is not on Redivis. Investigation results:
+
+**What happened (his option B, now with receipts).** peekbankr through at
+least mid-2021 defaulted to `dbname = "peekbank"` — an *unversioned*
+schema on the same host. The CogSci analysis (finalized May 2021) predates
+release versioning (introduced June 2021) entirely; it read the live
+unversioned database via `connect_to_peekbank()`. When the "2021.1" schema
+was created on 2021-10-07, the import repo already carried 20 datasets, so
+the retroactive label captured the then-current data, not the paper-era
+state. Our byte-identical id checksums between 2021.1 and 2022.1 fit two
+deterministic populate runs over unchanged inputs. Nothing was
+overwritten; a named 15-dataset release never existed. The recovery target
+is the pre-versioning `peekbank` schema as of ~May 2021.
+
+**The paper's exact data survives in git.** peekbank-paper commit
+`f527238` (2021-05-07) contains the analysis cache, pulled from that
+unversioned database days before submission:
+
+- `cogsci2021/data/dataset_info.Rds` — 1,521 administrations, 1,320
+  subjects, and the definitive 15 datasets *with their original database
+  ids*: casillas_tseltal_2015 (0), perry_cowpig (1), pomper_saffran_2016
+  (2), adams_marchman_2018 (3), pomper_salientme (4), swingley_aslin_2002
+  (5), reflook_v4 (6), reflook_socword (7), potter_remix (8),
+  potter_canine (9), attword_processed (10), garrison_bergelson_2020 (11),
+  mahr_coartic (12), byers-heinlein_2017 (13), frank_tablet_2016 (14).
+- `cogsci2021/data/aoi_data_joined.Rds` — 5,419,501 aoi timepoints × 38
+  columns (t_norm −975..2975), carrying original ids for aoi_timepoints,
+  trials, trial_types, administrations, subjects, stimuli, and datasets.
+  (Both files are `save()`-written RData despite the .Rds extension.)
+- Derived-stats CSVs (`participant_means_prop_looking.csv`, time-window
+  results, etc.) — verification targets for "reproduces the paper's
+  stats".
+
+**Recovery plan (no SQL backup required).** Seven of the nine tables can
+be re-derived *exactly* (original ids preserved) by normalizing the joined
+fixture. The two absent pieces — `xy_timepoints` and `aoi_region_sets` —
+come from the era's ingest inputs: that pipeline pushed each dataset's
+`processed_data/` to OSF, and OSF retains file version history, so the
+≤May-2021 versions are recoverable via the OSF API (4 datasets also have
+processed CSVs committed in peekbank-data-import at the freeze-era commit
+`22a9bce` as cross-checks). Verify the reconstruction against the paper's
+derived-stats CSVs, then stage to Redivis as a new version whose
+`release_info` names it (e.g. "2021.0 (CogSci)"); note Redivis versions
+are append-only, so it will sit after v1.4 in tag order with the naming
+carried by `release_info`, which is what peekbankr resolves.
+
+**A real backup would still add value** (independent validation; xy data
+as-ingested): candidates are EBS snapshots/AMIs of the pre-2025 server,
+S3-side mysqldump crons, and the old MySQL data directory if it survived
+the April-2025 Docker/MariaDB migration on disk. **Do not terminate the
+EC2 instance or delete its volumes until that disk has been checked.**
+Mike's Google Drive has no dumps (searched Sept 2026); the box itself has
+been unreachable since Aug 2026.
 - Row counts of every staged version were verified exactly (MySQL
   `COUNT(*)` == export == Redivis) after fixing an export bug our own
   verification caught: peekbank ids start at 0 and a `WHERE id > 0` keyset
